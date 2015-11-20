@@ -23,6 +23,10 @@ class ContactsTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+        
+        tableView.reloadData()
+        
     }
 
     // MARK: - Table view data source
@@ -34,18 +38,21 @@ class ContactsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return UserController.sharedController.users.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath)
 
-        // Configure the cell...
+        let user = UserController.sharedController.users[indexPath.row]
+        
+        cell.textLabel!.text = user.username
+        cell.detailTextLabel!.text = user.phoneNumber
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

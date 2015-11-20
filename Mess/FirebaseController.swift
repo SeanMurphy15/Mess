@@ -7,3 +7,13 @@
 //
 
 import Foundation
+import Firebase
+
+class FirebaseController{
+    
+    static let base = Firebase(url: "https://messapp.firebaseio.com")
+    
+    static let userBase = base.childByAppendingPath("Users")
+    
+}
+

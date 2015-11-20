@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+
+
+class MessageController {
+
+
+   
+    
+    
+    
+
+}

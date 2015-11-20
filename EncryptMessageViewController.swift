@@ -8,12 +8,22 @@
 
 import UIKit
 
-class EncryptMessageViewController: UIViewController {
+class EncryptMessageViewController:
+
+
+    UIViewController {
+    
+    
+   
+    @IBOutlet weak var originalMessageTextView: UITextView!
+
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +31,35 @@ class EncryptMessageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: Buttons
+    
+    
+    @IBAction func trashButtonTapped(sender: AnyObject) {
+        
+        originalMessageTextView.text.removeAll()
     }
-    */
-
+    
+    
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            return
+        }
+        
+    }
+    
+    
+    
+    @IBAction func encryptMessageButtonTapped(sender: AnyObject) {
+    
+    print(originalMessageTextView.text)
+    
+    }
+    
+        
+    
+    
+    
+    
+   
 }
