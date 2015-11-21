@@ -48,13 +48,10 @@ class LoginSignupViewController: UIViewController{
         //MARK: - Create new user
         
         
-    if !usernameTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty{
+    if !usernameTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
-        let userDictionary = ["username": usernameTextField.text!, "password": passwordTextField.text!, "phoneNumber": phoneNumberTextField.text!]
-        
-        UserController.sharedController.addUser(User(dictionary: userDictionary))
-        
-        UserController.sharedController.saveUserToFirebase()
+        let newUser = User(username: usernameTextField.text!, phoneNumber: phoneNumberTextField.text!)
+        UserController.saveUserToFirebase(newUser)
         
         
         

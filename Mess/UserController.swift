@@ -13,52 +13,40 @@ import Firebase
 class UserController {
     
     
-    static let sharedController = UserController()
+
     
+    var users: [User] = []
     
-    
-    var users: [User]
-    
-    init(){
-        
-        self.users = []
-        loadUsers()
-    }
-    
-    
-    func loadUsers(){
+    static func loadUsers(completion: (users: [User]) -> Void) {
         
         let allUsersReference = FirebaseController.userBase
         
         allUsersReference.observeSingleEventOfType(FEventType.Value, withBlock: { (snapshot) -> Void in
             
-            
-            if let userDictionaries = snapshot.value as? [[String:AnyObject]]{
+        if let userDictionaries = snapshot.value as? [String:[String: AnyObject]] {
                 
-                self.users = userDictionaries.map({User(dictionary: $0)})
+                let keys = Array(userDictionaries.keys)
+                var users = [User]()
                 
+                for key in keys {
+                    users.append(User(jsonDictionary: userDictionaries[key]!, username: key))
+                }
+                
+                completion(users: users)
             }
-            
-            
         })
         
     }
-    
-    func addUser(user: User){
         
-        users.append(user)
+    
+    static func saveUserToFirebase(user: User) {
+        
+        
+        FirebaseController.userBase.updateChildValues(user.dictionaryCopy())
         
     }
     
     
-    func saveUserToFirebase(){
-        
-        
-        let userDictionaries = self.users.map({$0.dictionaryCopy()})
-        
-        FirebaseController.userBase.setValue(userDictionaries)
-        
-    }
     
 }
     

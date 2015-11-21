@@ -13,8 +13,25 @@ class User{
     
     
     var username: String
-    var password: String
+    var password: String?
     var phoneNumber: String
+    
+    init (username: String, phoneNumber: String){
+        
+        self.username = username
+        self.phoneNumber = phoneNumber
+        
+    }
+    
+    init(jsonDictionary: [String : AnyObject], username: String) {
+        self.username = username
+        
+        if let phoneNumber = jsonDictionary["phoneNumber"] as? String {
+            self.phoneNumber = phoneNumber
+        } else {
+            self.phoneNumber = ""
+        }
+    }
     
     init(dictionary:[String:AnyObject]){
         
@@ -39,7 +56,8 @@ class User{
     
     func dictionaryCopy() -> [String: AnyObject] {
         
-        return ["username": username, "password": password, "phoneNumber": phoneNumber]
+        return [username : ["phoneNumber" : phoneNumber]]
+        
     }
 
     
