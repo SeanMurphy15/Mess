@@ -7,15 +7,39 @@
 //
 
 import Foundation
+import Firebase
 
 
 
-class MessageController {
-
-
+class messageController {
    
     
+    static func messageForIdentifier(messageIdentifier: String, completion:(message: Message?) -> Void){
+        
+        FirebaseController.dataAtEndpoint("messages/\(messageIdentifier)") { (data) -> Void in
+        
+        
+            if let json = data as? [String: AnyObject] {
+                
+                
+                let message = Message(json: json, messageIdentifier: messageIdentifier)
+                
+                completion(message: message)
+            } else {
+                
+                completion(message: nil)
+            }
+        
+        
+        }
+        
+    }
+ 
     
-    
-
 }
+
+
+    
+    
+    
+    

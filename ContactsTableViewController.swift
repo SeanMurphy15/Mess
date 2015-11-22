@@ -47,12 +47,16 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         let user = users[indexPath.row]
         
         cell.textLabel!.text = user.username
-        cell.detailTextLabel!.text = user.phoneNumber
+      //  cell.detailTextLabel!.text = user.phoneNumber
         
 
 
         return cell
     }
+    
+    
+    
+    
     
     func setupSearchController() {
         let resultsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserSearchResults")
@@ -61,7 +65,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         searchController.searchResultsUpdater = self
         searchController.searchBar.sizeToFit()
         tableView.tableHeaderView = searchController.searchBar
-        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.hidesNavigationBarDuringPresentation = false
         
         definesPresentationContext = true
     }
@@ -76,6 +80,11 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
+        
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            return 
+        }
+        
         
         }
         
@@ -116,14 +125,30 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "toMessageReceiversLabel"{
+            
+            if let indexPath = tableView.indexPathForSelectedRow{
+                
+                let user = users[indexPath.row]
+                
+                let detailView = segue.destinationViewController as! EncryptMessageViewController
+                
+                _ = detailView.view
+                
+                detailView.updateMessageReceivers(user)
+            }
+        
+        
+        }
+        
+        
     }
-    */
+    
 
 }

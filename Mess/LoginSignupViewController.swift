@@ -91,13 +91,13 @@ class LoginSignupViewController: UIViewController{
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
         
-        promptBiometricTouchID()
+        promptBiometricTouchIDForLogin()
         
         
         
     }
     
-    func promptBiometricTouchID(){
+    func promptBiometricTouchIDForLogin(){
         
         let context = LAContext()
         var error: NSError?

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class EncryptMessageViewController:
 
@@ -42,6 +43,7 @@ class EncryptMessageViewController:
     @IBAction func trashButtonTapped(sender: AnyObject) {
         
         originalMessageTextView.text.removeAll()
+        messageReceiverTextLabel.text?.removeAll()
     }
     
     
@@ -56,15 +58,48 @@ class EncryptMessageViewController:
     
     
     @IBAction func encryptMessageButtonTapped(sender: AnyObject) {
-    
-   
-    
+        
+        if !originalMessageTextView.text!.isEmpty {
+            
+            
+           promptBiometricTouchIDForEncryption()
+        }
     }
     
+    func updateMessageReceivers(user: User){
         
+        messageReceiverTextLabel.text = user.username
+        
+    }
+    
+   func promptBiometricTouchIDForEncryption(){
+        
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
+            let reason = "Encryption Requires Identity Varification"
+            
+            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    if success == true {
+                        
+                        print("Authorized")
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: "Sender - Current User")
+                        message.saveMessageToFirebase()
+                        
+                    }else{
+                        
+                        
+                        print("not Authorized")
+                    }
+                }
+            }
+        }
+        
+    }
     
     
-    
-    
-   
 }

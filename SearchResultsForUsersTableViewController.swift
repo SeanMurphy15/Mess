@@ -45,6 +45,11 @@ class SearchResultsForUsersTableViewController: UITableViewController {
         return cell
     }
 
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            return
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -80,14 +85,27 @@ class SearchResultsForUsersTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "toMessageReceiversLabelFromSearch"{
+            
+            if let indexPath = tableView.indexPathForSelectedRow{
+                
+                let filteredUsersFromSearch = filteredUsers[indexPath.row]
+                
+                let detailView = segue.destinationViewController as! EncryptMessageViewController
+                
+                _ = detailView.view
+                
+                detailView.updateMessageReceivers(filteredUsersFromSearch)
+            }
+            
+            
+        }
+        
+        
     }
-    */
 
+
+}
 }
