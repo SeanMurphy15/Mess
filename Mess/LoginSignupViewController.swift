@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LocalAuthentication
 
 class LoginSignupViewController: UIViewController{
     
@@ -48,13 +49,13 @@ class LoginSignupViewController: UIViewController{
         //MARK: - Create new user
         
         
-    if !usernameTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
+        if !usernameTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
-        let newUser = User(username: usernameTextField.text!, phoneNumber: phoneNumberTextField.text!)
-        UserController.saveUserToFirebase(newUser)
-        
-        
-        
+            let newUser = User(username: usernameTextField.text!, phoneNumber: phoneNumberTextField.text!)
+            UserController.saveUserToFirebase(newUser)
+            
+            performSegueWithIdentifier("toHomeView", sender: nil)
+            
         } else if passwordTextField.text! != reEnterPasswordTextField.text! {
             
             let passwordAlert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .ActionSheet)
@@ -88,6 +89,39 @@ class LoginSignupViewController: UIViewController{
         
     }
     
+    @IBAction func loginButtonTapped(sender: AnyObject) {
+        
+        promptBiometricTouchID()
+        
+        
+        
+    }
     
-    
+    func promptBiometricTouchID(){
+        
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
+            let reason = "Identify yourself"
+            
+            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    if success == true {
+                        
+                        self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
+                        print("Authorized")
+                    
+                    }else{
+                        
+                        
+                        print("not Authorized")
+                    }
+                }
+            }
+        }
+        
+    }
 }

@@ -13,16 +13,18 @@ class EncryptMessageViewController:
 
     UIViewController {
     
+    @IBOutlet weak var messageReceiverTextLabel: UILabel!
     
    
     @IBOutlet weak var originalMessageTextView: UITextView!
 
     
-    
+    var messageRecieverTextLabelData: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        messageReceiverTextLabel.text = self.messageRecieverTextLabelData
         
     }
 
@@ -30,6 +32,9 @@ class EncryptMessageViewController:
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
     
     //MARK: Buttons
     
@@ -52,7 +57,7 @@ class EncryptMessageViewController:
     
     @IBAction func encryptMessageButtonTapped(sender: AnyObject) {
     
-    print(originalMessageTextView.text)
+   
     
     }
     

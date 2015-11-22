@@ -61,7 +61,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         searchController.searchResultsUpdater = self
         searchController.searchBar.sizeToFit()
         tableView.tableHeaderView = searchController.searchBar
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
         
         definesPresentationContext = true
     }
@@ -75,6 +75,11 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         resultsViewController.tableView.reloadData()
     }
     
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        
+        }
+        
+
 
     /*
     // Override to support conditional editing of the table view.
