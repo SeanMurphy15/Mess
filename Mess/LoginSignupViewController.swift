@@ -51,12 +51,28 @@ class LoginSignupViewController: UIViewController{
         
         if !usernameTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
-            let newUser = User(username: usernameTextField.text!, phoneNumber: phoneNumberTextField.text!)
-            UserController.saveUserToFirebase(newUser)
             
-            performSegueWithIdentifier("toHomeView", sender: nil)
+            UserController.createUser(usernameTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, completion: { (success, user) -> Void in
+                
+                self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
+                print("Successful signup")
+            })
             
-        } else if passwordTextField.text! != reEnterPasswordTextField.text! {
+        }
+        else{
+            
+            let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "You have not filled in all the boxes", preferredStyle: .ActionSheet)
+            let incompleteSignupAlertRedoAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
+                
+            }
+            
+            incompleteSignupAlert.addAction(incompleteSignupAlertRedoAction)
+            
+            presentViewController(incompleteSignupAlert, animated: true, completion: nil)
+            
+        }
+        
+        if passwordTextField.text! != reEnterPasswordTextField.text! {
             
             let passwordAlert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .ActionSheet)
             let redoPasswordAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
@@ -70,58 +86,10 @@ class LoginSignupViewController: UIViewController{
             presentViewController(passwordAlert, animated: true, completion: nil)
             
             
-        }else{
-            
-            let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "You have not filled in all the boxes", preferredStyle: .ActionSheet)
-            let incompleteSignupAlertRedoAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
-                
-            }
-            
-            incompleteSignupAlert.addAction(incompleteSignupAlertRedoAction)
-            
-            presentViewController(incompleteSignupAlert, animated: true, completion: nil)
-            
         }
-        
-        
-        
         
         
     }
     
-    @IBAction func loginButtonTapped(sender: AnyObject) {
-        
-        promptBiometricTouchIDForLogin()
-        
-        
-        
-    }
-    
-    func promptBiometricTouchIDForLogin(){
-        
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
-            let reason = "Identify yourself"
-            
-            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    
-                    if success == true {
-                        
-                        self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
-                        print("Authorized")
-                    
-                    }else{
-                        
-                        
-                        print("not Authorized")
-                    }
-                }
-            }
-        }
-        
-    }
+
 }

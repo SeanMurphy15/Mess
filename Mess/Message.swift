@@ -21,7 +21,7 @@ class Message: FirebaseType {
     var messageReceiver: String?
     var messageSender: String?
     var encryptedMessage: String?
-    var messageIdentifier: String?
+    var identifier: String?
     var endpoint: String {
         
         return "Messages"
@@ -47,22 +47,22 @@ class Message: FirebaseType {
         
         return json
         
-        }
+    }
     
-    required init?(json: [String: AnyObject], messageIdentifier: String){
+    required init?(json: [String: AnyObject], identifier: String){
         
         guard let originalMessage = json[originalMessageKey] as? String else {return nil}
         self.originalMessage = originalMessage
         self.messageReceiver = json[messageReceiverKey] as? String
         self.messageSender = json[messageSenderKey] as? String
         self.encryptedMessage = json[encryptedMessageKey] as? String
-        self.messageIdentifier = messageIdentifier
+        self.identifier = identifier
     }
     
     
     
     init (originalMessage: String, encryptedMessage: String, messageReceiver: String, messageSender: String){
-    
+        
         self.originalMessage = originalMessage
         self.messageReceiver = messageReceiver
         self.messageSender = messageSender

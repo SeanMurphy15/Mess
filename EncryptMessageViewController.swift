@@ -87,8 +87,8 @@ class EncryptMessageViewController:
                     if success == true {
                         
                         print("Authorized")
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: "Sender - Current User")
-                        message.saveMessageToFirebase()
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: UserController.sharedController.currentUser.username)
+                        message.save()
                         
                     }else{
                         

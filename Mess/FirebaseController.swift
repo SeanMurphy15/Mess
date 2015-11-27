@@ -9,15 +9,19 @@
 import Foundation
 import Firebase
 
-class FirebaseController{
+import Foundation
+import Firebase
+
+class FirebaseController {
     
     static let base = Firebase(url: "https://messapp.firebaseio.com")
     
-    static let userBase = base.childByAppendingPath("Users")
-    
     static func dataAtEndpoint(endpoint: String, completion: (data: AnyObject?) -> Void) {
-        let firebaseForEndpoint = FirebaseController.base.childByAppendingPath(endpoint)
-        firebaseForEndpoint.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        
+        let baseForEndpoint = FirebaseController.base.childByAppendingPath(endpoint)
+        
+        baseForEndpoint.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            
             if snapshot.value is NSNull {
                 completion(data: nil)
             } else {
@@ -27,42 +31,54 @@ class FirebaseController{
     }
     
     
-    
-    
+    static func observeDataAtEndpoint(endpoint: String, completion: (data: AnyObject?) -> Void) {
+        
+        let baseForEndpoint = FirebaseController.base.childByAppendingPath(endpoint)
+        
+        baseForEndpoint.observeEventType(.Value, withBlock: { snapshot in
+            
+            if snapshot.value is NSNull {
+                completion(data: nil)
+            } else {
+                completion(data: snapshot.value)
+            }
+        })
+    }
 }
 
 protocol FirebaseType {
-    
-    var messageIdentifier: String? { get set }
+    var identifier: String? { get set }
     var endpoint: String { get }
     var jsonValue: [String: AnyObject] { get }
     
-    init?(json: [String: AnyObject], messageIdentifier: String)
+    init?(json: [String : AnyObject], identifier: String)
     
-    // save and delete functions went here
+    mutating func save()
+    func delete()
 }
 
 extension FirebaseType {
     
-    mutating func saveMessageToFirebase() {
-        var firebaseEndpoint = FirebaseController.base.childByAppendingPath(endpoint)
+    mutating func save() {
         
-        if let messageIdentifier = messageIdentifier {
-            firebaseEndpoint = firebaseEndpoint.childByAppendingPath(messageIdentifier)
+        var endpointBase: Firebase
+        
+        if let identifier = self.identifier {
+            endpointBase = FirebaseController.base.childByAppendingPath(endpoint).childByAppendingPath(identifier)
         } else {
-            firebaseEndpoint = firebaseEndpoint.childByAutoId()
-            messageIdentifier = firebaseEndpoint.key
+            endpointBase = FirebaseController.base.childByAppendingPath(endpoint).childByAutoId()
+            self.identifier = endpointBase.key
         }
         
-        firebaseEndpoint.updateChildValues(jsonValue)
-}
+        endpointBase.updateChildValues(self.jsonValue)
+    }
     
-    func deleteMessageFromFirebase() {
-        if let messageIdentifier = messageIdentifier {
-            let firebaseEndpoint = FirebaseController.base.childByAppendingPath(endpoint).childByAppendingPath(messageIdentifier)
-            firebaseEndpoint.removeValue()
+    func delete() {
+        
+        if let identifier = self.identifier {
+            let endpointBase: Firebase = FirebaseController.base.childByAppendingPath(endpoint).childByAppendingPath(identifier)
+            
+            endpointBase.removeValue()
         }
     }
 }
-
-

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF29BD881C0147B600A6ADEA /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29BD871C0147B600A6ADEA /* TableViewCell.swift */; };
+		FF1311251C08F54800D016E3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1311241C08F54800D016E3 /* LoginViewController.swift */; };
 		FF31DBAC1BFA6D3D00F49424 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31DBAB1BFA6D3D00F49424 /* AppDelegate.swift */; };
 		FF31DBB11BFA6D3D00F49424 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF31DBAF1BFA6D3D00F49424 /* Main.storyboard */; };
 		FF31DBB31BFA6D3D00F49424 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF31DBB21BFA6D3D00F49424 /* Assets.xcassets */; };
@@ -48,7 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FF29BD871C0147B600A6ADEA /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		FF1311241C08F54800D016E3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FF31DBA81BFA6D3D00F49424 /* Mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF31DBAB1BFA6D3D00F49424 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Mess/AppDelegate.swift; sourceTree = "<group>"; };
 		FF31DBB01BFA6D3D00F49424 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,7 +136,6 @@
 		FF31DBD01BFAB91300F49424 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FF29BD871C0147B600A6ADEA /* TableViewCell.swift */,
 				FF31DBC41BFAB72900F49424 /* HomeViewController.swift */,
 				FF31DBC61BFAB76800F49424 /* ContactsTableViewController.swift */,
 				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
@@ -144,6 +143,7 @@
 				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
 				FF31DBC21BFAB6AA00F49424 /* LoginSignupViewController.swift */,
+				FF1311241C08F54800D016E3 /* LoginViewController.swift */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -245,12 +245,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1311251C08F54800D016E3 /* LoginViewController.swift in Sources */,
 				FF31DBD41BFAB9A700F49424 /* FirebaseController.swift in Sources */,
 				FF31DBC51BFAB72900F49424 /* HomeViewController.swift in Sources */,
 				FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */,
 				FF31DBC01BFAB56300F49424 /* User.swift in Sources */,
 				FF31DBC91BFAB79900F49424 /* SettingsViewController.swift in Sources */,
-				FF29BD881C0147B600A6ADEA /* TableViewCell.swift in Sources */,
 				FF31DBD21BFAB94400F49424 /* UserController.swift in Sources */,
 				FF31DBC71BFAB76800F49424 /* ContactsTableViewController.swift in Sources */,
 				FF31DBCB1BFAB7D000F49424 /* DecryptMessageViewController.swift in Sources */,
