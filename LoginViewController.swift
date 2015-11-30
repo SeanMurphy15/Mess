@@ -10,6 +10,9 @@ import UIKit
 import LocalAuthentication
 
 class LoginViewController: UIViewController {
+    
+    
+    
     @IBOutlet weak var emailTextField: UITextField!
 
     @IBOutlet weak var passwordTextField: UITextField!
@@ -33,9 +36,11 @@ class LoginViewController: UIViewController {
     @IBAction func enterButtonTapped(sender: AnyObject) {
         
         UserController.authenticateUser(emailTextField.text!, password: passwordTextField.text!, completion: { (success, user) -> Void in
-            if success == true{
+            if success == true {
                 
-                _ = user
+                print("current user: \(UserController.sharedController.currentUser)")
+                
+                
                 
                 self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
             
@@ -48,6 +53,8 @@ class LoginViewController: UIViewController {
         
     }
 
+    
+    
     @IBAction func touchIDButtonTapped(sender: AnyObject) {
         
         promptBiometricTouchIDForLogin()

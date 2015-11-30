@@ -24,7 +24,7 @@ class Message: FirebaseType {
     var identifier: String?
     var endpoint: String {
         
-        return "Messages"
+        return "messages"
     }
     
     var jsonValue: [String: AnyObject] {

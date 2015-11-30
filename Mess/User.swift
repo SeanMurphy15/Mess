@@ -20,7 +20,7 @@ struct User: Equatable, FirebaseType {
     var password: String?
     var identifier: String?
     var endpoint: String {
-        return "Users"
+        return "users"
     }
     var jsonValue: [String: AnyObject] {
         var json: [String: AnyObject] = [usernameKey: username]

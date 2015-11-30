@@ -14,9 +14,13 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
     
     var userDataSource: [User] = []
     
+    
+    
+    
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        super.viewDidLoad()
         
         UserController.fetchAllUsers { (users) -> Void in
             
@@ -30,17 +34,9 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
             
         }
         
-        
         setupSearchController()
-        
     }
     
-    func users(completion: (users:[User]?) -> Void) {
-        
-        UserController.fetchAllUsers() { (users) -> Void in
-            completion(users: users)
-        }
-    }
     
     
     // MARK: - Table view data source
@@ -111,7 +107,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
                 
                 _ = detailView.view
                 
-                detailView.updateMessageReceivers(user)
+                detailView.updateMessageReceiver(user)
             }
             
             

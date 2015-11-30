@@ -17,8 +17,9 @@ class UserController {
     var currentUser: User! {
         get {
             
-            guard let uid = FirebaseController.base.authData?.uid,
-                let userDictionary = NSUserDefaults.standardUserDefaults().valueForKey(kUser) as? [String: AnyObject] else {
+            guard let uid = FirebaseController.base.authData?.uid else {return nil}
+            
+            guard let userDictionary = NSUserDefaults.standardUserDefaults().valueForKey(kUser) as? [String: AnyObject] else {
                     
                     return nil
             }
@@ -70,6 +71,20 @@ class UserController {
         }
     }
     
+    static func updateUser(user: User, username: String, phoneNumber: String?, password: String?, completion: (success: Bool, user: User?) -> Void) {
+        var updatedUser = User(username: user.username, uid: user.identifier!, phoneNumber : phoneNumber, password: password)
+        updatedUser.save()
+        
+        UserController.userForIdentifier(user.identifier!) { (user) -> Void in
+            
+            if let user = user {
+                sharedController.currentUser = user
+                completion(success: true, user: user)
+            } else {
+                completion(success: false, user: nil)
+            }
+        }
+    }
     
     
     static func authenticateUser(username: String, password: String, completion: (success: Bool, user: User?) -> Void) {

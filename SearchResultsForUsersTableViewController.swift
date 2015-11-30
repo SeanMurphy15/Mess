@@ -97,7 +97,7 @@ class SearchResultsForUsersTableViewController: UITableViewController {
                 
                 _ = detailView.view
                 
-                detailView.updateMessageReceivers(filteredUsersFromSearch)
+                detailView.updateMessageReceiver(filteredUsersFromSearch)
             }
             
             

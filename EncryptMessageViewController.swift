@@ -8,14 +8,13 @@
 
 import UIKit
 import LocalAuthentication
+import MessageUI
 
-class EncryptMessageViewController:
-
-
-    UIViewController {
+class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var messageReceiverTextLabel: UILabel!
     
+    @IBOutlet weak var messageReceiverTextFieldPhoneNumber: UILabel!
    
     @IBOutlet weak var originalMessageTextView: UITextView!
 
@@ -66,9 +65,10 @@ class EncryptMessageViewController:
         }
     }
     
-    func updateMessageReceivers(user: User){
+    func updateMessageReceiver(user: User){
         
         messageReceiverTextLabel.text = user.username
+        messageReceiverTextFieldPhoneNumber.text = user.phoneNumber
         
     }
     
@@ -86,9 +86,12 @@ class EncryptMessageViewController:
                     
                     if success == true {
                         
-                        print("Authorized")
+                        print("message sent")
+                        
                         var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: UserController.sharedController.currentUser.username)
                         message.save()
+                        
+                        
                         
                     }else{
                         
@@ -102,4 +105,45 @@ class EncryptMessageViewController:
     }
     
     
+    
+    func presentModalMessageComposeViewController(animated: Bool) {
+        if MFMessageComposeViewController.canSendText() {
+            let messageComposeVC = MFMessageComposeViewController()
+            
+            
+           
+            
+            messageComposeVC.messageComposeDelegate = self
+            messageComposeVC.body = originalMessageTextView.text
+            messageComposeVC.recipients = [messageReceiverTextFieldPhoneNumber.text!]
+            
+            presentViewController(messageComposeVC, animated: animated, completion: nil)
+            
+        } else {
+            
+            let unableToSendAlert = UIAlertController(title: "Unable to Send Encrypted Message", message: " ", preferredStyle: .Alert)
+           let unableToSendAlertConfirmation =  UIAlertAction(title: "OK", style: .Default, handler: { (_) -> Void in
+            
+           })
+            
+            unableToSendAlert.addAction(unableToSendAlertConfirmation)
+            
+            presentViewController(unableToSendAlert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func smsButtonTapped(sender: AnyObject) {
+        
+        presentModalMessageComposeViewController(true)
+        
+            }
 }
+    
+    
+    
+
