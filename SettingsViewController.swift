@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsViewController: UIViewController {
     
@@ -39,6 +40,21 @@ class SettingsViewController: UIViewController {
         }
     
     
+    func passwordError(){
+        
+        let unableToChangePasswordAlert = UIAlertController(title: "Unable To Change Password", message: " ", preferredStyle: .Alert)
+        let unableToChangePasswordAlertAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
+            
+            self.newPasswordTextField.text? = ""
+            self.reEnterNewPasswordTextField.text? = ""
+        }
+        
+        unableToChangePasswordAlert.addAction(unableToChangePasswordAlertAction)
+        self.presentViewController(unableToChangePasswordAlert, animated: true, completion: nil)
+        
+    }
+
+    
     
     
     
@@ -49,18 +65,30 @@ class SettingsViewController: UIViewController {
         if !newPasswordTextField.text!.isEmpty && !reEnterNewPasswordTextField.text!.isEmpty && newPasswordTextField.text == reEnterNewPasswordTextField.text {
             
             let settingsAlert = UIAlertController(title: "Do you wish to change your Password?", message: " ", preferredStyle: .Alert)
+            let cancelPasswordChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+            })
                 let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
                     
-                    UserController.updateUser(self.user, username: self.user.username , phoneNumber: self.user.phoneNumber, password: self.newPasswordTextField.text, completion: { (success, user) -> Void in
-                        
-                        self.performSegueWithIdentifier("savedFromSettings", sender: nil)
+                    let ref = Firebase(url: "https://messapp.firebaseio.com")
+                    ref.changePasswordForUser(UserController.sharedController.currentUser.username, fromOld: UserController.sharedController.currentUser.password,
+                        toNew: self.newPasswordTextField.text, withCompletionBlock: { error in
+                            if error != nil {
+                                
+                                self.passwordError()
+                                
+                            } else {
+                                
+                                self.user.save()
+                                
+                                self.performSegueWithIdentifier("savedFromSettings", sender: nil)
+                            }
                     })
-                    
                     
                 })
                 
             
                 settingsAlert.addAction(settingsAlertAction)
+                settingsAlert.addAction(cancelPasswordChange)
                 
                self.presentViewController(settingsAlert, animated: true, completion: nil)
                 
@@ -76,14 +104,13 @@ class SettingsViewController: UIViewController {
                 let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
                    
                  self.user.phoneNumber = self.newPhoneNumberTextField.text
+                    
                     self.user.save()
                     
                     
                         self.performSegueWithIdentifier("savedFromSettings", sender: nil)
                         
-                    
-                   
-                })
+                    })
                 
                 settingsAlert.addAction(settingsAlertAction)
                 
@@ -94,7 +121,6 @@ class SettingsViewController: UIViewController {
             
         }
         
-
         
     }
     
