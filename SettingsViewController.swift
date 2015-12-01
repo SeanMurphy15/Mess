@@ -26,6 +26,12 @@ class SettingsViewController: UIViewController {
         setCurrentUser()
         
     }
+    
+    func setCurrentUser(){
+        
+        currentUserTextLabel.text = UserController.sharedController.currentUser.username
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -53,6 +59,7 @@ class SettingsViewController: UIViewController {
                     
                 })
                 
+            
                 settingsAlert.addAction(settingsAlertAction)
                 
                self.presentViewController(settingsAlert, animated: true, completion: nil)
@@ -67,12 +74,14 @@ class SettingsViewController: UIViewController {
             
             let settingsAlert = UIAlertController(title: "Do you wish to change your Phone Number?", message: " ", preferredStyle: .Alert)
                 let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
+                   
+                 self.user.phoneNumber = self.newPhoneNumberTextField.text
+                    self.user.save()
                     
-                    UserController.updateUser(self.user, username: self.user.username , phoneNumber: self.newPhoneNumberTextField.text, password: self.user.password, completion: { (success, user) -> Void in
-                        
+                    
                         self.performSegueWithIdentifier("savedFromSettings", sender: nil)
                         
-                    })
+                    
                    
                 })
                 
@@ -104,11 +113,7 @@ class SettingsViewController: UIViewController {
     }
     
     
-    func setCurrentUser(){
-        
-        currentUserTextLabel.text = UserController.sharedController.currentUser.username
-        
-    }
+    
     
     
  

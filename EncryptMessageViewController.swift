@@ -114,7 +114,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
            
             
             messageComposeVC.messageComposeDelegate = self
-            messageComposeVC.body = originalMessageTextView.text
+            messageComposeVC.body = "messapp://decrypt"
             messageComposeVC.recipients = [messageReceiverTextFieldPhoneNumber.text!]
             
             presentViewController(messageComposeVC, animated: animated, completion: nil)

@@ -40,6 +40,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        
+        let urlString = "\(url)"
+        
+        if urlString == "messapp://decrypt"
+            
+            {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let navigationViewController = storyboard.instantiateViewControllerWithIdentifier("toDecryptionFromURLScheme") as! UINavigationController
+                
+                self.window?.rootViewController?.presentViewController(navigationViewController, animated: true, completion: nil)
+                
+            }
+            
+        
+        
+        
+        return true
+    }
 
 
 }
