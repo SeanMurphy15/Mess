@@ -824,10 +824,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emailTextField" destination="Tsl-ho-Vz3" id="5Yi-CK-yTT"/>
                         <outlet property="passwordTextField" destination="HhH-wW-Pmn" id="76X-Kw-Dn0"/>
                         <outlet property="phoneNumberTextField" destination="l6O-dF-SgD" id="2yF-5g-XCf"/>
                         <outlet property="reEnterPasswordTextField" destination="fGU-EE-r7y" id="WA7-eP-uyO"/>
-                        <outlet property="usernameTextField" destination="Tsl-ho-Vz3" id="KNh-EU-Dzx"/>
                         <segue destination="edX-Vt-ChN" kind="show" identifier="toHomeViewFromSignup" id="oAv-0T-lce"/>
                     </connections>
                 </viewController>
@@ -875,8 +875,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dYR-lX-8gn"/>
-        <segue reference="NO6-ac-3YC"/>
+        <segue reference="0wq-O2-zDD"/>
+        <segue reference="oAv-0T-lce"/>
         <segue reference="MN3-wV-26J"/>
         <segue reference="2cc-gC-hcx"/>
     </inferredMetricsTieBreakers>

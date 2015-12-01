@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     
     func setCurrentUser(){
         
-        currentUserTextLabel.text = UserController.sharedController.currentUser.username
+        currentUserTextLabel.text = UserController.sharedController.currentUser.email
         
     }
 
@@ -70,7 +70,7 @@ class SettingsViewController: UIViewController {
                 let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
                     
                     let ref = Firebase(url: "https://messapp.firebaseio.com")
-                    ref.changePasswordForUser(UserController.sharedController.currentUser.username, fromOld: UserController.sharedController.currentUser.password,
+                    ref.changePasswordForUser(UserController.sharedController.currentUser.email, fromOld: UserController.sharedController.currentUser.password,
                         toNew: self.newPasswordTextField.text, withCompletionBlock: { error in
                             if error != nil {
                                 

@@ -67,7 +67,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     func updateMessageReceiver(user: User){
         
-        messageReceiverTextLabel.text = user.username
+        messageReceiverTextLabel.text = user.email
         messageReceiverTextFieldPhoneNumber.text = user.phoneNumber
         
     }
@@ -88,7 +88,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                         
                         print("message sent")
                         
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: UserController.sharedController.currentUser.username)
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: UserController.sharedController.currentUser.email)
                         message.save()
                         
                         

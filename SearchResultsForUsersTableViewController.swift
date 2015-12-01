@@ -40,7 +40,7 @@ class SearchResultsForUsersTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath)
         let user = filteredUsers[indexPath.row]
         
-        cell.textLabel?.text = user.username
+        cell.textLabel?.text = user.email
         
         return cell
     }

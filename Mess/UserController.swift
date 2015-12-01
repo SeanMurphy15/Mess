@@ -71,8 +71,8 @@ class UserController {
         }
     }
     
-    static func updateUser(user: User, username: String, phoneNumber: String?, password: String?, completion: (success: Bool, user: User?) -> Void) {
-        var updatedUser = User(username: user.username, uid: user.identifier!, phoneNumber : phoneNumber, password: password)
+    static func updateUser(user: User, email: String, phoneNumber: String?, password: String?, completion: (success: Bool, user: User?) -> Void) {
+        var updatedUser = User(email: user.email, uid: user.identifier!, phoneNumber : phoneNumber, password: password)
         updatedUser.save()
         
         UserController.userForIdentifier(user.identifier!) { (user) -> Void in
@@ -87,9 +87,9 @@ class UserController {
     }
     
     
-    static func authenticateUser(username: String, password: String, completion: (success: Bool, user: User?) -> Void) {
+    static func authenticateUser(email: String, password: String, completion: (success: Bool, user: User?) -> Void) {
         
-        FirebaseController.base.authUser(username, password: password) { (error, response) -> Void in
+        FirebaseController.base.authUser(email, password: password) { (error, response) -> Void in
             
             if error != nil {
                 print("Unsuccessful login attempt.")
@@ -108,9 +108,9 @@ class UserController {
         }
     }
     
-    static func createUser(username: String, password: String, phoneNumber: String?, completion: (success: Bool, user: User?) -> Void) {
+    static func createUser(email: String, password: String, phoneNumber: String?, completion: (success: Bool, user: User?) -> Void) {
         
-        FirebaseController.base.createUser(username, password: password) { (error, response) -> Void in
+        FirebaseController.base.createUser(email, password: password) { (error, response) -> Void in
             
             
             if !(error == nil) {
@@ -118,10 +118,10 @@ class UserController {
                 completion(success: false, user: nil)
             } else {
                 if let uid = response["uid"] as? String {
-                    var user = User(username: username, uid: uid, phoneNumber: phoneNumber, password: password)
+                    var user = User(email: email, uid: uid, phoneNumber: phoneNumber, password: password)
                     user.save()
                     
-                    authenticateUser(username, password: password, completion: { (success, user) -> Void in
+                    authenticateUser(email, password: password, completion: { (success, user) -> Void in
                         completion(success: success, user: user)
                     })
                 } else {

@@ -57,7 +57,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         let user = userDataSource[indexPath.row]
         
-        cell.textLabel!.text = user.username
+        cell.textLabel!.text = user.email
         //cell.detailTextLabel!.text = user.phoneNumber
         
         
@@ -82,7 +82,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         let resultsViewController = searchController.searchResultsController as! SearchResultsForUsersTableViewController
         
-        resultsViewController.filteredUsers = userDataSource.filter({ $0.username.lowercaseString.containsString(searchTerm) })
+        resultsViewController.filteredUsers = userDataSource.filter({ $0.email.lowercaseString.containsString(searchTerm) })
         resultsViewController.tableView.reloadData()
     }
     

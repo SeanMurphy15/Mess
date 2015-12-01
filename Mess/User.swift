@@ -11,11 +11,11 @@ import Firebase
 
 struct User: Equatable, FirebaseType {
     
-    private let usernameKey = "username"
+    private let emailKey = "email"
     private let phoneNumberKey = "phoneNumber"
     private let passwordKey = "password"
     
-    var username = ""
+    var email = ""
     var phoneNumber: String?
     var password: String?
     var identifier: String?
@@ -23,7 +23,7 @@ struct User: Equatable, FirebaseType {
         return "users"
     }
     var jsonValue: [String: AnyObject] {
-        var json: [String: AnyObject] = [usernameKey: username]
+        var json: [String: AnyObject] = [emailKey: email]
         
         if let phoneNumber = phoneNumber {
             json.updateValue(phoneNumber, forKey: phoneNumberKey)
@@ -38,17 +38,17 @@ struct User: Equatable, FirebaseType {
     
     init?(json: [String: AnyObject], identifier: String) {
         
-        guard let username = json[usernameKey] as? String else { return nil }
+        guard let email = json[emailKey] as? String else { return nil }
         
-        self.username = username
+        self.email = email
         self.phoneNumber = json[phoneNumberKey] as? String
         self.password = json[passwordKey] as? String
         self.identifier = identifier
     }
     
-    init(username: String, uid: String, phoneNumber: String?, password: String?) {
+    init(email: String, uid: String, phoneNumber: String?, password: String?) {
         
-        self.username = username
+        self.email = email
         self.phoneNumber = phoneNumber
         self.password = password
         self.identifier = uid
@@ -57,7 +57,7 @@ struct User: Equatable, FirebaseType {
 
 func ==(lhs: User, rhs: User) -> Bool {
     
-    return (lhs.username == rhs.username) && (lhs.identifier == rhs.identifier)
+    return (lhs.email == rhs.email) && (lhs.identifier == rhs.identifier)
 }
 
 

@@ -13,7 +13,8 @@ import LocalAuthentication
 class LoginSignupViewController: UIViewController{
     
     
-    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var reEnterPasswordTextField: UITextField!
@@ -49,10 +50,10 @@ class LoginSignupViewController: UIViewController{
         //MARK: - Create new user
         
         
-        if !usernameTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
+        if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
             
-            UserController.createUser(usernameTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, completion: { (success, user) -> Void in
+            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, completion: { (success, user) -> Void in
                 
                 self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
                 print("Successful signup")
