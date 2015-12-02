@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class DecryptMessageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+fetchMessagesForUser()
     
         // Do any additional setup after loading the view.
     }
@@ -23,14 +24,18 @@ class DecryptMessageViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func fetchMessagesForUser(){
+        
+        var currentUserIdentifier = UserController.sharedController.currentUser.identifier
+        
+        let ref = Firebase(url:"https://messapp.firebaseio.com/messages")
+        ref.queryOrderedByChild(currentUserIdentifier).queryLimitedToLast(100)
+            .observeEventType(.ChildAdded, withBlock: { snapshot in
+                print(snapshot.key)
+            })
+        
     }
-    */
+    
 
 }

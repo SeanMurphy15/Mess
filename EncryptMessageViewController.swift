@@ -18,6 +18,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
    
     @IBOutlet weak var originalMessageTextView: UITextView!
 
+    @IBOutlet weak var identifierLabel: UILabel!
     
     var messageRecieverTextLabelData: String!
 
@@ -33,10 +34,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    //MARK: Buttons
     
     
     @IBAction func trashButtonTapped(sender: AnyObject) {
@@ -69,7 +66,38 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
         messageReceiverTextLabel.text = user.email
         messageReceiverTextFieldPhoneNumber.text = user.phoneNumber
+        identifierLabel.text = user.identifier
         
+    }
+    
+    func presentModalMessageComposeViewController(animated: Bool) {
+        if MFMessageComposeViewController.canSendText() {
+            let messageComposeVC = MFMessageComposeViewController()
+            
+            
+            
+            messageComposeVC.messageComposeDelegate = self
+            messageComposeVC.body = "\(messageReceiverTextLabel.text!), You've Received an Enrypted Message: messapp://decrypt"
+            messageComposeVC.recipients = [messageReceiverTextFieldPhoneNumber.text!]
+            
+            presentViewController(messageComposeVC, animated: animated, completion: nil)
+            
+        } else {
+            
+            let unableToSendAlert = UIAlertController(title: "Unable to Send Encrypted Message", message: " ", preferredStyle: .Alert)
+            let unableToSendAlertConfirmation =  UIAlertAction(title: "OK", style: .Default, handler: { (_) -> Void in
+                
+            })
+            
+            unableToSendAlert.addAction(unableToSendAlertConfirmation)
+            
+            presentViewController(unableToSendAlert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
    func promptBiometricTouchIDForEncryption(){
@@ -86,9 +114,12 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                     
                     if success == true {
                         
-                        print("message sent")
                         
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: "Receiver", messageSender: UserController.sharedController.currentUser.email)
+                        
+                        self.presentModalMessageComposeViewController(true)
+                        
+                        
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.identifier!)
                         message.save()
                         
                         
@@ -103,45 +134,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         }
         
     }
-    
-    
-    
-    func presentModalMessageComposeViewController(animated: Bool) {
-        if MFMessageComposeViewController.canSendText() {
-            let messageComposeVC = MFMessageComposeViewController()
-            
-            
-           
-            
-            messageComposeVC.messageComposeDelegate = self
-            messageComposeVC.body = "messapp://decrypt"
-            messageComposeVC.recipients = [messageReceiverTextFieldPhoneNumber.text!]
-            
-            presentViewController(messageComposeVC, animated: animated, completion: nil)
-            
-        } else {
-            
-            let unableToSendAlert = UIAlertController(title: "Unable to Send Encrypted Message", message: " ", preferredStyle: .Alert)
-           let unableToSendAlertConfirmation =  UIAlertAction(title: "OK", style: .Default, handler: { (_) -> Void in
-            
-           })
-            
-            unableToSendAlert.addAction(unableToSendAlertConfirmation)
-            
-            presentViewController(unableToSendAlert, animated: true, completion: nil)
-            
-        }
-    }
-    
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
 
-    @IBAction func smsButtonTapped(sender: AnyObject) {
-        
-        presentModalMessageComposeViewController(true)
-        
-            }
 }
     
     
