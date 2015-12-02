@@ -10,10 +10,12 @@ import UIKit
 import Firebase
 
 class DecryptMessageViewController: UIViewController {
-
+    private var arrayOfUserMessageDictionaries = []
+    private var arrayOfMessageDictionaries = [Message]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-fetchMessagesForUser()
+     fetchMessagesForUser()
     
         // Do any additional setup after loading the view.
     }
@@ -27,15 +29,28 @@ fetchMessagesForUser()
     
     func fetchMessagesForUser(){
         
-        var currentUserIdentifier = UserController.sharedController.currentUser.identifier
-        
+        let currentUserIdentifier = UserController.sharedController.currentUser.identifier
+       
         let ref = Firebase(url:"https://messapp.firebaseio.com/messages")
-        ref.queryOrderedByChild(currentUserIdentifier).queryLimitedToLast(100)
-            .observeEventType(.ChildAdded, withBlock: { snapshot in
-                print(snapshot.key)
-            })
+    
+        ref.queryOrderedByChild("messageReceiver").queryEqualToValue(currentUserIdentifier).queryLimitedToLast(100)
+             .observeEventType(.ChildAdded, withBlock: { snapshot in
+                if let messageDictionary = snapshot.value as? [String: String] {
+                   
+                    let message = Message(json: messageDictionary, identifier: snapshot.key)
+                      self.arrayOfMessageDictionaries.append(message!)
+                   
+                }
+            print(self.arrayOfMessageDictionaries.count)
+        })
         
+   
     }
     
+       static func orderMessages(messages: [Message]) -> [Message] {
+        
+        return messages.sort({$0.0.identifier > $0.1.identifier})
+    }
+
 
 }
