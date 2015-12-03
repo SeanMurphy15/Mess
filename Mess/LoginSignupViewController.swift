@@ -20,12 +20,10 @@ class LoginSignupViewController: UIViewController{
     @IBOutlet weak var reEnterPasswordTextField: UITextField!
     
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+      
         
         // Do any additional setup after loading the view.
     }

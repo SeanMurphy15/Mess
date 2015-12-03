@@ -118,8 +118,9 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                         
                         self.presentModalMessageComposeViewController(true)
                         
+                        let encyptedMessage = "bclbckdsbckjsDBckzjsdbcksdb.cKBSdc.kJSBdc.kJSBDc."
                         
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "Encrypted Message", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.identifier!)
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
                         message.save()
                         
                         

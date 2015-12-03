@@ -31,6 +31,7 @@
 		FF31DC001BFBDA7D00F49424 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */; };
 		FF31DC021BFBDA9000F49424 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DC011BFBDA9000F49424 /* libicucore.tbd */; };
 		FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */; };
+		FFFB030E1C0FBCA300F09FED /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +74,7 @@
 		FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FF31DC011BFBDA9000F49424 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsForUsersTableViewController.swift; sourceTree = "<group>"; };
+		FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
 				FF31DBC81BFAB79900F49424 /* SettingsViewController.swift */,
 				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
+				FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
 				FF31DBC21BFAB6AA00F49424 /* LoginSignupViewController.swift */,
 				FF1311241C08F54800D016E3 /* LoginViewController.swift */,
@@ -246,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1311251C08F54800D016E3 /* LoginViewController.swift in Sources */,
+				FFFB030E1C0FBCA300F09FED /* MessageCollectionViewCell.swift in Sources */,
 				FF31DBD41BFAB9A700F49424 /* FirebaseController.swift in Sources */,
 				FF31DBC51BFAB72900F49424 /* HomeViewController.swift in Sources */,
 				FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */,
