@@ -11,6 +11,8 @@ import Firebase
 
 class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
+    
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var numberOfEncryptedMessages: UILabel!
@@ -27,6 +29,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         super.viewDidLoad()
         arrayOfMessageDictionaries = []
         fetchMessagesForUser()
+        
         
     }
 
@@ -51,17 +54,18 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         let currentUserIdentifier = UserController.sharedController.currentUser.identifier
        
         let ref = Firebase(url:"https://messapp.firebaseio.com/messages")
-        var array = [Message]()
+        var arrayOfReceivedMessages = [Message]()
         ref.queryOrderedByChild("messageReceiver").queryEqualToValue(currentUserIdentifier).queryLimitedToLast(100)
              .observeEventType(.ChildAdded, withBlock: { snapshot in
+                
                 if let messageDictionary = snapshot.value as? [String: String] {
                    
                     let message = Message(json: messageDictionary, identifier: snapshot.key)
-                      array.append(message!)
+                      arrayOfReceivedMessages.append(message!)
                     
                    self.collectionView.reloadData()
                 }
-                self.arrayOfMessageDictionaries = array
+                self.arrayOfMessageDictionaries = arrayOfReceivedMessages
                 
                 
         })
@@ -72,6 +76,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.arrayOfMessageDictionaries!.count
+        
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -79,13 +85,54 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         let message = self.arrayOfMessageDictionaries![indexPath.row]
         cell.messageLabel.text = message.encryptedMessage!
         
-        numberOfEncryptedMessages.text = String(arrayOfMessageDictionaries?.count)
+    
         
-        senderTextLabel.text = message.messageSender
+        if numberOfEncryptedMessages.text == nil{
+            
+            numberOfEncryptedMessages.text = "0"
+            
+            senderTextLabel.text = "No Messages"
+            
+        }else{
+            
+            numberOfEncryptedMessages.text! = String(arrayOfMessageDictionaries!.count)
+            
+            senderTextLabel.text = message.messageSender
+        }
+        
+        
         
         
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let message = self.arrayOfMessageDictionaries![indexPath.item]
+        
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! MessageCollectionViewCell
+        
+        cell.messageLabel.text = message.originalMessage
+        
+       
+        
+        print("Selected Collection Cell")
+        
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 2, height: collectionView.frame.width - 2)
+    }
+    
+    @IBAction func decryptButtonPressed(sender: AnyObject) {
+        
+        
+        
+    }
+    
+    
+    
     
     
 }

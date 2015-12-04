@@ -118,10 +118,12 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                         
                         self.presentModalMessageComposeViewController(true)
                         
-                        let encyptedMessage = "bclbckdsbckjsDBckzjsdbcksdb.cKBSdc.kJSBdc.kJSBDc."
+                        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
                         
                         var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
                         message.save()
+                        
+                        
                         
                         
                         
@@ -135,8 +137,25 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         }
         
     }
-
+    
+    func encryptStringWithLength (len : Int) -> NSString {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        let randomString : NSMutableString = NSMutableString(capacity: len)
+        
+        for (var i=0; i < len; i++){
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
+            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        }
+        
+        return randomString
+    }
+    
+    
 }
+
     
     
     

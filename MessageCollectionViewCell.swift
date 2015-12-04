@@ -9,6 +9,17 @@
 import UIKit
 
 class MessageCollectionViewCell: UICollectionViewCell {
+    
+
+    
+    @IBOutlet weak var messageDateLabel: UILabel!
+    
+    
+    
     @IBOutlet weak var messageLabel: UILabel!
+    
+    
+    
+    
     
 }
