@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="edX-Vt-ChN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qsG-LQ-n3k">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -34,7 +34,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="messageCell" id="Jde-IP-zS8" customClass="MessageCollectionViewCell" customModule="Mess" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="504" height="201"/>
+                                        <rect key="frame" x="0.0" y="32" width="504" height="201"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="504" height="201"/>
@@ -45,7 +45,7 @@
                                                     <animations/>
                                                     <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWj-Zi-JVa">
@@ -67,7 +67,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <animations/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="leadingMargin" secondItem="AXG-06-H1n" secondAttribute="leading" constant="8" id="7SY-om-2aC"/>
                                             <constraint firstAttribute="leadingMargin" secondItem="aWj-Zi-JVa" secondAttribute="leading" id="DIK-yL-mkg"/>
@@ -89,7 +89,7 @@
                                     <outlet property="delegate" destination="Srx-OH-NWL" id="Uc7-rL-eL1"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypted Messages:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5U-Ca-z8U">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Encrypted Messages:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5U-Ca-z8U">
                                 <rect key="frame" x="48" y="111" width="165" height="21"/>
                                 <animations/>
                                 <constraints>
@@ -99,7 +99,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT2-fE-CG4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT2-fE-CG4">
                                 <rect key="frame" x="214" y="112" width="366" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -124,11 +124,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nYy-Oq-N1s">
+                                <rect key="frame" x="48" y="112" width="532" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="X3o-F4-gcR" firstAttribute="firstBaseline" secondItem="kgO-0I-hiX" secondAttribute="firstBaseline" id="2tH-76-DaJ"/>
+                            <constraint firstItem="nYy-Oq-N1s" firstAttribute="leading" secondItem="UYU-f6-dqt" secondAttribute="leadingMargin" constant="28" id="540-2y-V7j"/>
                             <constraint firstItem="kgO-0I-hiX" firstAttribute="trailing" secondItem="UYU-f6-dqt" secondAttribute="trailingMargin" id="AWb-ym-UbO"/>
                             <constraint firstItem="kgO-0I-hiX" firstAttribute="trailing" secondItem="GT2-fE-CG4" secondAttribute="trailing" id="EId-e4-MDh"/>
                             <constraint firstItem="PEQ-v7-MVE" firstAttribute="centerX" secondItem="UYU-f6-dqt" secondAttribute="centerX" id="Edg-pj-GBO"/>
@@ -145,6 +153,7 @@
                             <constraint firstItem="GT2-fE-CG4" firstAttribute="leading" secondItem="m5U-Ca-z8U" secondAttribute="trailing" constant="1" id="ZCt-n5-nG8"/>
                             <constraint firstItem="m5U-Ca-z8U" firstAttribute="leading" secondItem="UYU-f6-dqt" secondAttribute="leadingMargin" constant="28" id="bOf-Pe-keN"/>
                             <constraint firstItem="PEQ-v7-MVE" firstAttribute="leading" secondItem="UYU-f6-dqt" secondAttribute="leadingMargin" constant="28" id="g4E-h5-ooS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nYy-Oq-N1s" secondAttribute="trailing" id="hiv-5E-cwd"/>
                             <constraint firstItem="m5U-Ca-z8U" firstAttribute="top" secondItem="1PM-O0-oou" secondAttribute="bottom" constant="47" id="naP-lh-OYY"/>
                             <constraint firstItem="GT2-fE-CG4" firstAttribute="top" secondItem="1PM-O0-oou" secondAttribute="bottom" constant="48" id="tY2-MR-m0E"/>
                             <constraint firstItem="X3o-F4-gcR" firstAttribute="leading" secondItem="m5U-Ca-z8U" secondAttribute="leading" id="tkA-CE-dED"/>
@@ -164,7 +173,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="PEQ-v7-MVE" id="PTM-Dq-ZWb"/>
+                        <outlet property="fromTextLabel" destination="X3o-F4-gcR" id="qiI-0i-XqL"/>
+                        <outlet property="noMessagesTextLabel" destination="nYy-Oq-N1s" id="sjh-dx-ifo"/>
                         <outlet property="numberOfEncryptedMessages" destination="GT2-fE-CG4" id="Ryu-Lt-w2K"/>
+                        <outlet property="numberOfMessagesTextLabel" destination="m5U-Ca-z8U" id="S56-Sw-Nbn"/>
                         <outlet property="senderTextLabel" destination="kgO-0I-hiX" id="Vsk-rU-3AH"/>
                     </connections>
                 </viewController>
@@ -437,7 +449,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="userCell" textLabel="INt-Ai-Q69" style="IBUITableViewCellStyleDefault" id="rgk-PP-1hX">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rgk-PP-1hX" id="Rfu-Vb-Cyq">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -495,6 +507,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="blue-background" translatesAutoresizingMaskIntoConstraints="NO" id="exK-gP-6PW">
+                                <rect key="frame" x="-1" y="0.0" width="600" height="624"/>
+                                <animations/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iyi-VN-GIa">
                                 <rect key="frame" x="81" y="214" width="451" height="261"/>
                                 <animations/>
@@ -530,17 +546,16 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeR-Pr-sam">
-                                <rect key="frame" x="283" y="28" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeR-Pr-sam">
+                                <rect key="frame" x="229" y="56" width="154" height="100"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" image="fingerprint"/>
                                 <connections>
                                     <action selector="encryptMessageButtonTapped:" destination="pxD-0D-WlE" eventType="touchUpInside" id="Rhf-3r-aSa"/>
                                 </connections>
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="iyi-VN-GIa" secondAttribute="trailing" constant="20" id="2ik-3U-ZTK"/>
                             <constraint firstItem="VeR-Pr-sam" firstAttribute="centerX" secondItem="5N8-EM-Q7Q" secondAttribute="centerX" constant="6" id="64l-LT-HFQ"/>
@@ -548,6 +563,7 @@
                             <constraint firstItem="1jZ-mM-lea" firstAttribute="leading" secondItem="gS1-2a-2hq" secondAttribute="trailing" constant="17" id="KA5-rf-UYa"/>
                             <constraint firstItem="1jZ-mM-lea" firstAttribute="leading" secondItem="5N8-EM-Q7Q" secondAttribute="leadingMargin" constant="61" id="QNW-mj-zW0"/>
                             <constraint firstItem="iyi-VN-GIa" firstAttribute="centerX" secondItem="5N8-EM-Q7Q" secondAttribute="centerX" constant="6.5" id="Sob-Rp-WE5"/>
+                            <constraint firstItem="exK-gP-6PW" firstAttribute="centerX" secondItem="5N8-EM-Q7Q" secondAttribute="centerX" id="ckz-DW-0Ev"/>
                             <constraint firstItem="iyi-VN-GIa" firstAttribute="leading" secondItem="5N8-EM-Q7Q" secondAttribute="leadingMargin" constant="20" id="hu8-RW-YEZ"/>
                             <constraint firstItem="gS1-2a-2hq" firstAttribute="leading" secondItem="5N8-EM-Q7Q" secondAttribute="leadingMargin" constant="22" id="kX7-lO-zYn"/>
                             <constraint firstItem="yFa-5a-QQ9" firstAttribute="leading" secondItem="5N8-EM-Q7Q" secondAttribute="leadingMargin" constant="-3" id="kvR-vS-FGE"/>
@@ -572,6 +588,7 @@
                         <outlet property="messageReceiverTextFieldPhoneNumber" destination="U0R-mC-UpK" id="dWu-zP-5xG"/>
                         <outlet property="messageReceiverTextLabel" destination="1jZ-mM-lea" id="4mD-Ej-wbY"/>
                         <outlet property="originalMessageTextView" destination="iyi-VN-GIa" id="zm4-UV-L5J"/>
+                        <outlet property="view" destination="5N8-EM-Q7Q" id="03c-E8-kfD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qt-ej-MgI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -915,8 +932,12 @@
             <point key="canvasLocation" x="2224" y="-2099"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="blue-background" width="1600" height="1200"/>
+        <image name="fingerprint" width="100" height="100"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UEF-KY-L1u"/>
+        <segue reference="Cgq-rQ-cla"/>
         <segue reference="NO6-ac-3YC"/>
         <segue reference="dYR-lX-8gn"/>
         <segue reference="MN3-wV-26J"/>

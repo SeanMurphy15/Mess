@@ -12,6 +12,8 @@ import MessageUI
 
 class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
+    
+    
     @IBOutlet weak var messageReceiverTextLabel: UILabel!
     
     @IBOutlet weak var messageReceiverTextFieldPhoneNumber: UILabel!
@@ -26,6 +28,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         super.viewDidLoad()
 
         messageReceiverTextLabel.text = self.messageRecieverTextLabelData
+        
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "blue-background")!)
         
     }
 
@@ -152,6 +156,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
         return randomString
     }
+    
+    
     
     
 }

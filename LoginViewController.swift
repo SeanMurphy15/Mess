@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
     @IBAction func enterButtonTapped(sender: AnyObject) {
         //emailTextField.text!
         //passwordTextField.text
-        UserController.authenticateUser("seanduganmurphy@gmail.com", password:"1234", completion: { (success, user) -> Void in
+        UserController.authenticateUser(emailTextField.text!, password:passwordTextField.text!, completion: { (success, user) -> Void in
             if success == true {
                 
                 print("current user: \(UserController.sharedController.currentUser)")
