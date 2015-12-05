@@ -34,7 +34,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="messageCell" id="Jde-IP-zS8" customClass="MessageCollectionViewCell" customModule="Mess" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="32" width="504" height="201"/>
+                                        <rect key="frame" x="0.0" y="64" width="504" height="201"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="504" height="201"/>
@@ -89,7 +89,7 @@
                                     <outlet property="delegate" destination="Srx-OH-NWL" id="Uc7-rL-eL1"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Encrypted Messages:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5U-Ca-z8U">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypted Messages:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5U-Ca-z8U">
                                 <rect key="frame" x="48" y="111" width="165" height="21"/>
                                 <animations/>
                                 <constraints>
@@ -99,7 +99,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT2-fE-CG4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT2-fE-CG4">
                                 <rect key="frame" x="214" y="112" width="366" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -225,7 +225,7 @@
                                 <animations/>
                                 <state key="normal" title="Settings"/>
                                 <connections>
-                                    <segue destination="bep-ky-qmQ" kind="show" id="Off-sB-wuH"/>
+                                    <segue destination="bep-ky-qmQ" kind="presentation" id="Off-sB-wuH"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -343,7 +343,7 @@
                                 <animations/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <segue destination="edX-Vt-ChN" kind="show" id="HEb-Wi-oW3"/>
+                                    <segue destination="edX-Vt-ChN" kind="presentation" id="HEb-Wi-oW3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CK4-xV-NpU">
@@ -379,7 +379,7 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="save" id="a00-dM-cCq"/>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="vBA-uF-oZW">
                             <connections>
-                                <segue destination="edX-Vt-ChN" kind="show" id="Lai-tK-YKh"/>
+                                <segue destination="edX-Vt-ChN" kind="presentation" id="Lai-tK-YKh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -390,7 +390,7 @@
                         <outlet property="reEnterNewPasswordTextField" destination="toi-V9-AC5" id="hfy-gp-TBC"/>
                         <outlet property="reEnterNewPhoneNumberTextField" destination="dvo-mQ-JM8" id="RtR-Ql-Zkz"/>
                         <segue destination="qsG-LQ-n3k" kind="show" identifier="toInitialViewController" id="dYR-lX-8gn"/>
-                        <segue destination="edX-Vt-ChN" kind="show" identifier="savedFromSettings" id="NO6-ac-3YC"/>
+                        <segue destination="edX-Vt-ChN" kind="presentation" identifier="savedFromSettings" id="NO6-ac-3YC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ytm-dM-MGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -449,7 +449,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="userCell" textLabel="INt-Ai-Q69" style="IBUITableViewCellStyleDefault" id="rgk-PP-1hX">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rgk-PP-1hX" id="Rfu-Vb-Cyq">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -647,6 +647,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="blue-background" translatesAutoresizingMaskIntoConstraints="NO" id="Pn0-fT-vGX">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5Z-bK-tBX">
                                 <rect key="frame" x="281" y="258" width="38" height="30"/>
                                 <animations/>
@@ -667,6 +671,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Pn0-fT-vGX" firstAttribute="centerX" secondItem="bif-0T-K9b" secondAttribute="centerX" id="4L5-ox-gIM"/>
                             <constraint firstItem="hb7-4H-gyh" firstAttribute="centerX" secondItem="bif-0T-K9b" secondAttribute="centerX" id="Idc-Fj-zeD"/>
                             <constraint firstItem="d5Z-bK-tBX" firstAttribute="centerX" secondItem="bif-0T-K9b" secondAttribute="centerX" id="bhB-ny-tDq"/>
                         </constraints>
@@ -937,9 +942,9 @@
         <image name="fingerprint" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cgq-rQ-cla"/>
-        <segue reference="NO6-ac-3YC"/>
-        <segue reference="dYR-lX-8gn"/>
         <segue reference="MN3-wV-26J"/>
+        <segue reference="Cgq-rQ-cla"/>
+        <segue reference="oAv-0T-lce"/>
+        <segue reference="dYR-lX-8gn"/>
     </inferredMetricsTieBreakers>
 </document>

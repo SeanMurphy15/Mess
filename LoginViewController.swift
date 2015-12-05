@@ -14,16 +14,16 @@ class LoginViewController: UIViewController {
     
     
     @IBOutlet weak var emailTextField: UITextField!
-
+    
     @IBOutlet weak var passwordTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
                 
                 
                 self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
-            
+                
             } else {
                 
                 print("Not a matching user")
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
         
         
     }
-
+    
     
     
     @IBAction func touchIDButtonTapped(sender: AnyObject) {
@@ -64,6 +64,23 @@ class LoginViewController: UIViewController {
         
     }
     
+    func errorAlert(){
+        
+        let touchIDAlert = UIAlertController(title: "Access Denied", message: "", preferredStyle: .Alert)
+        let touchIDAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+        }
+        
+        touchIDAlert.addAction(touchIDAlertAction)
+        
+        self.presentViewController(touchIDAlert, animated: true, completion: nil)
+        
+        
+    }
+    
+    
     
     func promptBiometricTouchIDForLogin(){
         
@@ -71,7 +88,7 @@ class LoginViewController: UIViewController {
         var error: NSError?
         
         if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
-            let reason = "Identify yourself"
+            let reason = "Fingerprint Required"
             
             context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
                 
@@ -82,18 +99,29 @@ class LoginViewController: UIViewController {
                         
                         self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
                         
-                        print("Authorized")
-
+                    }else{
+                        switch (authenticationError!.code) {
                         
+                        case LAError.UserFallback.rawValue:
+                           
+                            self.errorAlert()
                         
-                        }else{
+                        case LAError.SystemCancel.rawValue:
+                           
+                            self.errorAlert()
+                            
+                            break;
+                            
+                        default:
+                            break;
+                        }
                         
-                        
-                        print("not Authorized")
                     }
                 }
             }
+            
         }
         
     }
+    
 }

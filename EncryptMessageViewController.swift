@@ -29,7 +29,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
 
         messageReceiverTextLabel.text = self.messageRecieverTextLabelData
         
-        view.backgroundColor = UIColor(patternImage: UIImage(named: "blue-background")!)
+        
         
     }
 
