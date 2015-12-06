@@ -11,6 +11,8 @@ import Firebase
 import LocalAuthentication
 import AudioToolbox
 
+@IBDesignable
+
 class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     @IBOutlet weak var noMessagesTextLabel: UILabel!
     
@@ -35,6 +37,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         arrayOfMessageDictionaries = []
         fetchMessagesForUser()
         
+        
+
         
     }
     
@@ -97,6 +101,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         senderTextLabel.text = message.messageSender
         
+//        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        
         let formatter = NSDateFormatter()
         
         formatter.dateStyle = NSDateFormatterStyle.ShortStyle
@@ -117,18 +123,24 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.width - 0)
+        
+        
+        
+        return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.height - 0)
     }
+    
     
     func touchIDNotAvailableAlert() {
         let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
+        let touchIDAlertCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         let touchIDAlertAction = UIAlertAction(title: "Enter Password", style: .Default) { (_) -> Void in
             self.promptUserPasswordAlert()
         }
         
         touchIDAlert.addAction(touchIDAlertAction)
-        
+        touchIDAlert.addAction(touchIDAlertCancel)
         presentViewController(touchIDAlert, animated: true, completion: nil)
         
     }

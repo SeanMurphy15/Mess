@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class MessageCollectionViewCell: UICollectionViewCell {
     
 
@@ -18,8 +19,19 @@ class MessageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var messageLabel: UILabel!
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        customCell()
+    }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        customCell()
+    }
     
-    
+    func customCell(){
+        
+        self.layer.cornerRadius = 3.0
+    }
     
 }

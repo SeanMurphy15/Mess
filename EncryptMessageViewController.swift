@@ -10,9 +10,10 @@ import UIKit
 import LocalAuthentication
 import MessageUI
 
-class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate {
+class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITextViewDelegate {
     
     
+    @IBOutlet weak var numberOfCharactersLabel: UILabel!
     
     @IBOutlet weak var messageReceiverTextLabel: UILabel!
     
@@ -29,8 +30,9 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
 
         messageReceiverTextLabel.text = self.messageRecieverTextLabelData
         
+        originalMessageTextView.delegate = self
         
-        
+        appearance()
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,7 +58,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
-    
     @IBAction func encryptMessageButtonTapped(sender: AnyObject) {
         
         if !originalMessageTextView.text!.isEmpty {
@@ -65,6 +66,17 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
            promptBiometricTouchIDForEncryption()
         }
     }
+    
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        numberOfCharactersLabel.text = String(originalMessageTextView.text.characters.count + 1)
+        
+        let newText = (textView.text as NSString).stringByReplacingCharactersInRange(range, withString: text)
+        let numberOfChars = newText.characters.count
+        return numberOfChars < 120;
+    }
+
     
     func updateMessageReceiver(user: User){
         
@@ -157,6 +169,14 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         return randomString
     }
     
+    
+    //MARK: Appearance
+    
+    func appearance(){
+        
+        originalMessageTextView.layer.cornerRadius = 3.0
+        
+    }
     
     
     
