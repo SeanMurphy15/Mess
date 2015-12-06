@@ -8,6 +8,7 @@
 
 import UIKit
 import LocalAuthentication
+import AudioToolbox
 
 class LoginViewController: UIViewController {
     
@@ -43,7 +44,7 @@ class LoginViewController: UIViewController {
                 
                 print("current user: \(UserController.sharedController.currentUser)")
                 
-                
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 
                 self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
                 
@@ -56,72 +57,5 @@ class LoginViewController: UIViewController {
         
     }
     
-    
-    
-    @IBAction func touchIDButtonTapped(sender: AnyObject) {
-        
-        promptBiometricTouchIDForLogin()
-        
-    }
-    
-    func errorAlert(){
-        
-        let touchIDAlert = UIAlertController(title: "Access Denied", message: "", preferredStyle: .Alert)
-        let touchIDAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
-            
-            self.dismissViewControllerAnimated(true, completion: nil)
-            
-        }
-        
-        touchIDAlert.addAction(touchIDAlertAction)
-        
-        self.presentViewController(touchIDAlert, animated: true, completion: nil)
-        
-        
-    }
-    
-    
-    
-    func promptBiometricTouchIDForLogin(){
-        
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
-            let reason = "Fingerprint Required"
-            
-            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    
-                    if success == true {
-                        
-                        
-                        self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
-                        
-                    }else{
-                        switch (authenticationError!.code) {
-                        
-                        case LAError.UserFallback.rawValue:
-                           
-                            self.errorAlert()
-                        
-                        case LAError.SystemCancel.rawValue:
-                           
-                            self.errorAlert()
-                            
-                            break;
-                            
-                        default:
-                            break;
-                        }
-                        
-                    }
-                }
-            }
-            
-        }
-        
-    }
     
 }

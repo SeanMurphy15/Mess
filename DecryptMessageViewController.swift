@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import LocalAuthentication
+import AudioToolbox
 
 class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     @IBOutlet weak var noMessagesTextLabel: UILabel!
@@ -80,11 +81,11 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-               
-        return self.arrayOfMessageDictionaries!.count
-    
         
-        }
+        return self.arrayOfMessageDictionaries!.count
+        
+        
+    }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("messageCell", forIndexPath: indexPath) as! MessageCollectionViewCell
@@ -111,17 +112,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        //promptBiometricTouchIDForDecryption()
-        
-        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-        
-        let message = self.arrayOfMessageDictionaries![indexPath!.item]
-        
-        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
-        
-        cell.messageLabel.text = message.originalMessage
-        
-        cell.messageDateLabel.hidden = false
+        promptBiometricTouchID()
         
         
     }
@@ -130,39 +121,105 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.width - 0)
     }
     
+    func touchIDNotAvailableAlert() {
+        let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
+        let touchIDAlertAction = UIAlertAction(title: "Enter Password", style: .Default) { (_) -> Void in
+            self.promptUserPasswordAlert()
+        }
+        
+        touchIDAlert.addAction(touchIDAlertAction)
+        
+        presentViewController(touchIDAlert, animated: true, completion: nil)
+        
+    }
     
-    //    func promptBiometricTouchIDForDecryption(){
-    //
-    //        let context = LAContext()
-    //        var error: NSError?
-    //
-    //        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
-    //            let reason = "Identify yourself"
-    //
-    //            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
-    //
-    //                dispatch_async(dispatch_get_main_queue()) {
-    //
-    //                    if success == true {
-    //
-    //
-    //
-    //
-    //
-    //
-    //                    }else{
-    //
-    //
-    //                        print("not Authorized, Error handle")
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        
-    //    }
+    func promptUserPasswordAlert(){
+        
+        let passwordAlert = UIAlertController(title: "Enter Password", message: " ", preferredStyle: .Alert)
+        passwordAlert.addTextFieldWithConfigurationHandler { (passwordField) -> Void in
+            
+            passwordField.placeholder = "Password"
+            
+        }
+        
+        let passwordAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        let passwordAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
+            
+            if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
+                
+                let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+                
+                let message = self.arrayOfMessageDictionaries![indexPath!.item]
+                
+                let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+                
+                cell.messageLabel.text = message.originalMessage
+                
+                cell.messageDateLabel.hidden = false
+                
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                
+                print("User Fallback Validated")
+                
+            }else{
+                
+                passwordAlert.textFields?[0].text = " "
+                
+            }
+            
+        }
+        
+        passwordAlert.addAction(passwordAlertAction)
+        
+        passwordAlert.addAction(passwordAlertCancelAction)
+        
+        presentViewController(passwordAlert, animated: true, completion: nil)
+    }
     
     
-    
+    func promptBiometricTouchID(){
+        
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error:&error) {
+            
+            // evaluate
+            
+            let reason = "Authenticate for login"
+            
+            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: {
+                (success: Bool, authenticationError: NSError?) -> Void in
+                
+                // check whether evaluation of fingerprint was successful
+                if success {
+                    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+                    
+                    let message = self.arrayOfMessageDictionaries![indexPath!.item]
+                    
+                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+                    
+                    cell.messageLabel.text = message.originalMessage
+                    
+                    cell.messageDateLabel.hidden = false
+                    
+                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    
+                    print("Fingerprint validated.")
+                    
+                } else {
+                  
+                    self.promptUserPasswordAlert()
+                }
+            })
+        } else {
+            
+            self.touchIDNotAvailableAlert()
+            
+            
+        }
+    }
     
     
 }

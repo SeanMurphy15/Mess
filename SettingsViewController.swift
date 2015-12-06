@@ -100,7 +100,7 @@ class SettingsViewController: UIViewController {
         if !newPhoneNumberTextField.text!.isEmpty && !reEnterNewPhoneNumberTextField.text!.isEmpty && newPhoneNumberTextField.text == reEnterNewPhoneNumberTextField.text {
             
             
-            let settingsAlert = UIAlertController(title: "Do you wish to change your Phone Number?", message: " ", preferredStyle: .Alert)
+            let settingsAlert = UIAlertController(title: "Do you wish to change your Phone Number?", message: "", preferredStyle: .Alert)
                 let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
                    
                  self.user.phoneNumber = self.newPhoneNumberTextField.text

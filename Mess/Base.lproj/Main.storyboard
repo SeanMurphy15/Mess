@@ -131,6 +131,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUv-wR-hgd">
+                                <rect key="frame" x="285" y="482" width="30" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Test"/>
+                                <connections>
+                                    <action selector="testButton:" destination="Srx-OH-NWL" eventType="touchUpInside" id="MDX-Vm-ECI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -138,6 +146,7 @@
                             <constraint firstItem="X3o-F4-gcR" firstAttribute="firstBaseline" secondItem="kgO-0I-hiX" secondAttribute="firstBaseline" id="2tH-76-DaJ"/>
                             <constraint firstItem="nYy-Oq-N1s" firstAttribute="leading" secondItem="UYU-f6-dqt" secondAttribute="leadingMargin" constant="28" id="540-2y-V7j"/>
                             <constraint firstItem="kgO-0I-hiX" firstAttribute="trailing" secondItem="UYU-f6-dqt" secondAttribute="trailingMargin" id="AWb-ym-UbO"/>
+                            <constraint firstItem="jUv-wR-hgd" firstAttribute="centerX" secondItem="UYU-f6-dqt" secondAttribute="centerX" id="Dpm-qS-Jv6"/>
                             <constraint firstItem="kgO-0I-hiX" firstAttribute="trailing" secondItem="GT2-fE-CG4" secondAttribute="trailing" id="EId-e4-MDh"/>
                             <constraint firstItem="PEQ-v7-MVE" firstAttribute="centerX" secondItem="UYU-f6-dqt" secondAttribute="centerX" id="Edg-pj-GBO"/>
                             <constraint firstItem="kgO-0I-hiX" firstAttribute="leading" secondItem="X3o-F4-gcR" secondAttribute="trailing" constant="2" id="Eoh-Qh-R3e"/>
@@ -182,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HRJ-Ju-lws" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3314" y="1554"/>
+            <point key="canvasLocation" x="4126" y="1554"/>
         </scene>
         <!--Home-->
         <scene sceneID="syY-jV-45a">
@@ -225,7 +234,7 @@
                                 <animations/>
                                 <state key="normal" title="Settings"/>
                                 <connections>
-                                    <segue destination="bep-ky-qmQ" kind="presentation" id="Off-sB-wuH"/>
+                                    <segue destination="bep-ky-qmQ" kind="presentation" id="4qd-0m-Wz8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -278,58 +287,30 @@
                                     <action selector="deleteAccountButtonTapped:" destination="bep-ky-qmQ" eventType="touchUpInside" id="urc-2M-zwD"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sS9-4u-qFv">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sS9-4u-qFv">
                                 <rect key="frame" x="218" y="172" width="177" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="toi-V9-AC5">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re- Enter New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="toi-V9-AC5">
                                 <rect key="frame" x="218" y="238" width="177" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-X0-Q1N">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-X0-Q1N">
                                 <rect key="frame" x="218" y="308" width="177" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvo-mQ-JM8">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re-Enter New Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvo-mQ-JM8">
                                 <rect key="frame" x="218" y="378" width="177" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="New Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYD-b3-wev">
-                                <rect key="frame" x="244" y="143" width="113" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Re- Enter New Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eco-PR-T39">
-                                <rect key="frame" x="212" y="213" width="189" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="New Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXi-Qd-76J">
-                                <rect key="frame" x="224" y="284" width="154" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Re-Enter New Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gW-eZ-yLt">
-                                <rect key="frame" x="224" y="352" width="167" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9iq-7N-O69">
                                 <rect key="frame" x="282" y="477" width="48" height="30"/>
                                 <animations/>
@@ -359,10 +340,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="i0K-h2-Tpz" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="4.5" id="2Ud-QS-Sq0"/>
-                            <constraint firstItem="Eco-PR-T39" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="6.5" id="4tr-5K-hiJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="k28-eY-zlD" secondAttribute="trailing" id="BNY-dD-CHF"/>
                             <constraint firstItem="dvo-mQ-JM8" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="6.5" id="Bf6-af-NgI"/>
-                            <constraint firstItem="dXi-Qd-76J" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="1" id="Ds8-2S-5J3"/>
                             <constraint firstItem="sS9-4u-qFv" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="6.5" id="JOz-sk-bN3"/>
                             <constraint firstItem="enZ-X0-Q1N" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="6.5" id="MHo-Qc-f9P"/>
                             <constraint firstItem="toi-V9-AC5" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="6.5" id="MaK-0h-4n7"/>
@@ -370,8 +349,6 @@
                             <constraint firstAttribute="leadingMargin" secondItem="k28-eY-zlD" secondAttribute="leading" id="WUG-C9-lq6"/>
                             <constraint firstItem="9iq-7N-O69" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="6" id="bvw-Vi-hCW"/>
                             <constraint firstItem="k28-eY-zlD" firstAttribute="top" secondItem="DFq-jS-a2M" secondAttribute="bottom" constant="27" id="ime-yX-EMO"/>
-                            <constraint firstItem="6gW-eZ-yLt" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" constant="7.5" id="jKT-yX-9yu"/>
-                            <constraint firstItem="mYD-b3-wev" firstAttribute="centerX" secondItem="4J1-VU-C4u" secondAttribute="centerX" id="kO8-76-d1m"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ufh-hG-N6j" secondAttribute="leading" id="nUv-Tr-PbL"/>
                         </constraints>
                     </view>
@@ -395,7 +372,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ytm-dM-MGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1118" y="2144"/>
+            <point key="canvasLocation" x="1930" y="2144"/>
         </scene>
         <!--Search Results For Users Table View Controller-->
         <scene sceneID="p9E-9C-03A">
@@ -417,7 +394,7 @@
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
-                                    <segue destination="pxD-0D-WlE" kind="presentation" identifier="toMessageReceiversLabelFromSearch" id="dwx-XP-4Bk"/>
+                                    <segue destination="pxD-0D-WlE" kind="show" identifier="toMessageReceiversLabelFromSearch" id="dwx-XP-4Bk"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -525,7 +502,7 @@
                                     <segue destination="YYL-BA-iGU" kind="presentation" id="MN3-wV-26J"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jZ-mM-lea">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="User" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jZ-mM-lea">
                                 <rect key="frame" x="81" y="185" width="499" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -633,7 +610,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OOd-g1-zpn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2588" y="1554"/>
+            <point key="canvasLocation" x="3400" y="1554"/>
         </scene>
         <!--Initial Viewcontroller-->
         <scene sceneID="uoZ-qI-fzf">
@@ -652,7 +629,7 @@
                                 <animations/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5Z-bK-tBX">
-                                <rect key="frame" x="281" y="258" width="38" height="30"/>
+                                <rect key="frame" x="281" y="364" width="38" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Login"/>
                                 <connections>
@@ -660,7 +637,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hb7-4H-gyh">
-                                <rect key="frame" x="247" y="333" width="107" height="30"/>
+                                <rect key="frame" x="247" y="439" width="107" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Create Account"/>
                                 <connections>
@@ -720,14 +697,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nX9-L4-9nG">
-                                <rect key="frame" x="270" y="363" width="61" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Touch ID"/>
-                                <connections>
-                                    <action selector="touchIDButtonTapped:" destination="eYu-NE-uVw" eventType="touchUpInside" id="32F-Fq-caq"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ji9-pv-hIH">
                                 <rect key="frame" x="282" y="293" width="37" height="30"/>
                                 <animations/>
@@ -740,7 +709,6 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="nX9-L4-9nG" firstAttribute="centerX" secondItem="Tm6-Nm-BLJ" secondAttribute="centerX" id="15M-w1-OqB"/>
                             <constraint firstItem="50k-ZX-rj8" firstAttribute="centerX" secondItem="Tm6-Nm-BLJ" secondAttribute="centerX" id="3fp-DR-Pth"/>
                             <constraint firstItem="Rob-YA-ZHx" firstAttribute="centerX" secondItem="Tm6-Nm-BLJ" secondAttribute="centerX" id="GAX-ld-Nn6"/>
                             <constraint firstItem="Ji9-pv-hIH" firstAttribute="centerX" secondItem="Tm6-Nm-BLJ" secondAttribute="centerX" id="Rct-KM-PaG"/>
@@ -896,7 +864,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ta-gi-cyC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-456" y="-279"/>
+            <point key="canvasLocation" x="-540" y="-288"/>
         </scene>
         <!--Contacts Navigation Controller-->
         <scene sceneID="pEm-9G-gnV">
@@ -942,9 +910,9 @@
         <image name="fingerprint" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MN3-wV-26J"/>
-        <segue reference="Cgq-rQ-cla"/>
-        <segue reference="oAv-0T-lce"/>
-        <segue reference="dYR-lX-8gn"/>
+        <segue reference="T2g-Hv-Ykz"/>
+        <segue reference="IyC-oD-D68"/>
+        <segue reference="q99-No-1sY"/>
+        <segue reference="UEF-KY-L1u"/>
     </inferredMetricsTieBreakers>
 </document>
