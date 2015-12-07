@@ -38,7 +38,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         fetchMessagesForUser()
         
         
-
+        
         
     }
     
@@ -82,6 +82,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
+
+    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -94,14 +96,16 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("messageCell", forIndexPath: indexPath) as! MessageCollectionViewCell
         let message = self.arrayOfMessageDictionaries![indexPath.row]
-        cell.messageLabel.text = message.encryptedMessage!
+        cell.messageTextView.text = message.encryptedMessage!
         
         
         numberOfEncryptedMessages.text? = String(arrayOfMessageDictionaries!.count)
         
         senderTextLabel.text = message.messageSender
         
-//        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        
+        collectionViewAppearance()
         
         let formatter = NSDateFormatter()
         
@@ -128,7 +132,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         
         
-        return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.height - 0)
+        return CGSize(width: collectionView.frame.width - 7, height: collectionView.frame.height - 0)
     }
     
     
@@ -155,28 +159,38 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         }
         
         let passwordAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        
         let passwordAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
             
-            if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
+        
                 
-                let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-                
-                let message = self.arrayOfMessageDictionaries![indexPath!.item]
-                
-                let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
-                
-                cell.messageLabel.text = message.originalMessage
-                
-                cell.messageDateLabel.hidden = false
-                
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                
-                print("User Fallback Validated")
-                
-            }else{
-                
-                passwordAlert.textFields?[0].text = " "
+                if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
+                    
+                    
+                    
+                    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+                    
+                    let message = self.arrayOfMessageDictionaries![indexPath!.item]
+                    
+                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        cell.messageTextView.text = message.originalMessage
+                        
+                        cell.messageDateLabel.hidden = false
+                    })
+                    
+                    
+                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    
+                    print("User Fallback Validated")
+                    
+                    
+                    
+                }else{
+                    
+                    passwordAlert.textFields?[0].text = " "
+                    
                 
             }
             
@@ -212,25 +226,45 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
                     
-                    cell.messageLabel.text = message.originalMessage
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        cell.messageTextView.text = message.originalMessage
+                        
+                        cell.messageDateLabel.hidden = false
+                        
+                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    })
                     
-                    cell.messageDateLabel.hidden = false
                     
-                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     
                     print("Fingerprint validated.")
                     
                 } else {
-                  
-                    self.promptUserPasswordAlert()
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.promptUserPasswordAlert()
+                    })
+                    
+                    
                 }
             })
         } else {
+             dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             self.touchIDNotAvailableAlert()
             
+            })
             
         }
+    }
+    
+    
+    //MARK: Appearance
+    
+    func collectionViewAppearance(){
+        
+        collectionView.layer.borderWidth = 3.0
+        collectionView.layer.borderColor = UIColor.cyanColor().CGColor
     }
     
     

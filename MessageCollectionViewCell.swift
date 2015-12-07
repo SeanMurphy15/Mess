@@ -15,9 +15,9 @@ class MessageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var messageDateLabel: UILabel!
     
+    @IBOutlet weak var messageTextView: UITextView!
     
-    
-    @IBOutlet weak var messageLabel: UILabel!
+   
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -32,6 +32,9 @@ class MessageCollectionViewCell: UICollectionViewCell {
     func customCell(){
         
         self.layer.cornerRadius = 3.0
+           
+        
+    
     }
     
 }
