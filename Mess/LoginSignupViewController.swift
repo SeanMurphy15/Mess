@@ -9,9 +9,9 @@
 import UIKit
 import Firebase
 import LocalAuthentication
-import QuartzCore
 
-class LoginSignupViewController: UIViewController{
+
+class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var messLogo: UIButton!
@@ -25,12 +25,16 @@ class LoginSignupViewController: UIViewController{
     @IBOutlet weak var reEnterPasswordTextField: UITextField!
     
     
+    var initialFrame: CGRect?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
-        // Do any additional setup after loading the view.
+        initialFrame = self.view.frame
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -104,28 +108,63 @@ class LoginSignupViewController: UIViewController{
         
         
     }
+    
+    //MARK: Keyboard Function
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            
+            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height)
+                
+                self.inPlainSight.hidden = true
+                self.messLogo.hidden = true
+                
+                }, completion: { (_) -> Void in
+            })
+           
+        }
+        
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        
+        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.view.frame = self.initialFrame!
+            }, completion: { (_) -> Void in
+        })
+    }
+    
+    @IBAction func unwindForSegue(unwindSegue: UIStoryboardSegue) {
+        
+        
+    }
         
     //MARK: Animation
     
     func animateView(){
     
-        self.emailTextField.center.x = self.view.frame.width + 300
-        self.passwordTextField.center.x = self.view.frame.width + 300
-        self.reEnterPasswordTextField.center.x = self.view.frame.width - 500
-        self.phoneNumberTextField.center.x = self.view.frame.width - 500
-        self.messLogo.center.x = self.view.frame.height + 300
-        self.inPlainSight.center.x = self.view.frame.height - 500
-        self.signupButtonLabel.center.x = self.view.frame.height + 500
-        self.cancelButton.center.x = self.view.frame.height - 500
+        self.emailTextField.center.x = self.view.frame.width + 400
+        self.passwordTextField.center.x = self.view.frame.width + 400
+        self.reEnterPasswordTextField.center.x = self.view.frame.width - 700
+        self.phoneNumberTextField.center.x = self.view.frame.width - 700
+        self.messLogo.center.x = self.view.frame.height + 500
+        self.inPlainSight.center.x = self.view.frame.height - 700
+        self.signupButtonLabel.center.x = self.view.frame.height + 300
+        self.cancelButton.center.x = self.view.frame.height - 700
 
 
         
-        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(2.5, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
             
             self.emailTextField.center.x = self.view.frame.width / 2
             self.passwordTextField.center.x = self.view.frame.width / 2
-            self.reEnterPasswordTextField.center.x = self.view.frame.width / 2
-            self.phoneNumberTextField.center.x = self.view.frame.width / 2
+            self.reEnterPasswordTextField.center.x = self.view.frame.width / 3
+            self.phoneNumberTextField.center.x = self.view.frame.width / 3
             self.messLogo.center.x = self.view.frame.height / 2
             self.inPlainSight.center.x = self.view.frame.height / 2
             self.signupButtonLabel.center.x = self.view.frame.height / 2

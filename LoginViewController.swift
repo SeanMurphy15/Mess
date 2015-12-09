@@ -24,6 +24,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
+    var initialFrame: CGRect?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,6 +36,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
        
          animateView()
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        initialFrame = self.view.frame
         
     }
     
@@ -61,7 +69,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 
-                self.deAnimateView()
+//                self.deAnimateView()
                 
                 self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
                 
@@ -90,30 +98,68 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    //MARK: Keyboard Functions
     
-    //MARK: Animations
+    func keyboardWillShow(notification: NSNotification) {
+        
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            
+            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height)
+               
+                // fade irrelevant content
+                
+                self.fade()
+                
+                }, completion: { (_) -> Void in
+            })
+            
+        }
+        
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        
+        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.view.frame = self.initialFrame!
+            }, completion: { (_) -> Void in
+        })
+    }
     
     //MARK: Animation
     
+    func fade(){
+        
+        UIView.animateWithDuration(1.0) { () -> Void in
+            self.inPlainSight.alpha = 0.0
+            self.messLogo.alpha = 0.0
+        }
+        
+    }
+    
+    
     func animateView(){
         
-        self.emailTextField.center.x = self.view.frame.width + 300
-        self.passwordTextField.center.x = self.view.frame.width - 500
-        self.messLogo.center.x = self.view.frame.height + 300
-        self.inPlainSight.center.x = self.view.frame.height - 500
-        self.loginButton.center.x = self.view.frame.height + 300
-        self.cancelButtonLabel.center.x = self.view.frame.width - 300
+        self.emailTextField.center.x = self.view.frame.width + 500
+        self.passwordTextField.center.x = self.view.frame.width - 700
+        self.messLogo.center.x = self.view.frame.height + 500
+        self.inPlainSight.center.x = self.view.frame.height - 900
+        self.loginButton.center.x = 900
+        self.cancelButtonLabel.center.x = -400
         
         
         
-        UIView.animateWithDuration(2.0, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
             
             self.emailTextField.center.x = self.view.frame.width / 2
             self.passwordTextField.center.x = self.view.frame.width / 2
             self.messLogo.center.x = self.view.frame.height / 3.5
             self.inPlainSight.center.x = self.view.frame.height / 3.5
-            self.loginButton.center.x = self.view.frame.width / 1.50
-            self.cancelButtonLabel.center.x = self.view.frame.width / 2.25
+           self.loginButton.center.x = 525
+          self.cancelButtonLabel.center.x = -200
             
             }, completion: nil)
         
@@ -126,19 +172,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.passwordTextField.center.x = self.view.frame.width / 2
         self.messLogo.center.x = self.view.frame.height / 3.5
         self.inPlainSight.center.x = self.view.frame.height / 3.5
-        self.loginButton.center.x = self.view.frame.height / 4
-        self.cancelButtonLabel.center.x = self.view.frame.height / 4
+        self.loginButton.center.x = self.view.frame.width / 2
+        self.cancelButtonLabel.center.x = self.view.frame.width / 2
         
         
-        
-        UIView.animateWithDuration(2.0, delay: 1.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
             
-            self.emailTextField.center.x = self.view.frame.width + 300
-            self.passwordTextField.center.x = self.view.frame.width + 300
-            self.messLogo.center.x = self.view.frame.height + 300
-            self.inPlainSight.center.x = self.view.frame.height - 500
-            self.loginButton.center.x = self.view.frame.height - 500
-            self.cancelButtonLabel.center.x = self.view.frame.height - 500
+            self.emailTextField.center.x = self.view.frame.width + 500
+            self.passwordTextField.center.x = self.view.frame.width - 700
+            self.messLogo.center.x = self.view.frame.height + 500
+            self.inPlainSight.center.x = self.view.frame.height - 900
+            self.loginButton.center.x = self.view.frame.width + 300
+            self.cancelButtonLabel.center.x = self.view.frame.width - 300
             
             }, completion: nil)
         

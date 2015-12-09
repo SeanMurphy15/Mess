@@ -134,6 +134,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //MARK: Touch ID
+    
     func promptBiometricTouchIDForEncryption(){
         
         let context = LAContext()
@@ -191,6 +193,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
     }
     
+    //MARK: Encrypt Original Message
+    
     func encryptStringWithLength (len : Int) -> NSString {
         
         let letters : NSString = "abcdefghij klmnopqrstuv wxyzABCDEFG HIJKLMNOPQRS TUVWXYZ0123456789"
@@ -206,6 +210,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         return randomString
     }
     
+    
+    // Touch ID Not Available
     
     func promptUserPasswordAlert(){
         
@@ -275,9 +281,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     func viewControllerAppearance(){
         
         originalMessageTextView.layer.cornerRadius = 3.0
-        //view.layer.backgroundColor = UIColor.b
-        
-        
+                
         
     }
 //    
