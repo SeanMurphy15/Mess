@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,28 +16,8 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray-background" translatesAutoresizingMaskIntoConstraints="NO" id="fQu-9K-Mfz">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mess-logo-launch" translatesAutoresizingMaskIntoConstraints="NO" id="JGW-iq-0Bo">
-                                <rect key="frame" x="92" y="189" width="416" height="222"/>
-                                <animations/>
-                            </imageView>
-                        </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="fQu-9K-Mfz" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="5DF-fo-oiC"/>
-                            <constraint firstItem="fQu-9K-Mfz" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="PSq-b6-2jH"/>
-                            <constraint firstItem="fQu-9K-Mfz" firstAttribute="centerY" secondItem="JGW-iq-0Bo" secondAttribute="centerY" id="WI5-nd-Pz4"/>
-                            <constraint firstItem="JGW-iq-0Bo" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="72" id="Wew-1g-GTt"/>
-                            <constraint firstItem="JGW-iq-0Bo" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="169" id="X8f-VL-OmY"/>
-                            <constraint firstAttribute="trailing" secondItem="fQu-9K-Mfz" secondAttribute="trailing" id="id0-KX-Dgr"/>
-                            <constraint firstItem="fQu-9K-Mfz" firstAttribute="centerX" secondItem="JGW-iq-0Bo" secondAttribute="centerX" id="n8q-xH-jSQ"/>
-                            <constraint firstItem="JGW-iq-0Bo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="wfX-so-uIO"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.0" green="0.74574802159999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -46,8 +25,4 @@
             <point key="canvasLocation" x="49" y="255"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="gray-background" width="640" height="1136"/>
-        <image name="mess-logo-launch" width="563" height="236"/>
-    </resources>
 </document>

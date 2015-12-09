@@ -128,16 +128,10 @@ class UserController {
                     completion(success: false, user: nil)
                 }
             }
-            
-            
         }
     }
     
-   
-    
-    
-    
-    static func logoutCurrentUser() {
+   static func logoutCurrentUser() {
         FirebaseController.base.unauth()
         UserController.sharedController.currentUser = nil
     }

@@ -9,10 +9,15 @@
 import UIKit
 import Firebase
 import LocalAuthentication
+import QuartzCore
 
 class LoginSignupViewController: UIViewController{
     
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var messLogo: UIButton!
     
+    @IBOutlet weak var inPlainSight: UIButton!
+    @IBOutlet weak var signupButtonLabel: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var phoneNumberTextField: UITextField!
@@ -41,6 +46,15 @@ class LoginSignupViewController: UIViewController{
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        animateView()
+    }
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func signupButtonTapped(sender: AnyObject) {
         
         
@@ -54,13 +68,14 @@ class LoginSignupViewController: UIViewController{
             UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, completion: { (success, user) -> Void in
                 
                 self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
-                print("Successful signup")
+               
+                self.deAnimateView()
             })
             
         }
         else{
             
-            let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "You have not filled in all the boxes", preferredStyle: .ActionSheet)
+            let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "You have not filled in all the boxes", preferredStyle: .Alert)
             let incompleteSignupAlertRedoAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
                 
             }
@@ -89,6 +104,64 @@ class LoginSignupViewController: UIViewController{
         
         
     }
+        
+    //MARK: Animation
     
+    func animateView(){
+    
+        self.emailTextField.center.x = self.view.frame.width + 300
+        self.passwordTextField.center.x = self.view.frame.width + 300
+        self.reEnterPasswordTextField.center.x = self.view.frame.width - 500
+        self.phoneNumberTextField.center.x = self.view.frame.width - 500
+        self.messLogo.center.x = self.view.frame.height + 300
+        self.inPlainSight.center.x = self.view.frame.height - 500
+        self.signupButtonLabel.center.x = self.view.frame.height + 500
+        self.cancelButton.center.x = self.view.frame.height - 500
+
+
+        
+        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+            
+            self.emailTextField.center.x = self.view.frame.width / 2
+            self.passwordTextField.center.x = self.view.frame.width / 2
+            self.reEnterPasswordTextField.center.x = self.view.frame.width / 2
+            self.phoneNumberTextField.center.x = self.view.frame.width / 2
+            self.messLogo.center.x = self.view.frame.height / 2
+            self.inPlainSight.center.x = self.view.frame.height / 2
+            self.signupButtonLabel.center.x = self.view.frame.height / 2
+            self.cancelButton.center.x = self.view.frame.height / 2
+            
+            }, completion: nil)
+    
+    
+    }
+    
+    func deAnimateView(){
+        
+        self.emailTextField.center.x = self.view.frame.width / 2
+        self.passwordTextField.center.x = self.view.frame.width / 2
+        self.reEnterPasswordTextField.center.x = self.view.frame.width / 2
+        self.phoneNumberTextField.center.x = self.view.frame.width / 2
+        self.messLogo.center.x = self.view.frame.height / 2
+        self.inPlainSight.center.x = self.view.frame.height / 2
+        self.signupButtonLabel.center.x = self.view.frame.height / 2
+        self.cancelButton.center.x = self.view.frame.height / 2
+        
+        
+        
+        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+            
+            self.emailTextField.center.x = self.view.frame.width + 300
+            self.passwordTextField.center.x = self.view.frame.width + 300
+            self.reEnterPasswordTextField.center.x = self.view.frame.width - 500
+            self.phoneNumberTextField.center.x = self.view.frame.width - 500
+            self.messLogo.center.x = self.view.frame.height + 300
+            self.inPlainSight.center.x = self.view.frame.height - 500
+            self.signupButtonLabel.center.x = self.view.frame.height + 500
+            self.cancelButton.center.x = self.view.frame.height - 500
+            
+            }, completion: nil)
+    
+    }
 
 }

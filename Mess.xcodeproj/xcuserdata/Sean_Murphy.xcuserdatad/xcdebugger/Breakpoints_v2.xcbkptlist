@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DecryptMessageViewController.swift"
-            timestampString = "471144359.260903"
+            timestampString = "471236714.390027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "promptUserPasswordAlert()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,45 +26,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DecryptMessageViewController.swift"
-            timestampString = "471144359.260903"
+            timestampString = "471236714.390027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "promptUserPasswordAlert()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Mess.DecryptMessageViewController.promptUserPasswordAlert (Mess.DecryptMessageViewController)() -&gt; ()"
-                  moduleName = "Mess"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/DecryptMessageViewController.swift"
-                  timestampString = "471149284.363008"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "162"
-                  endingLineNumber = "162"
-                  offsetFromSymbolStart = "706">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Mess.DecryptMessageViewController.(promptUserPasswordAlert (Mess.DecryptMessageViewController) -&gt; () -&gt; ()).(closure #2)"
-                  moduleName = "Mess"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/DecryptMessageViewController.swift"
-                  timestampString = "471149284.363535"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "162"
-                  endingLineNumber = "162"
-                  offsetFromSymbolStart = "55">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EncryptMessageViewController.swift"
+            timestampString = "471226068.045172"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "promptBiometricTouchIDForEncryption()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EncryptMessageViewController.swift"
+            timestampString = "471226068.045172"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "promptBiometricTouchIDForEncryption()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mess/AppDelegate.swift"
+            timestampString = "471303004.4364"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

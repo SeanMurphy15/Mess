@@ -15,9 +15,6 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
     var userDataSource: [User] = []
     
     
-    
-    
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -88,16 +85,14 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            return
-        }
+        self.dismissViewControllerAnimated(true, completion: nil)
         
         
     }
+   
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "toMessageReceiversLabel"{
             
             if let indexPath = tableView.indexPathForSelectedRow{
                 
@@ -108,8 +103,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
                 _ = detailView.view
                 
                 detailView.updateMessageReceiver(user)
-            }
-            
+                
             
         }
         

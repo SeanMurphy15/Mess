@@ -10,9 +10,10 @@ import UIKit
 import LocalAuthentication
 import MessageUI
 
+@IBDesignable
 class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITextViewDelegate {
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     @IBOutlet weak var numberOfCharactersLabel: UILabel!
     
@@ -26,6 +27,10 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     var messageRecieverTextLabelData: String!
     
+    var initialFrame: CGRect?
+    
+   // var currentMessageUser: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +38,13 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
         originalMessageTextView.delegate = self
         
-        appearance()
+        viewControllerAppearance()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        initialFrame = self.view.frame
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,7 +61,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
+    
+    @IBAction func backButtonTapped(sender: AnyObject) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -65,6 +77,11 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         }
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+
     
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -78,6 +95,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     
     func updateMessageReceiver(user: User){
+
+        //currentMessageUser = user
         
         messageReceiverTextLabel.text = user.email
         messageReceiverTextFieldPhoneNumber.text = user.phoneNumber
@@ -125,7 +144,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
             
             context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
                 
-                dispatch_async(dispatch_get_main_queue()) {
+         
                     
                     if success == true {
                         
@@ -144,12 +163,20 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                             
                         }
                         
-                        self.presentModalMessageComposeViewController(true)
+                      dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                       // self.animateEncryption({ () -> Void in
+                            self.presentModalMessageComposeViewController(true)
+                            
+                            let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
+                            
+                            var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
+                            message.save()
+                        //})
+                      })
                         
-                        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
+                       
                         
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
-                        message.save()
+                        
                         
                     }else{
                         
@@ -158,7 +185,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                             self.promptUserPasswordAlert()
                         })
                     }
-                }
+                
             }
         }
         
@@ -211,15 +238,11 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                     
                     
                 }
+    
+//                self.animateEncryption({ () -> Void in
+//                    self.performSelector("createMessage", withObject: nil, afterDelay: 5.0)
+//                })
                 
-                self.presentModalMessageComposeViewController(true)
-                
-                let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
-                
-                var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
-                message.save()
-            
-            
             }else{
                 
                 passwordAlert.textFields?[0].text = ""
@@ -236,13 +259,94 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         presentViewController(passwordAlert, animated: true, completion: nil)
     }
     
+    func createMessage() {
+        self.presentModalMessageComposeViewController(true)
+        
+        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
+        
+        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
+        message.save()
+
+    }
     
     
     //MARK: Appearance
     
-    func appearance(){
+    func viewControllerAppearance(){
         
         originalMessageTextView.layer.cornerRadius = 3.0
+        //view.layer.backgroundColor = UIColor.b
+        
+        
+        
+    }
+//    
+//    func animateEncryption(completion:() -> Void) {
+//        
+//        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count) as! String
+//        let letters : NSString = "abcdefghij klmnopqrstuv wxyzABCDEFG HIJKLMNOPQRS TUVWXYZ0123456789"
+//        var index = 0
+//        self.originalMessageTextView.text = ""
+//        for char in originalMessageTextView.text.characters {
+//
+//            UIView.animateWithDuration(1.0, delay: 1 * Double(index), usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+//                
+//                // Start animation
+//                
+//                
+//                let newString = encyptedMessage.stringByReplacingOccurrencesOfString(" ", withString: "~")
+//                
+//                if index % 2 == 0 {
+//                
+//                  
+//                    self.originalMessageTextView.text = encyptedMessage
+//               
+//                } else if index % 3 == 0 {
+//                    
+//                        self.originalMessageTextView.text = newString
+//                    
+//                }
+//
+//                
+//                
+//                
+//                }, completion: { (_) -> Void in
+//            })
+//            
+//            index += 1
+//        }
+//        completion()
+//        
+//    }
+    
+    //MARK: Keyboard Functions 
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            
+            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + self.navigationController!.navigationBar.frame.size.height)
+                }, completion: { (_) -> Void in
+            })
+            //            self.view.frame.origin.y -= keyboardSize.height
+        }
+        
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        
+        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.view.frame = self.initialFrame!
+            }, completion: { (_) -> Void in
+        })
+    }
+    
+    @IBAction func unwindForSegue(unwindSegue: UIStoryboardSegue) {
+        
         
     }
     

@@ -31,6 +31,7 @@
 		FF31DC001BFBDA7D00F49424 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */; };
 		FF31DC021BFBDA9000F49424 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DC011BFBDA9000F49424 /* libicucore.tbd */; };
 		FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */; };
+		FFEC3C891C17A7AC008A58BD /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */; };
 		FFFB030E1C0FBCA300F09FED /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FF31DC011BFBDA9000F49424 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsForUsersTableViewController.swift; sourceTree = "<group>"; };
+		FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,15 +140,13 @@
 		FF31DBD01BFAB91300F49424 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FFEC3C8C1C17A815008A58BD /* User Login / Signup */,
 				FF31DBC41BFAB72900F49424 /* HomeViewController.swift */,
-				FF31DBC61BFAB76800F49424 /* ContactsTableViewController.swift */,
-				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
 				FF31DBC81BFAB79900F49424 /* SettingsViewController.swift */,
-				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
-				FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
-				FF31DBC21BFAB6AA00F49424 /* LoginSignupViewController.swift */,
-				FF1311241C08F54800D016E3 /* LoginViewController.swift */,
+				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
+				FFEC3C8A1C17A7D6008A58BD /* Views */,
+				FFEC3C8B1C17A7F2008A58BD /* Contacts / Search */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -173,6 +173,33 @@
 				FF31DBF91BFBDA4D00F49424 /* CFNetwork.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFEC3C8A1C17A7D6008A58BD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FFEC3C8B1C17A7F2008A58BD /* Contacts / Search */ = {
+			isa = PBXGroup;
+			children = (
+				FF31DBC61BFAB76800F49424 /* ContactsTableViewController.swift */,
+				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
+			);
+			name = "Contacts / Search";
+			sourceTree = "<group>";
+		};
+		FFEC3C8C1C17A815008A58BD /* User Login / Signup */ = {
+			isa = PBXGroup;
+			children = (
+				FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */,
+				FF31DBC21BFAB6AA00F49424 /* LoginSignupViewController.swift */,
+				FF1311241C08F54800D016E3 /* LoginViewController.swift */,
+			);
+			name = "User Login / Signup";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +290,7 @@
 				FF31DBCF1BFAB90700F49424 /* MessageController.swift in Sources */,
 				FF31DBAC1BFA6D3D00F49424 /* AppDelegate.swift in Sources */,
 				FF31DBCD1BFAB7E500F49424 /* EncryptMessageViewController.swift in Sources */,
+				FFEC3C891C17A7AC008A58BD /* InitialViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

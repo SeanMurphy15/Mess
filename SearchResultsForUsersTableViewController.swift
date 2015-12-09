@@ -48,7 +48,6 @@ class SearchResultsForUsersTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "toMessageReceiversLabelFromSearch"{
             
             if let indexPath = tableView.indexPathForSelectedRow{
                 
@@ -59,8 +58,6 @@ class SearchResultsForUsersTableViewController: UITableViewController {
                 _ = detailView.view
                 
                 detailView.updateMessageReceiver(filteredUsersFromSearch)
-            }
-            
             
         }
         

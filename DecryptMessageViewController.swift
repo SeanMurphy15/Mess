@@ -28,7 +28,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var senderTextLabel: UILabel!
     
     
-    
     var arrayOfUserMessageDictionaries = []
     var arrayOfMessageDictionaries: [Message]?
     
@@ -132,7 +131,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         
         
-        return CGSize(width: collectionView.frame.width - 7, height: collectionView.frame.height - 0)
+        return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.height - 0)
     }
     
     
@@ -263,8 +262,10 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionViewAppearance(){
         
-        collectionView.layer.borderWidth = 3.0
-        collectionView.layer.borderColor = UIColor.cyanColor().CGColor
+        collectionView.layer.borderWidth = 5.0
+        collectionView.layer.cornerRadius = 5.0
+        collectionView.layer.borderColor = UIColor.whiteColor().CGColor
+        
     }
     
     
