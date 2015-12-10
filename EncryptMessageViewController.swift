@@ -29,7 +29,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     var initialFrame: CGRect?
     
-   // var currentMessageUser: User?
+    // var currentMessageUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         initialFrame = self.view.frame
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,6 +58,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
         originalMessageTextView.text.removeAll()
         messageReceiverTextLabel.text?.removeAll()
+        numberOfCharactersLabel.text = "0"
+        
     }
     
     
@@ -70,19 +72,31 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     @IBAction func encryptMessageButtonTapped(sender: AnyObject) {
         
-        if !originalMessageTextView.text!.isEmpty {
+        
+        
+        if self.messageReceiverTextLabel.text == nil || !originalMessageTextView.text!.isEmpty {
+            
+            let unableToSendAlert = UIAlertController(title: "Your message is not complete!", message: "Your message is blank or is missing a receiver!", preferredStyle: .Alert)
+            let unableToSendAlertCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let unableToSendAlertConfirmation =  UIAlertAction(title: "Add Contact", style: .Default, handler: { (_) -> Void in
+                
+                self.performSegueWithIdentifier("toContactsFromEncryption", sender: nil)
+            })
+            
+            unableToSendAlert.addAction(unableToSendAlertConfirmation)
+            unableToSendAlert.addAction(unableToSendAlertCancel)
+            self.presentViewController(unableToSendAlert, animated: true, completion: nil)
+        }
+            
+        else {
             
             
             promptBiometricTouchIDForEncryption()
+            
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
-
-    
+    //MARK: Charater limiting and counting
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
@@ -95,7 +109,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     
     func updateMessageReceiver(user: User){
-
+        
         //currentMessageUser = user
         
         messageReceiverTextLabel.text = user.email
@@ -103,6 +117,9 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         identifierLabel.text = user.identifier
         
     }
+    
+    
+    //MARK: iMessage Composing View
     
     func presentModalMessageComposeViewController(animated: Bool) {
         if MFMessageComposeViewController.canSendText() {
@@ -134,7 +151,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //MARK: Touch ID
+    //MARK: Touch ID for Encryption
     
     func promptBiometricTouchIDForEncryption(){
         
@@ -146,54 +163,38 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
             
             context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
                 
-         
+                
+                if success == true {
                     
-                    if success == true {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
-                        if self.messageReceiverTextLabel.text == nil {
-                            
-                            let unableToSendAlert = UIAlertController(title: "Your Message does not have a recipient", message: " ", preferredStyle: .Alert)
-                            let unableToSendAlertConfirmation =  UIAlertAction(title: "Contacts", style: .Default, handler: { (_) -> Void in
-                                
-                                self.performSegueWithIdentifier("toContactsFromEncryption", sender: nil)
-                            })
-                            
-                            unableToSendAlert.addAction(unableToSendAlertConfirmation)
-                            
-                            self.presentViewController(unableToSendAlert, animated: true, completion: nil)
-                            
-                            
-                        }
+                        self.presentModalMessageComposeViewController(true)
                         
-                      dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                       // self.animateEncryption({ () -> Void in
-                            self.presentModalMessageComposeViewController(true)
-                            
-                            let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
-                            
-                            var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
-                            message.save()
-                        //})
-                      })
+                        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
                         
-                       
-                        
-                        
-                        
-                    }else{
-                        
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.promptUserPasswordAlert()
-                        })
-                    }
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
+                        message.save()
+                   
+                    })
+                    
+                    
+                    
+                    
+                    
+                }else{
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.promptUserPasswordAlert()
+                    })
+                }
                 
             }
         }
         
     }
     
-    //MARK: Encrypt Original Message
+    //MARK: Encrypt Original Message Algorithym
     
     func encryptStringWithLength (len : Int) -> NSString {
         
@@ -211,7 +212,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
-    // Touch ID Not Available
+    //MARK:  Touch ID Not Available
     
     func promptUserPasswordAlert(){
         
@@ -219,6 +220,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         passwordAlert.addTextFieldWithConfigurationHandler { (passwordField) -> Void in
             
             passwordField.placeholder = "Password"
+            passwordField.secureTextEntry = true
             
         }
         
@@ -244,10 +246,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                     
                     
                 }
-    
-//                self.animateEncryption({ () -> Void in
-//                    self.performSelector("createMessage", withObject: nil, afterDelay: 5.0)
-//                })
+                
                 
             }else{
                 
@@ -265,65 +264,27 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         presentViewController(passwordAlert, animated: true, completion: nil)
     }
     
-    func createMessage() {
-        self.presentModalMessageComposeViewController(true)
-        
-        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
-        
-        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
-        message.save()
-
-    }
-    
     
     //MARK: Appearance
     
     func viewControllerAppearance(){
         
         originalMessageTextView.layer.cornerRadius = 3.0
-                
+        
         
     }
-//    
-//    func animateEncryption(completion:() -> Void) {
-//        
-//        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count) as! String
-//        let letters : NSString = "abcdefghij klmnopqrstuv wxyzABCDEFG HIJKLMNOPQRS TUVWXYZ0123456789"
-//        var index = 0
-//        self.originalMessageTextView.text = ""
-//        for char in originalMessageTextView.text.characters {
-//
-//            UIView.animateWithDuration(1.0, delay: 1 * Double(index), usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-//                
-//                // Start animation
-//                
-//                
-//                let newString = encyptedMessage.stringByReplacingOccurrencesOfString(" ", withString: "~")
-//                
-//                if index % 2 == 0 {
-//                
-//                  
-//                    self.originalMessageTextView.text = encyptedMessage
-//               
-//                } else if index % 3 == 0 {
-//                    
-//                        self.originalMessageTextView.text = newString
-//                    
-//                }
-//
-//                
-//                
-//                
-//                }, completion: { (_) -> Void in
-//            })
-//            
-//            index += 1
-//        }
-//        completion()
-//        
-//    }
     
-    //MARK: Keyboard Functions 
+    
+    //MARK: Keyboard Functions
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        return true
+    }
     
     func keyboardWillShow(notification: NSNotification) {
         

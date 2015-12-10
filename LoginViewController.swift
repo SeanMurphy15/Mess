@@ -106,7 +106,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             
             UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height)
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height + keyboardSize.height - 400)
                
                 // fade irrelevant content
                 
@@ -133,7 +133,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func fade(){
         
-        UIView.animateWithDuration(1.0) { () -> Void in
+        UIView.animateWithDuration(0.5) { () -> Void in
             self.inPlainSight.alpha = 0.0
             self.messLogo.alpha = 0.0
         }
@@ -182,8 +182,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.passwordTextField.center.x = self.view.frame.width - 700
             self.messLogo.center.x = self.view.frame.height + 500
             self.inPlainSight.center.x = self.view.frame.height - 900
-            self.loginButton.center.x = self.view.frame.width + 300
-            self.cancelButtonLabel.center.x = self.view.frame.width - 300
+            self.loginButton.center.x = 900
+            self.cancelButtonLabel.center.x = -400
             
             }, completion: nil)
         

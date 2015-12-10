@@ -32,9 +32,8 @@ class MessageCollectionViewCell: UICollectionViewCell {
     func customCell(){
         
         self.layer.cornerRadius = 5.0
-           
         
-    
-    }
+        
+        }
     
 }

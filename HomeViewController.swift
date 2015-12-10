@@ -10,6 +10,9 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+   
+    @IBOutlet weak var inPlainSight: UIButton!
+    @IBOutlet weak var messLogo: UIButton!
     
     @IBOutlet weak var encryptButtonLabel: UIButton!
     
@@ -59,10 +62,12 @@ class HomeViewController: UIViewController {
     
     func animateView(){
         
-        self.encryptButtonLabel.center.x = self.view.frame.width - 900
-        self.decryptButtonLabel.center.x = self.view.frame.width + 900
-        self.settingsButtonLabel.center.x = self.view.frame.width + 900
-        self.contactsButtonLabel.center.x = self.view.frame.width - 900
+        self.encryptButtonLabel.center.x = self.view.frame.width - 450
+        self.decryptButtonLabel.center.x = self.view.frame.width + 300
+        self.settingsButtonLabel.center.x = self.view.frame.width + 300
+        self.contactsButtonLabel.center.x = self.view.frame.width - 450
+        self.messLogo.center.x = self.view.frame.height + 500
+        self.inPlainSight.center.x = self.view.frame.height - 900
         
         
         
@@ -73,6 +78,8 @@ class HomeViewController: UIViewController {
             self.decryptButtonLabel.center.x = self.view.frame.width / 2
             self.settingsButtonLabel.center.x = self.view.frame.width / 2
             self.contactsButtonLabel.center.x = self.view.frame.width / 2
+            self.messLogo.center.x = self.view.frame.height / 3.5
+            self.inPlainSight.center.x = self.view.frame.height / 3.5
             
             
             }, completion: nil)
@@ -87,7 +94,9 @@ class HomeViewController: UIViewController {
         self.decryptButtonLabel.center.x = self.view.frame.width / 2
         self.settingsButtonLabel.center.x = self.view.frame.width / 2
         self.contactsButtonLabel.center.x = self.view.frame.width / 2
-        
+        self.messLogo.center.x = self.view.frame.height / 3.5
+        self.inPlainSight.center.x = self.view.frame.height / 3.5
+
         
         
         
@@ -95,11 +104,13 @@ class HomeViewController: UIViewController {
             
             
             
-            self.encryptButtonLabel.center.x = self.view.frame.width - 900
-            self.decryptButtonLabel.center.x = self.view.frame.width + 900
-            self.settingsButtonLabel.center.x = self.view.frame.width + 900
-            self.contactsButtonLabel.center.x = self.view.frame.width - 900
-            
+            self.encryptButtonLabel.center.x = self.view.frame.width - 450
+            self.decryptButtonLabel.center.x = self.view.frame.width + 300
+            self.settingsButtonLabel.center.x = self.view.frame.width + 300
+            self.contactsButtonLabel.center.x = self.view.frame.width - 450
+            self.messLogo.center.x = self.view.frame.height + 500
+            self.inPlainSight.center.x = self.view.frame.height - 900
+         
             
             }, completion: nil)
         

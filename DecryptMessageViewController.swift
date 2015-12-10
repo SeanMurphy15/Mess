@@ -129,7 +129,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        
+
         
         return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.height - 0)
     }
@@ -150,10 +150,11 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func promptUserPasswordAlert(){
         
-        let passwordAlert = UIAlertController(title: "Enter Password", message: " ", preferredStyle: .Alert)
+        let passwordAlert = UIAlertController(title: "Enter Password", message: "Touch ID is not available on your device.", preferredStyle: .Alert)
         passwordAlert.addTextFieldWithConfigurationHandler { (passwordField) -> Void in
             
             passwordField.placeholder = "Password"
+            passwordField.secureTextEntry = true
             
         }
         

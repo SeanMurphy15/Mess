@@ -9,10 +9,14 @@
 import UIKit
 import Firebase
 
+@IBDesignable
+
 class SettingsViewController: UIViewController {
     
     var user = UserController.sharedController.currentUser
 
+    @IBOutlet weak var deleteAccountButtonLabel: UIButton!
+    @IBOutlet weak var logoutButtonLabel: UIButton!
     @IBOutlet weak var newPasswordTextField: UITextField!
    
     @IBOutlet weak var reEnterNewPasswordTextField: UITextField!
@@ -26,6 +30,13 @@ class SettingsViewController: UIViewController {
 
         setCurrentUser()
         
+//         currentUserTextLabel.backgroundColor = UIColor(patternImage: UIImage(named:"blank-button-gray.png")!)
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        animateView()
     }
     
     func setCurrentUser(){
@@ -119,11 +130,29 @@ class SettingsViewController: UIViewController {
     }
     
     
-    
+    //MARK: Delete Account
     
     @IBAction func deleteAccountButtonTapped(sender: AnyObject) {
         
-        user.delete()
+        
+        let settingsAlert = UIAlertController(title: "Are you sure you want to delete your account?", message: "This action cannot be undone!", preferredStyle: .Alert)
+        let settingsAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
+            
+            self.deAnimateView()
+            
+            self.user.delete()
+            
+            self.performSegueWithIdentifier("toInitialViewController", sender: nil)
+            
+        })
+        
+        settingsAlert.addAction(settingsAlertAction)
+        
+        settingsAlert.addAction(settingsAlertCancelAction)
+    
+        self.presentViewController(settingsAlert, animated: true, completion: nil)
+
         
     }
     
@@ -131,11 +160,74 @@ class SettingsViewController: UIViewController {
         
         UserController.logoutCurrentUser()
         
+        deAnimateView()
+        
         self.performSegueWithIdentifier("toInitialViewController", sender: nil)
         
     }
     
+// MARK: Animations
     
+    func animateView(){
+        
+//        currentUserTextLabel.backgroundColor = UIColor(patternImage: UIImage(named:"blank-button-gray.png")!)
+        
+        
+        self.newPasswordTextField.center.x = self.view.frame.width + 500
+        self.reEnterNewPasswordTextField.center.x = self.view.frame.width - 500
+        self.newPhoneNumberTextField.center.x = self.view.frame.width + 500
+        self.reEnterNewPhoneNumberTextField.center.x = self.view.frame.width - 500
+        self.logoutButtonLabel.center.x = self.view.frame.height - 900
+        self.deleteAccountButtonLabel.center.x = self.view.frame.height + 400
+        self.currentUserTextLabel.center.x = self.view.frame.width - 500
+
+        
+        
+        
+        UIView.animateWithDuration(2.5, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+            
+            self.newPasswordTextField.center.x = self.view.frame.width / 2
+            self.reEnterNewPasswordTextField.center.x = self.view.frame.width / 2
+            self.newPhoneNumberTextField.center.x = self.view.frame.width / 2
+            self.reEnterNewPhoneNumberTextField.center.x = self.view.frame.width / 2
+            self.logoutButtonLabel.center.x = self.view.frame.height / 3.5
+            self.deleteAccountButtonLabel.center.x = self.view.frame.height / 3.5
+            self.currentUserTextLabel.center.x = self.view.frame.width / 2
+
+            
+            }, completion: nil)
+        
+        
+    }
+    
+    func deAnimateView(){
+        
+        self.newPasswordTextField.center.x = self.view.frame.width / 2
+        self.reEnterNewPasswordTextField.center.x = self.view.frame.width / 2
+        self.newPhoneNumberTextField.center.x = self.view.frame.width / 2
+        self.reEnterNewPhoneNumberTextField.center.x = self.view.frame.width / 2
+        self.logoutButtonLabel.center.x = self.view.frame.height / 3.5
+        self.deleteAccountButtonLabel.center.x = self.view.frame.height / 3.5
+        self.currentUserTextLabel.center.x = self.view.frame.width / 2
+
+        
+        
+        
+        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+            
+            self.newPasswordTextField.center.x = self.view.frame.width + 500
+            self.reEnterNewPasswordTextField.center.x = self.view.frame.width - 500
+            self.newPhoneNumberTextField.center.x = self.view.frame.width + 500
+            self.reEnterNewPhoneNumberTextField.center.x = self.view.frame.width - 500
+            self.logoutButtonLabel.center.x = self.view.frame.height - 900
+            self.deleteAccountButtonLabel.center.x = self.view.frame.height + 400
+            self.currentUserTextLabel.center.x = self.view.frame.width - 500
+
+            
+            }, completion: nil)
+        
+    }
+
     
     
     
