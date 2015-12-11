@@ -13,7 +13,11 @@ import MessageUI
 @IBDesignable
 class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITextViewDelegate {
     
+    @IBOutlet weak var totalCharactersLabel: UILabel!
+    @IBOutlet weak var encryptButtonLabel: UIButton!
+    @IBOutlet weak var messLogo: UIButton!
     
+    @IBOutlet weak var addReceiverLabel: UIButton!
     
     @IBOutlet weak var numberOfCharactersLabel: UILabel!
     
@@ -40,6 +44,9 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
         viewControllerAppearance()
         
+        
+        
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -51,7 +58,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     
     @IBAction func trashButtonTapped(sender: AnyObject) {
@@ -74,7 +80,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
         
         
-        if self.messageReceiverTextLabel.text == nil || !originalMessageTextView.text!.isEmpty {
+        
+        if messageReceiverTextLabel.text?.characters.count == nil || originalMessageTextView.text!.isEmpty {
             
             let unableToSendAlert = UIAlertController(title: "Your message is not complete!", message: "Your message is blank or is missing a receiver!", preferredStyle: .Alert)
             let unableToSendAlertCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -109,8 +116,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     
     func updateMessageReceiver(user: User){
-        
-        //currentMessageUser = user
         
         messageReceiverTextLabel.text = user.email
         messageReceiverTextFieldPhoneNumber.text = user.phoneNumber
@@ -265,11 +270,43 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
-    //MARK: Appearance
+    //MARK: Appearance / animation
+    
     
     func viewControllerAppearance(){
         
         originalMessageTextView.layer.cornerRadius = 3.0
+        
+        
+        
+        // Make Navigation controller translucent and fade in View items
+        
+        navigationController?.navigationBar.alpha = 0.0
+        numberOfCharactersLabel.alpha = 0.0
+        originalMessageTextView.alpha = 0.0
+        totalCharactersLabel.alpha = 0.0
+        encryptButtonLabel.alpha = 0.0
+        messLogo.alpha = 0.0
+        addReceiverLabel.alpha = 0.0
+        
+        
+        
+        UINavigationBar.animateWithDuration(1.0) { () -> Void in
+            
+            self.navigationController?.navigationBar.alpha = 1.0
+            self.numberOfCharactersLabel.alpha = 1.0
+            self.originalMessageTextView.alpha = 1.0
+            self.totalCharactersLabel.alpha = 1.0
+            self.encryptButtonLabel.alpha = 1.0
+            self.messLogo.alpha = 1.0
+            self.addReceiverLabel.alpha = 1.0
+            
+        }
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clearColor()
         
         
     }
@@ -292,7 +329,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             
             UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + self.navigationController!.navigationBar.frame.size.height)
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + self.navigationController!.navigationBar.frame.size.height - 10)
                 }, completion: { (_) -> Void in
             })
             //            self.view.frame.origin.y -= keyboardSize.height

@@ -49,11 +49,13 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     @IBAction func doneButtonTapped(sender: AnyObject) {
         
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            
-        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func createEncryptedMessageTapped(sender: AnyObject) {
+        
+        self.performSegueWithIdentifier("toEncryptFromDecrypt", sender: nil)
+    }
     
     
     func fetchMessagesForUser() {
@@ -266,6 +268,14 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         collectionView.layer.borderWidth = 5.0
         collectionView.layer.cornerRadius = 5.0
         collectionView.layer.borderColor = UIColor.whiteColor().CGColor
+        collectionView.layer.shadowColor = UIColor.blackColor().CGColor
+        
+        // Make Navigation controller translucent
+        
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.view.backgroundColor = UIColor.clearColor()
         
     }
     

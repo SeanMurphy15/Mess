@@ -29,8 +29,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         setCurrentUser()
-        
-//         currentUserTextLabel.backgroundColor = UIColor(patternImage: UIImage(named:"blank-button-gray.png")!)
+
         
     }
     
@@ -47,7 +46,8 @@ class SettingsViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        
         }
     
     
@@ -65,6 +65,8 @@ class SettingsViewController: UIViewController {
         
     }
 
+    
+    // Change password and confirm password change with firebase
     
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
@@ -103,6 +105,8 @@ class SettingsViewController: UIViewController {
             
         }
         
+        // save phone settings if textFields are populated and alert warning
+        
         if !newPhoneNumberTextField.text!.isEmpty && !reEnterNewPhoneNumberTextField.text!.isEmpty && newPhoneNumberTextField.text == reEnterNewPhoneNumberTextField.text {
             
             
@@ -130,12 +134,12 @@ class SettingsViewController: UIViewController {
     }
     
     
-    //MARK: Delete Account
+    //MARK: Delete Account with error handling alert
     
     @IBAction func deleteAccountButtonTapped(sender: AnyObject) {
         
         
-        let settingsAlert = UIAlertController(title: "Are you sure you want to delete your account?", message: "This action cannot be undone!", preferredStyle: .Alert)
+        let settingsAlert = UIAlertController(title: "Are you sure you want to delete your account?", message: "This action can't be undone!", preferredStyle: .Alert)
         let settingsAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
             
@@ -170,8 +174,7 @@ class SettingsViewController: UIViewController {
     
     func animateView(){
         
-//        currentUserTextLabel.backgroundColor = UIColor(patternImage: UIImage(named:"blank-button-gray.png")!)
-        
+        // animate bar buttons into view
         
         self.newPasswordTextField.center.x = self.view.frame.width + 500
         self.reEnterNewPasswordTextField.center.x = self.view.frame.width - 500
@@ -197,10 +200,27 @@ class SettingsViewController: UIViewController {
             
             }, completion: nil)
         
+        // Make Navigation controller translucent and fades in
+        
+        navigationController?.navigationBar.alpha = 0.0
+        
+        UINavigationBar.animateWithDuration(2.5) { () -> Void in
+            
+            self.navigationController?.navigationBar.alpha = 1.0
+            
+        }
+        
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.view.backgroundColor = UIColor.clearColor()
         
     }
     
     func deAnimateView(){
+        
+        
+        // deanimate the bar buttons to leave scene when pressed
         
         self.newPasswordTextField.center.x = self.view.frame.width / 2
         self.reEnterNewPasswordTextField.center.x = self.view.frame.width / 2

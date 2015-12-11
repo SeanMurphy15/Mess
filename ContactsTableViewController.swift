@@ -19,6 +19,10 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         super.viewDidLoad()
         
+        viewControllerAppearance()
+        
+         setupSearchController()
+        
         UserController.fetchAllUsers { (users) -> Void in
             
             self.userDataSource = users
@@ -31,7 +35,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
             
         }
         
-        setupSearchController()
+        
     }
     
     
@@ -49,30 +53,36 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath)
         
         let user = userDataSource[indexPath.row]
         
+        // programmatic tableview colors
+        
+        tableView.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
+        
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        
+        
+        if indexPath.row % 2 == 0 {
+            
+            cell.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
+        } else {
+            
+            cell.backgroundColor = UIColor(red: 3/255, green: 158/255, blue: 204/255, alpha: 1.0)
+            
+        }
+        
+        
         cell.textLabel!.text = user.email
-        //cell.detailTextLabel!.text = user.phoneNumber
         
         
         
         return cell
     }
     
-    func setupSearchController() {
-        let resultsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserSearchResults")
-        
-        searchController = UISearchController(searchResultsController: resultsViewController)
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.sizeToFit()
-        tableView.tableHeaderView = searchController.searchBar
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        definesPresentationContext = true
-    }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchTerm = searchController.searchBar.text!.lowercaseString
@@ -89,6 +99,12 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         
     }
+    
+    static func animateReceiverLabel(){
+        
+       
+    }
+
    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -102,6 +118,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
                 
                 _ = detailView.view
                 
+                
                 detailView.updateMessageReceiver(user)
                 
             
@@ -109,6 +126,70 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         
     }
+    
+    //MARK: Appearance
+    
+    //MARK: Set up Search Controller with animations
+    
+    func setupSearchController() {
+        let resultsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserSearchResults")
+        
+        searchController = UISearchController(searchResultsController: resultsViewController)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.sizeToFit()
+        tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.barTintColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
+        searchController.searchBar.alpha = 0.0
+        UISearchBar.animateWithDuration(2.0) { () -> Void in
+            self.searchController.searchBar.alpha = 1.0
+        }
+        
+        searchController.searchBar.placeholder = "Search Users"
+        searchController.hidesNavigationBarDuringPresentation = true
+        
+        definesPresentationContext = true
+    }
+    
+    //MARK: Animate tableview
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 0, 0)
+        cell.layer.transform = rotationTransform
+        UIView.animateWithDuration(1.0) { () -> Void in
+            
+            cell.layer.transform = CATransform3DIdentity
+            
+            
+        }
+        
+    }
+    
+    
+    func viewControllerAppearance(){
+        
+        // Make Navigation controller translucent and fade in
+        
+        
+        navigationController?.navigationBar.alpha = 0.0
+        
+        UINavigationBar.animateWithDuration(2.0) { () -> Void in
+            
+            self.navigationController?.navigationBar.alpha = 1.0
+
+            
+        }
+        
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.view.backgroundColor = UIColor.clearColor()
+     
+        
+        
+    }
+    
+    
     
     
 }

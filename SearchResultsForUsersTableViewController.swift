@@ -36,6 +36,20 @@ class SearchResultsForUsersTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath)
         let user = filteredUsers[indexPath.row]
         
+        tableView.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
+        
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        
+        
+        if indexPath.row % 2 == 0 {
+            
+            cell.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
+        } else {
+            
+            cell.backgroundColor = UIColor(red: 3/255, green: 158/255, blue: 204/255, alpha: 1.0)
+            
+        }
+        
         cell.textLabel?.text = user.email
         
         return cell
