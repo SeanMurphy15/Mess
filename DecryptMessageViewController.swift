@@ -35,7 +35,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         super.viewDidLoad()
         arrayOfMessageDictionaries = []
         fetchMessagesForUser()
-        
+        animateView()
         
         
         
@@ -262,6 +262,48 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     
     //MARK: Appearance
+    
+    
+//    @IBOutlet weak var noMessagesTextLabel: UILabel!
+//    
+//    @IBOutlet weak var fromTextLabel: UILabel!
+//    
+//    @IBOutlet weak var numberOfMessagesTextLabel: UILabel!
+//    
+//    @IBOutlet weak var collectionView: UICollectionView!
+//    
+//    @IBOutlet weak var numberOfEncryptedMessages: UILabel!
+//    
+//    
+//    @IBOutlet weak var senderTextLabel: UILabel!
+    
+    func animateView(){
+        
+        
+        navigationController?.navigationBar.alpha = 0.0
+        fromTextLabel.alpha = 0.0
+        numberOfMessagesTextLabel.alpha = 0.0
+        collectionView.alpha = 0.0
+        numberOfEncryptedMessages.alpha = 0.0
+        senderTextLabel.alpha = 0.0
+        senderTextLabel.alpha = 0.0
+        
+        
+        
+        UINavigationBar.animateWithDuration(1.0) { () -> Void in
+            
+            self.navigationController?.navigationBar.alpha = 1.0
+            self.fromTextLabel.alpha = 1.0
+            self.numberOfMessagesTextLabel.alpha = 1.0
+            self.collectionView.alpha = 1.0
+            self.numberOfEncryptedMessages.alpha = 1.0
+            self.senderTextLabel.alpha = 1.0
+            self.senderTextLabel.alpha = 1.0
+            
+        }
+        
+    }
+    
     
     func collectionViewAppearance(){
         

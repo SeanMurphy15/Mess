@@ -275,7 +275,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     func viewControllerAppearance(){
         
-        originalMessageTextView.layer.cornerRadius = 3.0
+        originalMessageTextView.layer.cornerRadius = 5.0
+        
         
         
         
