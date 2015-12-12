@@ -9,6 +9,7 @@
 import UIKit
 import LocalAuthentication
 import MessageUI
+import AudioToolbox
 
 @IBDesignable
 class EncryptMessageViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITextViewDelegate {
@@ -130,10 +131,10 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         if MFMessageComposeViewController.canSendText() {
             let messageComposeVC = MFMessageComposeViewController()
             
-            
+            let url = "m3550364797"
             
             messageComposeVC.messageComposeDelegate = self
-            messageComposeVC.body = "You've Received an Enrypted Message: messapp://decrypt"
+            messageComposeVC.body = "You've received an encrypted message: messapp://\(url)"
             messageComposeVC.recipients = [messageReceiverTextFieldPhoneNumber.text!]
             
             presentViewController(messageComposeVC, animated: animated, completion: nil)
@@ -173,13 +174,22 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
+                        
+                        let formatter = NSDateFormatter()
+                        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                        formatter.timeStyle = .LongStyle
+                        
+                        let timeStamp = formatter.stringFromDate(NSDate())
+                        
                         self.presentModalMessageComposeViewController(true)
                         
                         let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
                         
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email)
+                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                        
+                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email, timeSent: "\(timeStamp)")
                         message.save()
-                   
+                        
                     })
                     
                     

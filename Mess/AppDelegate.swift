@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let urlString = "\(url)"
         
-        if urlString == "messapp://decrypt"
+        if urlString == "m3550364797"
             
             {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

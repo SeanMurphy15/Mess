@@ -104,17 +104,11 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         senderTextLabel.text = message.messageSender
         
-        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+//        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Left, animated: true)
         
         collectionViewAppearance()
         
-        let formatter = NSDateFormatter()
-        
-        formatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        
-        formatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        
-        cell.messageDateLabel.text = formatter.stringFromDate(NSDate())
+        cell.messageDateLabel.text = message.timeSent
         
         cell.messageDateLabel.hidden = true
         
@@ -133,7 +127,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
 
         
-        return CGSize(width: collectionView.frame.width - 0, height: collectionView.frame.height - 0)
+        return CGSize(width: collectionView.frame.width - 10, height: collectionView.frame.height )
     }
     
     
@@ -215,7 +209,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
             
             // evaluate
             
-            let reason = "Authenticate for login"
+            let reason = "Authenticate"
             
             context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: {
                 (success: Bool, authenticationError: NSError?) -> Void in
@@ -239,19 +233,15 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     
                     
-                    print("Fingerprint validated.")
-                    
                 } else {
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.promptUserPasswordAlert()
-                    })
-                    
-                    
+                    print("User canceled touch ID")
                 }
             })
+       
         } else {
-             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             self.touchIDNotAvailableAlert()
             
@@ -262,20 +252,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     
     //MARK: Appearance
-    
-    
-//    @IBOutlet weak var noMessagesTextLabel: UILabel!
-//    
-//    @IBOutlet weak var fromTextLabel: UILabel!
-//    
-//    @IBOutlet weak var numberOfMessagesTextLabel: UILabel!
-//    
-//    @IBOutlet weak var collectionView: UICollectionView!
-//    
-//    @IBOutlet weak var numberOfEncryptedMessages: UILabel!
-//    
-//    
-//    @IBOutlet weak var senderTextLabel: UILabel!
+
     
     func animateView(){
         

@@ -24,7 +24,6 @@
 		FF31DBD21BFAB94400F49424 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31DBD11BFAB94400F49424 /* UserController.swift */; };
 		FF31DBD41BFAB9A700F49424 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31DBD31BFAB9A700F49424 /* FirebaseController.swift */; };
 		FF31DBF61BFBDA2000F49424 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBF41BFBD9E200F49424 /* Firebase.framework */; };
-		FF31DBF71BFBDA2000F49424 /* Firebase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBF41BFBD9E200F49424 /* Firebase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF31DBFA1BFBDA4D00F49424 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBF91BFBDA4D00F49424 /* CFNetwork.framework */; };
 		FF31DBFC1BFBDA5E00F49424 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFB1BFBDA5E00F49424 /* SystemConfiguration.framework */; };
 		FF31DBFE1BFBDA6A00F49424 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFD1BFBDA6A00F49424 /* Security.framework */; };
@@ -42,7 +41,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FF31DBF71BFBDA2000F49424 /* Firebase.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,8 +143,8 @@
 				FF31DBC81BFAB79900F49424 /* SettingsViewController.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
 				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
-				FFEC3C8A1C17A7D6008A58BD /* Views */,
 				FFEC3C8B1C17A7F2008A58BD /* Contacts / Search */,
+				FFEC3C8A1C17A7D6008A58BD /* Views */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -411,8 +409,9 @@
 				);
 				INFOPLIST_FILE = Mess/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Sean-Murphy-Development.Mess";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Sean-Murphy-Development.Mess";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "525a23c8-a69d-4748-b1d7-4a7253593865";
 			};
 			name = Debug;
 		};
@@ -428,8 +427,9 @@
 				);
 				INFOPLIST_FILE = Mess/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Sean-Murphy-Development.Mess";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Sean-Murphy-Development.Mess";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "525a23c8-a69d-4748-b1d7-4a7253593865";
 			};
 			name = Release;
 		};

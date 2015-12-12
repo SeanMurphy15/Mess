@@ -15,6 +15,7 @@ class Message: FirebaseType {
     private let messageReceiverKey = "messageReceiver"
     private let messageSenderKey = "messageSender"
     private let encryptedMessageKey = "encryptedMessage"
+    private let timeSentKey = "timeSent"
     
     
     var originalMessage: String = ""
@@ -22,6 +23,7 @@ class Message: FirebaseType {
     var messageSender: String?
     var encryptedMessage: String?
     var identifier: String?
+    var timeSent: String?
     var endpoint: String {
         
         return "messages"
@@ -44,6 +46,10 @@ class Message: FirebaseType {
             
             json.updateValue(encryptedMessage, forKey: encryptedMessageKey)
         }
+        if let timeSent = timeSent {
+            
+            json.updateValue(timeSent, forKey: timeSentKey)
+        }
         
         return json
         
@@ -56,17 +62,19 @@ class Message: FirebaseType {
         self.messageReceiver = json[messageReceiverKey] as? String
         self.messageSender = json[messageSenderKey] as? String
         self.encryptedMessage = json[encryptedMessageKey] as? String
+        self.timeSent = json[timeSentKey] as? String
         self.identifier = identifier
     }
     
     
     
-    init (originalMessage: String, encryptedMessage: String, messageReceiver: String, messageSender: String){
+    init (originalMessage: String, encryptedMessage: String, messageReceiver: String, messageSender: String, timeSent: String){
         
         self.originalMessage = originalMessage
         self.messageReceiver = messageReceiver
         self.messageSender = messageSender
         self.encryptedMessage = encryptedMessage
+        self.timeSent = timeSent
     }
     
     
