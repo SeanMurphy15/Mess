@@ -16,7 +16,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     @IBOutlet weak var totalCharactersLabel: UILabel!
     @IBOutlet weak var encryptButtonLabel: UIButton!
-    @IBOutlet weak var messLogo: UIButton!
     
     @IBOutlet weak var addReceiverLabel: UIButton!
     
@@ -99,7 +98,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         else {
             
             
-            promptBiometricTouchIDForEncryption()
+            promptBiometricTouchID()
             
         }
     }
@@ -118,7 +117,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     func updateMessageReceiver(user: User){
         
-        messageReceiverTextLabel.text = user.email
+        messageReceiverTextLabel.text = user.username
         messageReceiverTextFieldPhoneNumber.text = user.phoneNumber
         identifierLabel.text = user.identifier
         
@@ -159,54 +158,55 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     //MARK: Touch ID for Encryption
     
-    func promptBiometricTouchIDForEncryption(){
+    func promptBiometricTouchID(){
         
         let context = LAContext()
         var error: NSError?
         
-        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error){
-            let reason = "Encryption Requires Identity Varification"
+        if context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error:&error) {
             
-            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [unowned self] (success: Bool, authenticationError: NSError?) in
+            // evaluate
+            
+            let reason = "Authenticate"
+            
+            context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: {
+                (success: Bool, authenticationError: NSError?) -> Void in
                 
-                
-                if success == true {
+                // check whether evaluation of fingerprint was successful
+                if success {
+                    let formatter = NSDateFormatter()
+                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                    formatter.timeStyle = .LongStyle
                     
+                    let timeStamp = formatter.stringFromDate(NSDate())
+                    
+                    self.presentModalMessageComposeViewController(true)
+                    
+                    let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
+                    
+                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    
+                    var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email, timeSent: "\(timeStamp)")
+                    message.save()
+                    
+                } else {
+                    
+                   
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        
-                        
-                        let formatter = NSDateFormatter()
-                        formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                        formatter.timeStyle = .LongStyle
-                        
-                        let timeStamp = formatter.stringFromDate(NSDate())
-                        
-                        self.presentModalMessageComposeViewController(true)
-                        
-                        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
-                        
-                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                        
-                        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email, timeSent: "\(timeStamp)")
-                        message.save()
-                        
-                    })
-                    
-                    
-                    
-                    
-                    
-                }else{
-                    
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.promptUserPasswordAlert()
+                    self.promptUserPasswordAlert()
                     })
                 }
+            })
+            
+        } else {
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-            }
+                self.touchIDNotAvailableAlert()
+                
+            })
+            
         }
-        
     }
     
     //MARK: Encrypt Original Message Algorithym
@@ -227,11 +227,26 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
+    func touchIDNotAvailableAlert() {
+        let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
+        let touchIDAlertCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let touchIDAlertAction = UIAlertAction(title: "Enter Password", style: .Default) { (_) -> Void in
+            self.promptUserPasswordAlert()
+        }
+        
+        touchIDAlert.addAction(touchIDAlertAction)
+        touchIDAlert.addAction(touchIDAlertCancel)
+        presentViewController(touchIDAlert, animated: true, completion: nil)
+        
+    }
+    
+    
     //MARK:  Touch ID Not Available
+    
     
     func promptUserPasswordAlert(){
         
-        let passwordAlert = UIAlertController(title: "Enter Password", message: " ", preferredStyle: .Alert)
+        let passwordAlert = UIAlertController(title: "Enter Password", message: "Touch ID is not available on your device.", preferredStyle: .Alert)
         passwordAlert.addTextFieldWithConfigurationHandler { (passwordField) -> Void in
             
             passwordField.placeholder = "Password"
@@ -242,30 +257,36 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         let passwordAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         let passwordAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
             
-            
-            
             if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
                 
                 
-                if self.messageReceiverTextLabel.text == nil {
-                    
-                    let unableToSendAlert = UIAlertController(title: "Your Message does not have a recipient", message: " ", preferredStyle: .Alert)
-                    let unableToSendAlertConfirmation =  UIAlertAction(title: "Add", style: .Default, handler: { (_) -> Void in
-                        
-                        self.performSegueWithIdentifier("toContactsFromEncryption", sender: nil)
-                    })
-                    
-                    unableToSendAlert.addAction(unableToSendAlertConfirmation)
-                    
-                    self.presentViewController(unableToSendAlert, animated: true, completion: nil)
-                    
-                    
-                }
+                
+                let formatter = NSDateFormatter()
+                formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                formatter.timeStyle = .LongStyle
+                
+                let timeStamp = formatter.stringFromDate(NSDate())
+                
+                self.presentModalMessageComposeViewController(true)
+                
+                let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
+                
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                
+                var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
+                message.save()
+
+                
+                
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                
+                print("User Fallback Validated")
+                
                 
                 
             }else{
                 
-                passwordAlert.textFields?[0].text = ""
+                passwordAlert.textFields?[0].text = " "
                 
                 
             }
@@ -297,7 +318,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         originalMessageTextView.alpha = 0.0
         totalCharactersLabel.alpha = 0.0
         encryptButtonLabel.alpha = 0.0
-        messLogo.alpha = 0.0
+        
         addReceiverLabel.alpha = 0.0
         
         
@@ -309,7 +330,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
             self.originalMessageTextView.alpha = 1.0
             self.totalCharactersLabel.alpha = 1.0
             self.encryptButtonLabel.alpha = 1.0
-            self.messLogo.alpha = 1.0
+            
             self.addReceiverLabel.alpha = 1.0
             
         }
@@ -366,6 +387,10 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     
 }
+
+
+
+
 
 
 

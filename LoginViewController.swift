@@ -9,6 +9,7 @@
 import UIKit
 import LocalAuthentication
 import AudioToolbox
+import Firebase
 
 @IBDesignable
 
@@ -62,6 +63,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    @IBAction func forgotPasswordButtonTapped(sender: AnyObject) {
+        
+        
+        let ref = Firebase(url: "https://messapp.firebaseio.com")
+        ref.resetPasswordForUser(emailTextField.text!, withCompletionBlock: { error in
+            if error != nil {
+                
+                print("there was an error signing in")
+                
+            } else {
+                
+                let emailSentAlert = UIAlertController(title: "Email Sent", message: "The email provided has received a temporary password", preferredStyle: .Alert)
+                let emailSentAlertCancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                
+                
+                emailSentAlert.addAction(emailSentAlertCancel)
+                
+                self.presentViewController(emailSentAlert, animated: true, completion: nil)
+            }
+        })
+        
+        
+    }
+    
     @IBAction func enterButtonTapped(sender: AnyObject) {
         
         UserController.authenticateUser(emailTextField.text!, password:passwordTextField.text!, completion: { (success, user) -> Void in
@@ -69,14 +95,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 
-//                self.deAnimateView()
+               self.deAnimateView()
                 
                 self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
                 
             } else {
                 
                 let incompleteLoginAlert = UIAlertController(title: "User Does Not Exist", message: "Try again, or sign up!", preferredStyle: .Alert)
-                let incompleteLoginAlertRedoAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
+                let incompleteLoginAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
                     
                     self.passwordTextField.text = ""
                     
@@ -105,7 +131,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             
-            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            UIView.animateWithDuration(1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height + keyboardSize.height - 400)
                
                 // fade irrelevant content
@@ -123,8 +149,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func keyboardWillHide(notification: NSNotification) {
         
         
-        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             self.view.frame = self.initialFrame!
+            
             }, completion: { (_) -> Void in
         })
     }

@@ -83,7 +83,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
-
+    
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -104,8 +104,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         senderTextLabel.text = message.messageSender
         
-//        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Left, animated: true)
-        
         collectionViewAppearance()
         
         cell.messageDateLabel.text = message.timeSent
@@ -125,7 +123,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-
+        
         
         return CGSize(width: collectionView.frame.width - 10, height: collectionView.frame.height )
     }
@@ -157,36 +155,34 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         let passwordAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         let passwordAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
             
-        
+            if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
                 
-                if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
+                
+                
+                let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+                
+                let message = self.arrayOfMessageDictionaries![indexPath!.item]
+                
+                let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
+                    cell.messageTextView.text = message.originalMessage
                     
-                    
-                    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-                    
-                    let message = self.arrayOfMessageDictionaries![indexPath!.item]
-                    
-                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        
-                        cell.messageTextView.text = message.originalMessage
-                        
-                        cell.messageDateLabel.hidden = false
-                    })
-                    
-                    
-                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                    
-                    print("User Fallback Validated")
-                    
-                    
-                    
-                }else{
-                    
-                    passwordAlert.textFields?[0].text = " "
-                    
+                    cell.messageDateLabel.hidden = false
+                })
+                
+                
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                
+                print("User Fallback Validated")
+                
+                
+                
+            }else{
+                
+                passwordAlert.textFields?[0].text = " "
+                
                 
             }
             
@@ -231,28 +227,28 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     })
                     
-                    
-                    
                 } else {
                     
-                    print("User canceled touch ID")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        self.promptUserPasswordAlert()
+                        
+                    })
                 }
             })
-       
+            
         } else {
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
-            self.touchIDNotAvailableAlert()
             
-            })
+            print("User canceled touch ID")
             
         }
     }
     
     
     //MARK: Appearance
-
+    
     
     func animateView(){
         

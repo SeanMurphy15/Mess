@@ -40,7 +40,7 @@ class SettingsViewController: UIViewController {
     
     func setCurrentUser(){
         
-        currentUserTextLabel.text = UserController.sharedController.currentUser.email
+        currentUserTextLabel.text = UserController.sharedController.currentUser.username
         
     }
 
@@ -200,7 +200,7 @@ class SettingsViewController: UIViewController {
             
             }, completion: nil)
         
-        // Make Navigation controller translucent and fades in
+        // Make Navigation bar translucent and fades in
         
         navigationController?.navigationBar.alpha = 0.0
         

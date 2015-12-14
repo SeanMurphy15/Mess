@@ -76,11 +76,20 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         }
         
         
-        cell.textLabel!.text = user.email
+        cell.textLabel!.text = user.username
         
         
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        
+        cell?.selectionStyle = .None
+        
     }
     
     
@@ -100,12 +109,6 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
     }
     
-    static func animateReceiverLabel(){
-        
-       
-    }
-
-   
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

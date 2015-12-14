@@ -14,8 +14,10 @@ struct User: Equatable, FirebaseType {
     private let emailKey = "email"
     private let phoneNumberKey = "phoneNumber"
     private let passwordKey = "password"
+    private let usernameKey = "username"
     
     var email = ""
+    var username: String?
     var phoneNumber: String?
     var password: String?
     var identifier: String?
@@ -33,6 +35,11 @@ struct User: Equatable, FirebaseType {
             json.updateValue(password, forKey: passwordKey)
         }
         
+        
+        if let username = username {
+            json.updateValue(username, forKey: usernameKey)
+        }
+        
         return json
     }
     
@@ -43,14 +50,16 @@ struct User: Equatable, FirebaseType {
         self.email = email
         self.phoneNumber = json[phoneNumberKey] as? String
         self.password = json[passwordKey] as? String
+        self.username = json[usernameKey] as? String
         self.identifier = identifier
     }
     
-    init(email: String, uid: String, phoneNumber: String?, password: String?) {
+    init(email: String, uid: String, phoneNumber: String?, password: String?, username: String?) {
         
         self.email = email
         self.phoneNumber = phoneNumber
         self.password = password
+        self.username = username
         self.identifier = uid
     }
 }

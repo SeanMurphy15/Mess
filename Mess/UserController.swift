@@ -71,8 +71,8 @@ class UserController {
         }
     }
     
-    static func updateUser(user: User, email: String, phoneNumber: String?, password: String?, completion: (success: Bool, user: User?) -> Void) {
-        var updatedUser = User(email: user.email, uid: user.identifier!, phoneNumber : phoneNumber, password: password)
+    static func updateUser(user: User, email: String, phoneNumber: String?, password: String?, username: String, completion: (success: Bool, user: User?) -> Void) {
+        var updatedUser = User(email: user.email, uid: user.identifier!, phoneNumber : phoneNumber, password: password, username: username)
         updatedUser.save()
         
         UserController.userForIdentifier(user.identifier!) { (user) -> Void in
@@ -108,7 +108,7 @@ class UserController {
         }
     }
     
-    static func createUser(email: String, password: String, phoneNumber: String?, completion: (success: Bool, user: User?) -> Void) {
+    static func createUser(email: String, password: String, phoneNumber: String?,username: String?, completion: (success: Bool, user: User?) -> Void) {
         
         FirebaseController.base.createUser(email, password: password) { (error, response) -> Void in
             
@@ -118,7 +118,7 @@ class UserController {
                 completion(success: false, user: nil)
             } else {
                 if let uid = response["uid"] as? String {
-                    var user = User(email: email, uid: uid, phoneNumber: phoneNumber, password: password)
+                    var user = User(email: email, uid: uid, phoneNumber: phoneNumber, password: password,username: username)
                     user.save()
                     
                     authenticateUser(email, password: password, completion: { (success, user) -> Void in

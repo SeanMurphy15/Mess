@@ -13,6 +13,7 @@ import LocalAuthentication
 
 class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     
+    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var messLogo: UIButton!
     
@@ -69,7 +70,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
             
-            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, completion: { (success, user) -> Void in
+            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success, user) -> Void in
                 
                 self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
                
@@ -149,6 +150,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     func animateView(){
     
         self.emailTextField.center.x = self.view.frame.width + 400
+        self.usernameTextField.center.x = self.view.frame.width - 700
         self.passwordTextField.center.x = self.view.frame.width + 400
         self.reEnterPasswordTextField.center.x = self.view.frame.width - 700
         self.phoneNumberTextField.center.x = self.view.frame.width - 700
@@ -162,6 +164,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         UIView.animateWithDuration(2.5, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
             
             self.emailTextField.center.x = self.view.frame.width / 2
+            self.usernameTextField.center.x = self.view.frame.width / 2
             self.passwordTextField.center.x = self.view.frame.width / 2
             self.reEnterPasswordTextField.center.x = self.view.frame.width / 3
             self.phoneNumberTextField.center.x = self.view.frame.width / 3
@@ -178,6 +181,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     func deAnimateView(){
         
         self.emailTextField.center.x = self.view.frame.width / 2
+        self.usernameTextField.center.x = self.view.frame.width / 2
         self.passwordTextField.center.x = self.view.frame.width / 2
         self.reEnterPasswordTextField.center.x = self.view.frame.width / 2
         self.phoneNumberTextField.center.x = self.view.frame.width / 2
@@ -191,6 +195,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
             
             self.emailTextField.center.x = self.view.frame.width + 300
+            self.usernameTextField.center.x = self.view.frame.width - 700
             self.passwordTextField.center.x = self.view.frame.width + 300
             self.reEnterPasswordTextField.center.x = self.view.frame.width - 500
             self.phoneNumberTextField.center.x = self.view.frame.width - 500
