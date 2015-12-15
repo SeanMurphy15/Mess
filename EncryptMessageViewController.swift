@@ -361,7 +361,11 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             
             UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + self.navigationController!.navigationBar.frame.size.height - 10)
+                
+                if let NC = self.navigationController {
+                
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + NC.navigationBar.frame.size.height - 10)
+                }
                 }, completion: { (_) -> Void in
             })
             //            self.view.frame.origin.y -= keyboardSize.height
@@ -370,6 +374,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         
     }
     
+        
     func keyboardWillHide(notification: NSNotification) {
         
         

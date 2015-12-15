@@ -108,7 +108,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         cell.messageDateLabel.text = message.timeSent
         
-        cell.messageDateLabel.hidden = true
+        cell.messageDateLabel.alpha = 0.0
         
         return cell
     }
@@ -169,7 +169,12 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     cell.messageTextView.text = message.originalMessage
                     
-                    cell.messageDateLabel.hidden = false
+                    UIView.animateWithDuration(1.0, animations: { () -> Void in
+                        
+                        cell.messageDateLabel.alpha = 1.0
+                    })
+                    
+                    
                 })
                 
                 
@@ -222,7 +227,10 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                         
                         cell.messageTextView.text = message.originalMessage
                         
-                        cell.messageDateLabel.hidden = false
+                        UIView.animateWithDuration(1.0, animations: { () -> Void in
+                            
+                            cell.messageDateLabel.alpha = 1.0
+                        })
                         
                         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     })
