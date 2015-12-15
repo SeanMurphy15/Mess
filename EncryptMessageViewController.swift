@@ -189,6 +189,11 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                     var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email, timeSent: "\(timeStamp)")
                     message.save()
                     
+                    UIView.animateWithDuration(2.0, animations: { () -> Void in
+                        
+                        self.originalMessageTextView.alpha = 0.0
+                    })
+                    
                 } else {
                     
                    
@@ -226,6 +231,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         return randomString
     }
     
+    //MARL: Touch ID not available alert
     
     func touchIDNotAvailableAlert() {
         let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
@@ -241,7 +247,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
-    //MARK:  Touch ID Not Available
+    //MARK:  Touch ID Not Available or password button fallback is pressed
     
     
     func promptUserPasswordAlert(){
@@ -259,8 +265,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
             
             if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
                 
-                
-                
                 let formatter = NSDateFormatter()
                 formatter.dateStyle = NSDateFormatterStyle.LongStyle
                 formatter.timeStyle = .LongStyle
@@ -276,12 +280,12 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                 var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
                 message.save()
 
-                
-                
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 
-                print("User Fallback Validated")
-                
+                UIView.animateWithDuration(2.0, animations: { () -> Void in
+                    
+                    self.originalMessageTextView.alpha = 0.0
+                })
                 
                 
             }else{
@@ -307,9 +311,6 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     func viewControllerAppearance(){
         
         originalMessageTextView.layer.cornerRadius = 5.0
-        
-        
-        
         
         // Make Navigation controller translucent and fade in View items
         

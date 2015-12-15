@@ -37,9 +37,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         fetchMessagesForUser()
         animateView()
         
-        
-        
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -110,6 +109,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         cell.messageDateLabel.alpha = 0.0
         
+        
         return cell
     }
     
@@ -126,6 +126,33 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         
         return CGSize(width: collectionView.frame.width - 10, height: collectionView.frame.height )
+    }
+    
+    
+    func showOriginalMessage(){
+        
+        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+        
+        let message = self.arrayOfMessageDictionaries![indexPath!.item]
+        
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            cell.messageTextView.text = message.originalMessage
+            
+            cell.messageDateLabel.alpha = 0.0
+            
+            cell.messageTextView.alpha = 0.0
+            
+            UIView.animateWithDuration(2.0, animations: { () -> Void in
+                
+                cell.messageDateLabel.alpha = 1.0
+                
+                cell.messageTextView.alpha = 1.0
+            })
+        })
+        
     }
     
     
@@ -158,31 +185,9 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
             if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
                 
                 
-                
-                let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
-                
-                let message = self.arrayOfMessageDictionaries![indexPath!.item]
-                
-                let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-                    cell.messageTextView.text = message.originalMessage
-                    
-                    UIView.animateWithDuration(1.0, animations: { () -> Void in
-                        
-                        cell.messageDateLabel.alpha = 1.0
-                    })
-                    
-                    
-                })
-                
+                self.showOriginalMessage()
                 
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                
-                print("User Fallback Validated")
-                
-                
                 
             }else{
                 
@@ -225,12 +230,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
-                        cell.messageTextView.text = message.originalMessage
+                        self.showOriginalMessage()
                         
-                        UIView.animateWithDuration(1.0, animations: { () -> Void in
-                            
-                            cell.messageDateLabel.alpha = 1.0
-                        })
                         
                         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     })
