@@ -240,8 +240,13 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         } else {
             
             
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                self.touchIDNotAvailableAlert()
+                
+            })
             
-            print("User canceled touch ID")
+            
             
         }
     }
@@ -252,6 +257,11 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func animateView(){
         
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clearColor()
         
         navigationController?.navigationBar.alpha = 0.0
         fromTextLabel.alpha = 0.0

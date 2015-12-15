@@ -70,7 +70,9 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
             
-            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success, user) -> Void in
+            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success, var user) -> Void in
+                
+               user?.save()
                 
                 self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
                
@@ -81,7 +83,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         else{
             
             let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "You have not filled in all the boxes", preferredStyle: .Alert)
-            let incompleteSignupAlertRedoAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
+            let incompleteSignupAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
                 
             }
             
@@ -94,7 +96,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         if passwordTextField.text! != reEnterPasswordTextField.text! {
             
             let passwordAlert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .ActionSheet)
-            let redoPasswordAction = UIAlertAction(title: "Redo", style: .Default) { (_) -> Void in
+            let redoPasswordAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
                 
                 self.resetPasswordTextFields()
                 

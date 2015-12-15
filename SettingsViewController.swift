@@ -85,10 +85,10 @@ class SettingsViewController: UIViewController {
                             self.passwordError()
                             
                         } else {
-                            
+                            self.user.password = self.newPasswordTextField.text
                             self.user.save()
                             
-                            self.performSegueWithIdentifier("savedFromSettings", sender: nil)
+//                            self.performSegueWithIdentifier("savedFromSettings", sender: nil)
                         }
                 })
                 
@@ -118,7 +118,7 @@ class SettingsViewController: UIViewController {
                 self.user.save()
                 
                 
-                self.performSegueWithIdentifier("savedFromSettings", sender: nil)
+//                self.performSegueWithIdentifier("savedFromSettings", sender: nil)
                 
             })
             
@@ -132,6 +132,8 @@ class SettingsViewController: UIViewController {
         }
         
     }
+    
+    
     
     
     //MARK: Delete Account with error handling alert

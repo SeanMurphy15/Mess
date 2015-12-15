@@ -24,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var forgotPasswordLabel: UIButton!
     
     var initialFrame: CGRect?
     
@@ -71,7 +72,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ref.resetPasswordForUser(emailTextField.text!, withCompletionBlock: { error in
             if error != nil {
                 
-                print("there was an error signing in")
+                let emailAlert = UIAlertController(title: "Error", message: "Something went wrong. Did you provide the correct email address?", preferredStyle: .Alert)
+                let emailAlertCancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                
+                
+                emailAlert.addAction(emailAlertCancel)
+                
+                self.presentViewController(emailAlert, animated: true, completion: nil)
+
                 
             } else {
                 
@@ -176,7 +184,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.inPlainSight.center.x = self.view.frame.height - 900
         self.loginButton.center.x = 900
         self.cancelButtonLabel.center.x = -400
-        
+        self.forgotPasswordLabel.center.x = self.view.frame.height - 900
         
         
         UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
@@ -185,6 +193,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.passwordTextField.center.x = self.view.frame.width / 2
             self.messLogo.center.x = self.view.frame.height / 3.5
             self.inPlainSight.center.x = self.view.frame.height / 3.5
+            self.forgotPasswordLabel.center.x = self.view.frame.height / 3.5
            self.loginButton.center.x = 525
           self.cancelButtonLabel.center.x = -200
             
@@ -199,6 +208,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.passwordTextField.center.x = self.view.frame.width / 2
         self.messLogo.center.x = self.view.frame.height / 3.5
         self.inPlainSight.center.x = self.view.frame.height / 3.5
+          self.forgotPasswordLabel.center.x = self.view.frame.height / 3.5
         self.loginButton.center.x = self.view.frame.width / 2
         self.cancelButtonLabel.center.x = self.view.frame.width / 2
         
@@ -209,6 +219,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.passwordTextField.center.x = self.view.frame.width - 700
             self.messLogo.center.x = self.view.frame.height + 500
             self.inPlainSight.center.x = self.view.frame.height - 900
+            self.forgotPasswordLabel.center.x = self.view.frame.height - 900
             self.loginButton.center.x = 900
             self.cancelButtonLabel.center.x = -400
             

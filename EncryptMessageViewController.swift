@@ -246,7 +246,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     func promptUserPasswordAlert(){
         
-        let passwordAlert = UIAlertController(title: "Enter Password", message: "Touch ID is not available on your device.", preferredStyle: .Alert)
+        let passwordAlert = UIAlertController(title: "Enter Password", message: "", preferredStyle: .Alert)
         passwordAlert.addTextFieldWithConfigurationHandler { (passwordField) -> Void in
             
             passwordField.placeholder = "Password"
