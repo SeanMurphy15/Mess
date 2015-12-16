@@ -180,13 +180,11 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                     
                     let timeStamp = formatter.stringFromDate(NSDate())
                     
-                    self.presentModalMessageComposeViewController(true)
-                    
                     let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
                     
                     AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     
-                    var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.email, timeSent: "\(timeStamp)")
+                    var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
                     message.save()
                     
                     UIView.animateWithDuration(2.0, animations: { () -> Void in
@@ -194,11 +192,27 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                         self.originalMessageTextView.alpha = 0.0
                     })
                     
+                    self.presentModalMessageComposeViewController(true)
+                    
                 } else {
                     
-                   
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.promptUserPasswordAlert()
+                   dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        switch (authenticationError!.code) {
+                        case LAError.AuthenticationFailed.rawValue:
+                            self.promptUserPasswordAlert()
+                            break;
+                        case LAError.UserFallback.rawValue:
+                            self.promptUserPasswordAlert()
+                            break;
+                        case LAError.UserCancel.rawValue:
+                            break;
+                            
+                        default:
+                            break;
+                        }
+                        
+                        
                     })
                 }
             })

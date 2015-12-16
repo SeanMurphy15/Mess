@@ -70,7 +70,14 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 if let messageDictionary = snapshot.value as? [String: String] {
                     
                     let message = Message(json: messageDictionary, identifier: snapshot.key)
+                    
+                    
                     arrayOfReceivedMessages.append(message!)
+                    
+                    arrayOfReceivedMessages.sortInPlace({ (message1, message2) -> Bool in
+                        
+                        message1.identifier > message2.identifier
+                    })
                     
                     self.collectionView.reloadData()
                 }
@@ -96,6 +103,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("messageCell", forIndexPath: indexPath) as! MessageCollectionViewCell
         let message = self.arrayOfMessageDictionaries![indexPath.row]
+        
         cell.messageTextView.text = message.encryptedMessage!
         
         
@@ -224,9 +232,9 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 if success {
                     let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
                     
-                    let message = self.arrayOfMessageDictionaries![indexPath!.item]
+                    _ = self.arrayOfMessageDictionaries![indexPath!.item]
                     
-                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+                    _ = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
@@ -240,7 +248,20 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         
-                        self.promptUserPasswordAlert()
+                        switch (authenticationError!.code) {
+                        case LAError.AuthenticationFailed.rawValue:
+                            self.promptUserPasswordAlert()
+                            break;
+                        case LAError.UserFallback.rawValue:
+                            self.promptUserPasswordAlert()
+                            break;
+                        case LAError.UserCancel.rawValue:
+                            break;
+                            
+                        default:
+                            break;
+                        }
+                        
                         
                     })
                 }
