@@ -17,22 +17,5 @@ class MessageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var messageTextView: UITextView!
     
    
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        customCell()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        customCell()
-    }
-    
-    func customCell(){
-        
-//        messageTextView.layer.cornerRadius = 3.0
-        
-        
-        }
-    
+
 }

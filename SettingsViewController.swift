@@ -74,6 +74,10 @@ class SettingsViewController: UIViewController {
             
             let settingsAlert = UIAlertController(title: "Do you wish to change your Password?", message: " ", preferredStyle: .Alert)
             let cancelPasswordChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+                
+                self.newPasswordTextField.text = ""
+                self.reEnterNewPasswordTextField.text = ""
+                
             })
             let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
                 
@@ -111,18 +115,23 @@ class SettingsViewController: UIViewController {
             
             
             let settingsAlert = UIAlertController(title: "Do you wish to change your Phone Number?", message: "", preferredStyle: .Alert)
+            let settingsAlertActionCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+                self.newPhoneNumberTextField.text = ""
+                self.reEnterNewPhoneNumberTextField.text = ""
+            })
             let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
                 
                 self.user.phoneNumber = self.newPhoneNumberTextField.text
                 
                 self.user.save()
                 
-                
-//                self.performSegueWithIdentifier("savedFromSettings", sender: nil)
+                self.newPhoneNumberTextField.text = ""
+                self.reEnterNewPhoneNumberTextField.text = ""
                 
             })
             
             settingsAlert.addAction(settingsAlertAction)
+            settingsAlert.addAction(settingsAlertActionCancel)
             
             self.presentViewController(settingsAlert, animated: true, completion: nil)
             

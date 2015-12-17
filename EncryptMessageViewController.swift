@@ -33,7 +33,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     
     var initialFrame: CGRect?
     
-    // var currentMessageUser: User?
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,25 +174,8 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                 
                 // check whether evaluation of fingerprint was successful
                 if success {
-                    let formatter = NSDateFormatter()
-                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                    formatter.timeStyle = .LongStyle
                     
-                    let timeStamp = formatter.stringFromDate(NSDate())
-                    
-                    let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
-                    
-                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                    
-                    var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
-                    message.save()
-                    
-                    UIView.animateWithDuration(2.0, animations: { () -> Void in
-                        
-                        self.originalMessageTextView.alpha = 0.0
-                    })
-                    
-                    self.presentModalMessageComposeViewController(true)
+                    self.saveMessageWithAnimation()
                     
                 } else {
                     
@@ -279,28 +262,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
             
             if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
                 
-                let formatter = NSDateFormatter()
-                formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                formatter.timeStyle = .LongStyle
-                
-                let timeStamp = formatter.stringFromDate(NSDate())
-                
-                self.presentModalMessageComposeViewController(true)
-                
-                let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
-                
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                
-                var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
-                message.save()
-
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                
-                UIView.animateWithDuration(2.0, animations: { () -> Void in
-                    
-                    self.originalMessageTextView.alpha = 0.0
-                })
-                
+                self.saveMessageWithAnimation()
                 
             }else{
                 
@@ -319,12 +281,31 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
+    func saveMessageWithAnimation(){
+        
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+        formatter.timeStyle = .LongStyle
+        
+        let timeStamp = formatter.stringFromDate(NSDate())
+        
+        let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
+        
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
+        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
+        message.save()
+        
+        //self.presentModalMessageComposeViewController(true)
+    }
+    
+    
     //MARK: Appearance / animation
     
     
     func viewControllerAppearance(){
         
-        originalMessageTextView.layer.cornerRadius = 5.0
+         self.originalMessageTextView.layer.cornerRadius = 10.0
         
         // Make Navigation controller translucent and fade in View items
         

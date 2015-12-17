@@ -14,8 +14,12 @@ import AudioToolbox
 @IBDesignable
 
 class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    @IBOutlet weak var noMessagesTextLabel: UILabel!
     
+    
+    
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var fromTextLabel: UILabel!
     
     @IBOutlet weak var numberOfMessagesTextLabel: UILabel!
@@ -30,12 +34,16 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     var arrayOfUserMessageDictionaries = []
     var arrayOfMessageDictionaries: [Message]?
+    var time : Float = 0.0
+    var timer: NSTimer?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         arrayOfMessageDictionaries = []
         fetchMessagesForUser()
         animateView()
+        navigationBarAppearance()
         
     }
     
@@ -55,6 +63,10 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         self.performSegueWithIdentifier("toEncryptFromDecrypt", sender: nil)
     }
+    
+    
+    
+    //MARK: Get messages for user
     
     
     func fetchMessagesForUser() {
@@ -85,11 +97,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 
                 
             })
-        
-        
-    }
-    
-    
+        }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -106,12 +114,11 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
         cell.messageTextView.text = message.encryptedMessage!
         
+        self.collectionView.layer.borderColor = UIColor.whiteColor().CGColor
         
         numberOfEncryptedMessages.text? = String(arrayOfMessageDictionaries!.count)
         
         senderTextLabel.text = message.messageSender
-        
-        collectionViewAppearance()
         
         cell.messageDateLabel.text = message.timeSent
         
@@ -137,13 +144,26 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     
+    func setProgress() {
+        time += 1.0
+        progressView.progress = time / 5
+        if time >= 100 {
+            timer!.invalidate()
+        }
+        
+    }
+    
+    
     func showOriginalMessage(){
+        
         
         let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
         
         let message = self.arrayOfMessageDictionaries![indexPath!.item]
         
         let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+        
+        //let progressTime = Double(cell.messageTextView.text.characters.count)
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
@@ -153,16 +173,23 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
             
             cell.messageTextView.alpha = 0.0
             
+            self.collectionView.layer.borderColor = UIColor.greenColor().CGColor
+            
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            
             UIView.animateWithDuration(2.0, animations: { () -> Void in
                 
                 cell.messageDateLabel.alpha = 1.0
-                
                 cell.messageTextView.alpha = 1.0
+                
+                
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector:Selector("setProgress"), userInfo: nil, repeats: true)
             })
         })
         
     }
     
+    //MARK: Touch ID is not available
     
     func touchIDNotAvailableAlert() {
         let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
@@ -176,6 +203,9 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         presentViewController(touchIDAlert, animated: true, completion: nil)
         
     }
+    
+    
+    //MARL: Called when user fails touchID
     
     func promptUserPasswordAlert(){
         
@@ -195,7 +225,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 
                 self.showOriginalMessage()
                 
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                
                 
             }else{
                 
@@ -240,8 +270,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                         
                         self.showOriginalMessage()
                         
-                        
-                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     })
                     
                 } else {
@@ -285,8 +313,63 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     //MARK: Appearance
     
     
+    @IBAction func deleteButtonPressed(sender: AnyObject) {
+        
+        
+        let indexPath = self.collectionView.indexPathsForVisibleItems().first
+        
+        if self.arrayOfMessageDictionaries?.count > 0 {
+        
+        let message = self.arrayOfMessageDictionaries![indexPath!.item]
+            
+            
+            _ = self.collectionView.cellForItemAtIndexPath(indexPath!) as! MessageCollectionViewCell
+            
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: { () -> Void in
+                self.collectionView.center.x = self.view.frame.width - 600
+                //self.collectionView.alpha = 0.0
+                
+                }, completion: { (_) -> Void in
+                    
+                    UIView.animateWithDuration(0.5, animations: { () -> Void in
+                        self.collectionView.center.x = self.view.frame.width + 600
+                        self.collectionView.alpha = 1.0
+                        self.collectionView.layer.borderColor = UIColor.whiteColor().CGColor
+                    })
+                    
+                   if let indexPath = indexPath {
+                        message.delete()
+                        self.arrayOfMessageDictionaries?.removeAtIndex(indexPath.item)
+                        self.collectionView.reloadData()
+                        
+                    }
+            })
+                
+           
+        } else {
+        
+            let noMoreMessagesAlert = UIAlertController(title: "No Messages!", message: "Your inbox is empty", preferredStyle: .Alert)
+            let noMoreMessagesAlertCancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            
+            noMoreMessagesAlert.addAction(noMoreMessagesAlertCancel)
+            presentViewController(noMoreMessagesAlert, animated: true, completion: nil)
+        }
+        
+        
+        
+
+    }
+    
+    
     func animateView(){
         
+
+        collectionView.layer.borderWidth = 5.0
+        collectionView.layer.cornerRadius = 10.0
+        collectionView.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        
+
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -318,14 +401,9 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     
-    func collectionViewAppearance(){
+    func navigationBarAppearance(){
         
-        collectionView.layer.borderWidth = 5.0
-        collectionView.layer.cornerRadius = 5.0
-        collectionView.layer.borderColor = UIColor.whiteColor().CGColor
-        collectionView.layer.shadowColor = UIColor.blackColor().CGColor
-        
-        // Make Navigation controller translucent
+                // Make Navigation controller translucent
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
