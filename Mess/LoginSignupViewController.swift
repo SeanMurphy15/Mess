@@ -67,16 +67,16 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         //MARK: - Create new user
         
         
-        if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
+        if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
             
-            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success, var user) -> Void in
+            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success,var user) -> Void in
                 
-               user?.save()
+                user?.save()
                 
                 self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
-               
-                self.deAnimateView()
+                
+                
             })
             
         }
@@ -127,7 +127,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
                 
                 }, completion: { (_) -> Void in
             })
-           
+            
         }
         
         
@@ -146,11 +146,11 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         
     }
-        
+    
     //MARK: Animation
     
     func animateView(){
-    
+        
         self.emailTextField.center.x = self.view.frame.width + 400
         self.usernameTextField.center.x = self.view.frame.width - 700
         self.passwordTextField.center.x = self.view.frame.width + 400
@@ -160,10 +160,10 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         self.inPlainSight.center.x = self.view.frame.height - 700
         self.signupButtonLabel.center.x = self.view.frame.height + 300
         self.cancelButton.center.x = self.view.frame.height - 700
-
-
         
-        UIView.animateWithDuration(2.5, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+        
+        
+        UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
             
             self.emailTextField.center.x = self.view.frame.width / 2
             self.usernameTextField.center.x = self.view.frame.width / 2
@@ -176,38 +176,11 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
             self.cancelButton.center.x = self.view.frame.height / 2
             
             }, completion: nil)
-    
-    
+        
+        
     }
     
-    func deAnimateView(){
-        
-        self.emailTextField.center.x = self.view.frame.width / 2
-        self.usernameTextField.center.x = self.view.frame.width / 2
-        self.passwordTextField.center.x = self.view.frame.width / 2
-        self.reEnterPasswordTextField.center.x = self.view.frame.width / 2
-        self.phoneNumberTextField.center.x = self.view.frame.width / 2
-        self.messLogo.center.x = self.view.frame.height / 2
-        self.inPlainSight.center.x = self.view.frame.height / 2
-        self.signupButtonLabel.center.x = self.view.frame.height / 2
-        self.cancelButton.center.x = self.view.frame.height / 2
-        
-        
-        
-        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
-            
-            self.emailTextField.center.x = self.view.frame.width + 300
-            self.usernameTextField.center.x = self.view.frame.width - 700
-            self.passwordTextField.center.x = self.view.frame.width + 300
-            self.reEnterPasswordTextField.center.x = self.view.frame.width - 500
-            self.phoneNumberTextField.center.x = self.view.frame.width - 500
-            self.messLogo.center.x = self.view.frame.height + 300
-            self.inPlainSight.center.x = self.view.frame.height - 500
-            self.signupButtonLabel.center.x = self.view.frame.height + 500
-            self.cancelButton.center.x = self.view.frame.height - 500
-            
-            }, completion: nil)
     
-    }
-
+    
 }
+

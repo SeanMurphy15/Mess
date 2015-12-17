@@ -35,9 +35,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        animateView()
+    }
+    
+    
     override func viewDidAppear(animated: Bool) {
        
-         animateView()
+        
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -103,13 +108,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 
-               self.deAnimateView()
                 
                 self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
                 
             } else {
                 
-                let incompleteLoginAlert = UIAlertController(title: "User Does Not Exist", message: "Try again, or sign up!", preferredStyle: .Alert)
+                let incompleteLoginAlert = UIAlertController(title: "User Does Not Exist", message: "Try again, or sign up!", preferredStyle: .ActionSheet)
                 let incompleteLoginAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
                     
                     self.passwordTextField.text = ""
@@ -183,11 +187,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.messLogo.center.x = self.view.frame.height + 500
         self.inPlainSight.center.x = self.view.frame.height - 900
         self.loginButton.center.x = 900
-        self.cancelButtonLabel.center.x = -400
+        self.cancelButtonLabel.center.x = -600
         self.forgotPasswordLabel.center.x = self.view.frame.height - 900
         
         
-        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
             
             self.emailTextField.center.x = self.view.frame.width / 2
             self.passwordTextField.center.x = self.view.frame.width / 2
@@ -202,29 +206,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func deAnimateView(){
-        
-        self.emailTextField.center.x = self.view.frame.width / 2
-        self.passwordTextField.center.x = self.view.frame.width / 2
-        self.messLogo.center.x = self.view.frame.height / 3.5
-        self.inPlainSight.center.x = self.view.frame.height / 3.5
-          self.forgotPasswordLabel.center.x = self.view.frame.height / 3.5
-        self.loginButton.center.x = self.view.frame.width / 2
-        self.cancelButtonLabel.center.x = self.view.frame.width / 2
-        
-        
-        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
-            
-            self.emailTextField.center.x = self.view.frame.width + 500
-            self.passwordTextField.center.x = self.view.frame.width - 700
-            self.messLogo.center.x = self.view.frame.height + 500
-            self.inPlainSight.center.x = self.view.frame.height - 900
-            self.forgotPasswordLabel.center.x = self.view.frame.height - 900
-            self.loginButton.center.x = 900
-            self.cancelButtonLabel.center.x = -400
-            
-            }, completion: nil)
-        
-    }
     
 }

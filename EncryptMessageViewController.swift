@@ -296,7 +296,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
         message.save()
         
-        //self.presentModalMessageComposeViewController(true)
+        self.presentModalMessageComposeViewController(true)
     }
     
     

@@ -29,8 +29,6 @@
 		FF31DBFE1BFBDA6A00F49424 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFD1BFBDA6A00F49424 /* Security.framework */; };
 		FF31DC001BFBDA7D00F49424 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */; };
 		FF31DC021BFBDA9000F49424 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DC011BFBDA9000F49424 /* libicucore.tbd */; };
-		FF6CB8BE1C20DE1C00759B71 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CB8BD1C20DE1C00759B71 /* ExtensionString.swift */; };
-		FF6CB8C01C20E14700759B71 /* ExtensionDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6CB8BF1C20E14700759B71 /* ExtensionDate.swift */; };
 		FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */; };
 		FFEC3C891C17A7AC008A58BD /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */; };
 		FFFB030E1C0FBCA300F09FED /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */; };
@@ -74,8 +72,6 @@
 		FF31DBFD1BFBDA6A00F49424 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FF31DC011BFBDA9000F49424 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		FF6CB8BD1C20DE1C00759B71 /* ExtensionString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
-		FF6CB8BF1C20E14700759B71 /* ExtensionDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionDate.swift; sourceTree = "<group>"; };
 		FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsForUsersTableViewController.swift; sourceTree = "<group>"; };
 		FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -147,8 +143,6 @@
 				FF31DBC81BFAB79900F49424 /* SettingsViewController.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
 				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
-				FF6CB8BF1C20E14700759B71 /* ExtensionDate.swift */,
-				FF6CB8BD1C20DE1C00759B71 /* ExtensionString.swift */,
 				FFEC3C8B1C17A7F2008A58BD /* Contacts / Search */,
 				FFEC3C8A1C17A7D6008A58BD /* Views */,
 			);
@@ -286,14 +280,12 @@
 				FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */,
 				FF31DBC01BFAB56300F49424 /* User.swift in Sources */,
 				FF31DBC91BFAB79900F49424 /* SettingsViewController.swift in Sources */,
-				FF6CB8C01C20E14700759B71 /* ExtensionDate.swift in Sources */,
 				FF31DBD21BFAB94400F49424 /* UserController.swift in Sources */,
 				FF31DBC71BFAB76800F49424 /* ContactsTableViewController.swift in Sources */,
 				FF31DBCB1BFAB7D000F49424 /* DecryptMessageViewController.swift in Sources */,
 				FF31DBBE1BFAB54F00F49424 /* Message.swift in Sources */,
 				FF31DBC31BFAB6AA00F49424 /* LoginSignupViewController.swift in Sources */,
 				FF31DBCF1BFAB90700F49424 /* MessageController.swift in Sources */,
-				FF6CB8BE1C20DE1C00759B71 /* ExtensionString.swift in Sources */,
 				FF31DBAC1BFA6D3D00F49424 /* AppDelegate.swift in Sources */,
 				FF31DBCD1BFAB7E500F49424 /* EncryptMessageViewController.swift in Sources */,
 				FFEC3C891C17A7AC008A58BD /* InitialViewController.swift in Sources */,

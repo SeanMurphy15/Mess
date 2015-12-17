@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         
         animateView()
     }
@@ -198,7 +198,7 @@ class SettingsViewController: UIViewController {
         
         
         
-        UIView.animateWithDuration(2.5, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+       UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
             
             self.newPasswordTextField.center.x = self.view.frame.width / 2
             self.reEnterNewPasswordTextField.center.x = self.view.frame.width / 2

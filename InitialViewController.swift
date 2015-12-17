@@ -37,12 +37,12 @@ class InitialViewController: UIViewController {
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
         
-        self.deAnimateView()
+        
     }
     
     @IBAction func createAccountButtonTapped(sender: AnyObject) {
         
-        self.deAnimateView()
+        
     }
     
     
@@ -58,7 +58,7 @@ class InitialViewController: UIViewController {
         
         
         
-        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
             
             self.createAccountLabel.center.x = self.view.frame.width / 2
             self.loginButton.center.x = self.view.frame.width / 8
@@ -70,27 +70,6 @@ class InitialViewController: UIViewController {
         
     }
     
-    func deAnimateView(){
-        
-        self.createAccountLabel.center.x = self.view.frame.width / 2
-        self.loginButton.center.x = self.view.frame.width / 2
-        self.messLogo.center.x = self.view.frame.height / 2
-        self.inPlainSight.center.x = self.view.frame.height / 2
-        
-        
-        
-        UIView.animateWithDuration(2.0, delay: 0.75, usingSpringWithDamping: 0.5, initialSpringVelocity: 5.0, options: [], animations: { () -> Void in
-            
-            
-            self.createAccountLabel.center.x = self.view.frame.width + 300
-            self.loginButton.center.x = self.view.frame.width - 500
-            self.messLogo.center.x = self.view.frame.height + 300
-            self.inPlainSight.center.x = self.view.frame.height - 500
-            
-            
-            }, completion: nil)
-        
-    }
     
 }
 
