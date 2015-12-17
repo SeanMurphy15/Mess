@@ -16,6 +16,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var messageTextView: UITextView!
     
+    @IBOutlet weak var decryptButtonOverlayLabel: UIButton!
    
 
 }

@@ -16,6 +16,9 @@ import AudioToolbox
 class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     
+   
+   
+   
     
     @IBOutlet weak var deleteButton: UIButton!
     
@@ -108,6 +111,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
+    //MARK: Configure Cell in CollectionView
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("messageCell", forIndexPath: indexPath) as! MessageCollectionViewCell
         let message = self.arrayOfMessageDictionaries![indexPath.row]
@@ -123,6 +128,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         cell.messageDateLabel.text = message.timeSent
         
         cell.messageDateLabel.alpha = 0.0
+        
+        cell.decryptButtonOverlayLabel.alpha = 1.0
         
         
         return cell
@@ -157,7 +164,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     func showOriginalMessage(){
         
         
-        let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+        let indexPath = self.collectionView.indexPathsForVisibleItems().first
         
         let message = self.arrayOfMessageDictionaries![indexPath!.item]
         
@@ -181,6 +188,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 
                 cell.messageDateLabel.alpha = 1.0
                 cell.messageTextView.alpha = 1.0
+                cell.decryptButtonOverlayLabel.alpha = 0.0
                 
                 
                 self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector:Selector("setProgress"), userInfo: nil, repeats: true)
@@ -188,6 +196,15 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         })
         
     }
+    
+    @IBAction func decryptOverlayButtonPressed(sender: AnyObject) {
+        
+        promptBiometricTouchID()
+        
+        
+    }
+    
+    
     
     //MARK: Touch ID is not available
     
@@ -260,7 +277,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 
                 // check whether evaluation of fingerprint was successful
                 if success {
-                    let indexPath = self.collectionView.indexPathsForSelectedItems()?.first
+                    let indexPath = self.collectionView.indexPathsForVisibleItems().first
                     
                     _ = self.arrayOfMessageDictionaries![indexPath!.item]
                     
