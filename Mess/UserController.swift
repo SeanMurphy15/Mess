@@ -87,6 +87,12 @@ class UserController {
     }
     
     
+    static func practiceFunc(email: String, password: String) -> Bool{
+        
+        return true
+    }
+    
+    
     static func authenticateUser(email: String, password: String, completion: (success: Bool, user: User?) -> Void) {
         
         FirebaseController.base.authUser(email, password: password) { (error, response) -> Void in
@@ -108,24 +114,24 @@ class UserController {
         }
     }
     
-    static func createUser(email: String, password: String, phoneNumber: String?,username: String?, completion: (success: Bool, user: User?) -> Void) {
+    static func createUser(email: String, password: String, phoneNumber: String?,username: String?, completion: (success: Bool, user: User?, error: NSError?) -> Void) {
         
         FirebaseController.base.createUser(email, password: password) { (error, response) -> Void in
             
             
             if !(error == nil) {
                 print(error.localizedDescription)
-                completion(success: false, user: nil)
+                completion(success: false, user: nil, error: error)
             } else {
                 if let uid = response["uid"] as? String {
                     var user = User(email: email, uid: uid, phoneNumber: phoneNumber, password: password,username: username)
                     user.save()
                     
                     authenticateUser(email, password: password, completion: { (success, user) -> Void in
-                        completion(success: success, user: user)
+                        completion(success: success, user: user, error: nil)
                     })
                 } else {
-                    completion(success: false, user: nil)
+                    completion(success: false, user: nil, error: nil)
                 }
             }
         }

@@ -70,32 +70,34 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
             
-            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success,var user) -> Void in
+            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success, var user, error) -> Void in
                 
-                user?.save()
+                if success {
+                    user?.save()
+                    
+                    self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
+                    
+                } else {
+                    if let error = error {
+                       
+                    let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "\(error.localizedDescription)", preferredStyle: .Alert)
+                    let incompleteSignupAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
+                        
+                    }
+                    
+                    incompleteSignupAlert.addAction(incompleteSignupAlertRedoAction)
+                    
+                    self.presentViewController(incompleteSignupAlert, animated: true, completion: nil)
+                }
                 
-                self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
-                
-                
+                }
             })
-            
-        }
-        else{
-            
-            let incompleteSignupAlert = UIAlertController(title: "Incomplete Submission", message: "You have not filled in all the boxes", preferredStyle: .Alert)
-            let incompleteSignupAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
-                
-            }
-            
-            incompleteSignupAlert.addAction(incompleteSignupAlertRedoAction)
-            
-            presentViewController(incompleteSignupAlert, animated: true, completion: nil)
             
         }
         
         if passwordTextField.text! != reEnterPasswordTextField.text! {
             
-            let passwordAlert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .ActionSheet)
+            let passwordAlert = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .Alert)
             let redoPasswordAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
                 
                 self.resetPasswordTextFields()
@@ -119,7 +121,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             
-            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + 20)
                 
                 self.inPlainSight.hidden = true
