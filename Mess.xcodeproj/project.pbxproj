@@ -175,6 +175,10 @@
 		FF31DC031BFBDAA600F49424 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF1A98FF1C23A01500ACF306 /* Fabric.framework */,
+				FF1A99001C23A01500ACF306 /* DigitsKit.framework */,
+				FF1A99011C23A01500ACF306 /* DigitsKitResources.bundle */,
+				FF1A99021C23A01500ACF306 /* TwitterCore.framework */,
 				FF31DBF41BFBD9E200F49424 /* Firebase.framework */,
 				FF31DC011BFBDA9000F49424 /* libicucore.tbd */,
 				FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */,
@@ -190,10 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */,
-				FF1A98FF1C23A01500ACF306 /* Fabric.framework */,
-				FF1A99001C23A01500ACF306 /* DigitsKit.framework */,
-				FF1A99011C23A01500ACF306 /* DigitsKitResources.bundle */,
-				FF1A99021C23A01500ACF306 /* TwitterCore.framework */,
 			);
 			name = Views;
 			sourceTree = "<group>";

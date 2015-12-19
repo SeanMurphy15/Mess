@@ -35,7 +35,13 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         Digits.sharedInstance().logOut()
         
+        let userID = UIDevice.currentDevice().identifierForVendor?.UUIDString
         
+// 0B6B37AE-DF15-425D-8F6D-5C0E7D1D234B
+// 0B6B37AE-DF15-425D-8F6D-5C0E7D1D234B
+        
+        
+        print("This is the user ID: \(userID)")
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)

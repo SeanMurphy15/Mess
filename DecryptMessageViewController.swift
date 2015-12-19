@@ -62,11 +62,11 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func createEncryptedMessageTapped(sender: AnyObject) {
-        
-        self.performSegueWithIdentifier("toEncryptFromDecrypt", sender: nil)
-    }
-    
+//    @IBAction func createEncryptedMessageTapped(sender: AnyObject) {
+//        
+//        self.performSegueWithIdentifier("toEncryptFromDecrypt", sender: nil)
+//    }
+//    
     
     
     //MARK: Get messages for user
@@ -74,9 +74,9 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     func fetchMessagesForUser() {
         
-        
+        //UserController.sharedController.currentUser.identifier
+
         let currentUserIdentifier = UserController.sharedController.currentUser.identifier
-        
         let ref = Firebase(url:"https://messapp.firebaseio.com/messages")
         var arrayOfReceivedMessages = [Message]()
         ref.queryOrderedByChild("messageReceiver").queryEqualToValue(currentUserIdentifier).queryLimitedToLast(100)
@@ -151,15 +151,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     
-    func setProgress() {
-        time += 1.0
-        progressView.progress = time / 5
-        if time >= 100 {
-            timer!.invalidate()
-        }
-        
-    }
-    
     
     func showOriginalMessage(){
         
@@ -222,7 +213,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     
-    //MARL: Called when user fails touchID
+    //MARK: Called when user fails touchID
     
     func promptUserPasswordAlert(){
         
