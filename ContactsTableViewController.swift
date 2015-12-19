@@ -98,7 +98,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         let resultsViewController = searchController.searchResultsController as! SearchResultsForUsersTableViewController
         
-        resultsViewController.filteredUsers = userDataSource.filter({ $0.email.lowercaseString.containsString(searchTerm) })
+        resultsViewController.filteredUsers = userDataSource.filter({ $0.username!.lowercaseString.containsString(searchTerm) })
         resultsViewController.tableView.reloadData()
     }
     
@@ -159,7 +159,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         
         let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, -500, 0, 0)
         cell.layer.transform = rotationTransform
-        UIView.animateWithDuration(1.0) { () -> Void in
+        UIView.animateWithDuration(0.5) { () -> Void in
             
             cell.layer.transform = CATransform3DIdentity
             

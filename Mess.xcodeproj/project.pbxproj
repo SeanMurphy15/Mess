@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		FF1311251C08F54800D016E3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1311241C08F54800D016E3 /* LoginViewController.swift */; };
+		FF1A99031C23A01500ACF306 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1A98FF1C23A01500ACF306 /* Fabric.framework */; };
+		FF1A99041C23A01500ACF306 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1A99001C23A01500ACF306 /* DigitsKit.framework */; };
+		FF1A99051C23A01500ACF306 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FF1A99011C23A01500ACF306 /* DigitsKitResources.bundle */; };
+		FF1A99061C23A01500ACF306 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1A99021C23A01500ACF306 /* TwitterCore.framework */; };
 		FF31DBAC1BFA6D3D00F49424 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31DBAB1BFA6D3D00F49424 /* AppDelegate.swift */; };
 		FF31DBB11BFA6D3D00F49424 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF31DBAF1BFA6D3D00F49424 /* Main.storyboard */; };
 		FF31DBB31BFA6D3D00F49424 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF31DBB21BFA6D3D00F49424 /* Assets.xcassets */; };
@@ -48,7 +52,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0FE7194ABBBC2AC1DDD4822F /* Pods_Mess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1311241C08F54800D016E3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		FF1A98FF1C23A01500ACF306 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		FF1A99001C23A01500ACF306 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
+		FF1A99011C23A01500ACF306 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
+		FF1A99021C23A01500ACF306 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		FF31DBA81BFA6D3D00F49424 /* Mess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF31DBAB1BFA6D3D00F49424 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Mess/AppDelegate.swift; sourceTree = "<group>"; };
 		FF31DBB01BFA6D3D00F49424 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -82,8 +91,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1A99031C23A01500ACF306 /* Fabric.framework in Frameworks */,
 				FF31DC021BFBDA9000F49424 /* libicucore.tbd in Frameworks */,
 				FF31DC001BFBDA7D00F49424 /* libc++.tbd in Frameworks */,
+				FF1A99041C23A01500ACF306 /* DigitsKit.framework in Frameworks */,
+				FF1A99061C23A01500ACF306 /* TwitterCore.framework in Frameworks */,
 				FF31DBFE1BFBDA6A00F49424 /* Security.framework in Frameworks */,
 				FF31DBFC1BFBDA5E00F49424 /* SystemConfiguration.framework in Frameworks */,
 				FF31DBFA1BFBDA4D00F49424 /* CFNetwork.framework in Frameworks */,
@@ -169,6 +181,7 @@
 				FF31DBFD1BFBDA6A00F49424 /* Security.framework */,
 				FF31DBFB1BFBDA5E00F49424 /* SystemConfiguration.framework */,
 				FF31DBF91BFBDA4D00F49424 /* CFNetwork.framework */,
+				0FE7194ABBBC2AC1DDD4822F /* Pods_Mess.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,6 +190,10 @@
 			isa = PBXGroup;
 			children = (
 				FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */,
+				FF1A98FF1C23A01500ACF306 /* Fabric.framework */,
+				FF1A99001C23A01500ACF306 /* DigitsKit.framework */,
+				FF1A99011C23A01500ACF306 /* DigitsKitResources.bundle */,
+				FF1A99021C23A01500ACF306 /* TwitterCore.framework */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -211,6 +228,7 @@
 				FF31DBA51BFA6D3D00F49424 /* Frameworks */,
 				FF31DBA61BFA6D3D00F49424 /* Resources */,
 				FF31DBF81BFBDA2000F49424 /* Embed Frameworks */,
+				FF1A98FE1C239F8A00ACF306 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -260,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1A99051C23A01500ACF306 /* DigitsKitResources.bundle in Resources */,
 				FF31DBB61BFA6D3D00F49424 /* LaunchScreen.storyboard in Resources */,
 				FF31DBB31BFA6D3D00F49424 /* Assets.xcassets in Resources */,
 				FF31DBB11BFA6D3D00F49424 /* Main.storyboard in Resources */,
@@ -267,6 +286,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FF1A98FE1C239F8A00ACF306 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 5095a735973bf40655e393f80ff790f9e9d6c3e7 7baa12528ac971d612344bd182fe1a9feeb7dbe7b58f8d2fb446e99b1985f091";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FF31DBA41BFA6D3D00F49424 /* Sources */ = {
@@ -403,12 +438,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 10;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Mess/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Sean-Murphy-Development.Mess";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "525a23c8-a69d-4748-b1d7-4a7253593865";
@@ -421,12 +459,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Sean Murphy (RXHJKR4N7Q)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 10;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Mess/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Sean-Murphy-Development.Mess";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "525a23c8-a69d-4748-b1d7-4a7253593865";

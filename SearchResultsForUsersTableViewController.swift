@@ -50,7 +50,7 @@ class SearchResultsForUsersTableViewController: UITableViewController {
             
         }
         
-        cell.textLabel?.text = user.email
+        cell.textLabel?.text = user.username 
         
         return cell
     }

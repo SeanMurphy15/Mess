@@ -9,9 +9,11 @@
 import UIKit
 import Firebase
 import LocalAuthentication
+import DigitsKit
 
 
 class LoginSignupViewController: UIViewController, UITextFieldDelegate{
+    
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
@@ -31,6 +33,10 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Digits.sharedInstance().logOut()
+        
+        
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -59,6 +65,59 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField == phoneNumberTextField {
+            resignFirstResponder()
+            verifyPhone()
+            
+        }
+    }
+    
+    func verifyPhone(){
+        let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
+        configuration.appearance = DGTAppearance()
+        
+        configuration.appearance.logoImage = UIImage(named: "messLogo-digits-logo")
+        
+        configuration.appearance.labelFont = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        configuration.appearance.bodyFont = UIFont(name: "HelveticaNeue-Italic", size: 16)
+        
+        configuration.appearance.accentColor = UIColor.whiteColor()
+        configuration.appearance.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
+        
+        Digits.sharedInstance().authenticateWithViewController(self, configuration: configuration) { (session, error) -> Void in
+            if (session != nil) {
+                
+               
+                    self.phoneNumberTextField.text = session.phoneNumber
+                    self.phoneNumberTextField.layer.borderColor = UIColor.greenColor().CGColor
+                    self.phoneNumberTextField.layer.borderWidth = 5.0
+                    self.phoneNumberTextField.layer.cornerRadius = 5.0
+                                    
+               
+                self.phoneNumberTextField.text = session.phoneNumber
+                self.phoneNumberTextField.layer.borderColor = UIColor.greenColor().CGColor
+                self.phoneNumberTextField.layer.borderWidth = 5.0
+                self.phoneNumberTextField.layer.cornerRadius = 5.0
+                
+                let message = "Phone number: \(session!.phoneNumber)"
+                let alertController = UIAlertController(title: "Your phone has been verified!", message: message, preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: .None))
+                self.presentViewController(alertController, animated: true, completion: .None)
+            }
+            else {
+                
+                let alertController = UIAlertController(title: "Error", message:"\(error.localizedDescription)" , preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: .None))
+                self.presentViewController(alertController, animated: true, completion: .None)
+            }
+            
+        }
+        
+    }
+    
+    //MARK: Signup Button tapped
     
     @IBAction func signupButtonTapped(sender: AnyObject) {
         
@@ -141,6 +200,9 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             self.view.frame = self.initialFrame!
             }, completion: { (_) -> Void in
+                
+                self.inPlainSight.hidden = false
+                self.messLogo.hidden = false
         })
     }
     
@@ -149,7 +211,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
     }
     
-    //MARK: Animation
+    //MARK: Animations
     
     func animateView(){
         
@@ -158,6 +220,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         self.passwordTextField.center.x = self.view.frame.width + 400
         self.reEnterPasswordTextField.center.x = self.view.frame.width - 700
         self.phoneNumberTextField.center.x = self.view.frame.width - 700
+        
         self.messLogo.center.x = self.view.frame.height + 500
         self.inPlainSight.center.x = self.view.frame.height - 700
         self.signupButtonLabel.center.x = self.view.frame.height + 300
@@ -172,6 +235,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
             self.passwordTextField.center.x = self.view.frame.width / 2
             self.reEnterPasswordTextField.center.x = self.view.frame.width / 3
             self.phoneNumberTextField.center.x = self.view.frame.width / 3
+            
             self.messLogo.center.x = self.view.frame.height / 2
             self.inPlainSight.center.x = self.view.frame.height / 2
             self.signupButtonLabel.center.x = self.view.frame.height / 2

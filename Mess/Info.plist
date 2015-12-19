@@ -31,7 +31,26 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>10</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>5095a735973bf40655e393f80ff790f9e9d6c3e7</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>54QzgGmT7llh0CmkziIS8Nd7P</string>
+					<key>consumerSecret</key>
+					<string>UtiwmRF5YOsIobCJAyA812xyLV8UIISTYbP7uV5L22MM7VxtDM</string>
+				</dict>
+				<key>KitName</key>
+				<string>Digits</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
