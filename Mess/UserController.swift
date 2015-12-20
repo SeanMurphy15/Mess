@@ -11,24 +11,24 @@ import Firebase
 
 
 class UserController {
-    
+
     private let kUser = "userKey"
-    
+
     var currentUser: User! {
         get {
-            
+
             guard let uid = FirebaseController.base.authData?.uid else {return nil}
-            
+
             guard let userDictionary = NSUserDefaults.standardUserDefaults().valueForKey(kUser) as? [String: AnyObject] else {
-                    
-                    return nil
+
+                return nil
             }
-            
+
             return User(json: userDictionary, identifier: uid)
         }
-        
+
         set {
-            
+
             if let newValue = newValue {
                 NSUserDefaults.standardUserDefaults().setValue(newValue.jsonValue, forKey: kUser)
                 NSUserDefaults.standardUserDefaults().synchronize()
@@ -38,14 +38,14 @@ class UserController {
             }
         }
     }
-    
-    
+
+
     static let sharedController = UserController()
-    
+
     static func userForIdentifier(identifier: String, completion: (user: User?) -> Void) {
-        
+
         FirebaseController.dataAtEndpoint("users/\(identifier)") { (data) -> Void in
-            
+
             if let json = data as? [String: AnyObject] {
                 let user = User(json: json, identifier: identifier)
                 completion(user: user)
@@ -54,29 +54,29 @@ class UserController {
             }
         }
     }
-    
+
     static func fetchAllUsers(completion: (users: [User]) -> Void) {
-        
+
         FirebaseController.dataAtEndpoint("users") { (data) -> Void in
-            
+
             if let json = data as? [String: AnyObject] {
-                
+
                 let users = json.flatMap({User(json: $0.1 as! [String : AnyObject], identifier: $0.0)})
-                
+
                 completion(users: users)
-                
+
             } else {
                 completion(users: [])
             }
         }
     }
-    
+
     static func updateUser(user: User, email: String, phoneNumber: String?, password: String?, username: String, deviceID: String?, completion: (success: Bool, user: User?) -> Void) {
         var updatedUser = User(email: user.email, uid: user.identifier!, phoneNumber : phoneNumber, password: password, username: username, deviceID: deviceID)
         updatedUser.save()
-        
+
         UserController.userForIdentifier(user.identifier!) { (user) -> Void in
-            
+
             if let user = user {
                 sharedController.currentUser = user
                 completion(success: true, user: user)
@@ -85,35 +85,35 @@ class UserController {
             }
         }
     }
-    
-    
-    
+
+
+
     static func authenticateUser(email: String, password: String, completion: (success: Bool, user: User?) -> Void) {
-        
+
         FirebaseController.base.authUser(email, password: password) { (error, response) -> Void in
-            
+
             if error != nil {
                 print("Unsuccessful login attempt.")
                 completion(success: false, user: nil)
             } else {
                 print("User ID: \(response.uid) authenticated successfully.")
                 UserController.userForIdentifier(response.uid, completion: { (user) -> Void in
-                    
+
                     if let user = user {
                         sharedController.currentUser = user
                     }
-                    
+
                     completion(success: true, user: user)
                 })
             }
         }
     }
-    
+
     static func createUser(email: String, password: String, phoneNumber: String?,username: String?,deviceID:String?, completion: (success: Bool, user: User?, error: NSError?) -> Void) {
-        
+
         FirebaseController.base.createUser(email, password: password) { (error, response) -> Void in
-            
-            
+
+
             if !(error == nil) {
                 print(error.localizedDescription)
                 completion(success: false, user: nil, error: error)
@@ -121,7 +121,7 @@ class UserController {
                 if let uid = response["uid"] as? String {
                     var user = User(email: email, uid: uid, phoneNumber: phoneNumber, password: password,username: username, deviceID: deviceID)
                     user.save()
-                    
+
                     authenticateUser(email, password: password, completion: { (success, user) -> Void in
                         completion(success: success, user: user, error: nil)
                     })
@@ -131,10 +131,55 @@ class UserController {
             }
         }
     }
-    
-   static func logoutCurrentUser() {
+
+    static func logoutCurrentUser() {
         FirebaseController.base.unauth()
         UserController.sharedController.currentUser = nil
     }
+
+
+    static func findEqualUsernames(username: String){
+
+        let ref = Firebase(url:"https://messapp.firebaseio.com/users")
+        ref.queryOrderedByChild("username").queryEqualToValue(username).queryLimitedToLast(100)
+            .observeEventType(.ChildAdded, withBlock: { snapshot in
+
+                if let userDictionary = snapshot.value as? [String: String] {
+
+                    let user = User(json: userDictionary, identifier: snapshot.key)
+
+                    
+                    if user?.username == username {
+
+                        let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
+                        let touchIDAlertCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+                        let touchIDAlertAction = UIAlertAction(title: "Enter Password", style: .Default) { (_) -> Void in
+                            self.promptUserPasswordAlert()
+                        }
+
+                        touchIDAlert.addAction(touchIDAlertAction)
+                        touchIDAlert.addAction(touchIDAlertCancel)
+                        presentViewController(touchIDAlert, animated: true, completion: nil)
+
+
+                    }
+
+                    else {
+
+
+
+                    }
+                    
+                    
+                    
+                }
+                
+                
+            })
+        
+    }
+
     
 }
+
+

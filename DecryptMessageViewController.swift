@@ -82,16 +82,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     arrayOfReceivedMessages.append(message!)
 
-                    if arrayOfReceivedMessages.count > 0 {
-
-                        if let messageSender = message?.messageSender {
-
-                        self.messageNotifications(messageSender, messageCount: arrayOfReceivedMessages.count)
-
-                        }
-
-                    }
-                    
                     arrayOfReceivedMessages.sortInPlace({ (message1, message2) -> Bool in
                         
                         message1.identifier > message2.identifier
@@ -425,7 +415,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     }
 
 
-     func messageNotifications(messageSender: String, messageCount: Int){
+     func messageNotifications(messageCount: Int){
 
         let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
 
@@ -439,17 +429,17 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         }
 
         let notification = UILocalNotification()
-        notification.fireDate = NSDate(timeIntervalSinceNow: 5)
-        notification.alertBody = "\(messageSender) has sent you an encrypted message"
-        notification.alertAction = "Confirm"
+        notification.fireDate = NSDate(timeIntervalSinceNow: 0)
+
+
         notification.applicationIconBadgeNumber = messageCount
         notification.soundName = UILocalNotificationDefaultSoundName
-        notification.userInfo = ["CustomField1": "w00t"]
+
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
 
 
     }
-    
+
     
 }
 

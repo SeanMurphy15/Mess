@@ -66,11 +66,18 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField == usernameTextField {
+
+            UserController.findEqualUsernames(self.usernameTextField.text!)
+        }
+    }
+
     
     func textFieldDidBeginEditing(textField: UITextField) {
         if textField == phoneNumberTextField {
             resignFirstResponder()
-            verifyPhone()
+            //verifyPhone()
             
         }
     }
@@ -119,20 +126,22 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     }
     
     //MARK: Signup Button tapped
+
+    func clear
     
     @IBAction func signupButtonTapped(sender: AnyObject) {
         
-        
-        //MARK: - Error handle unequal passwords
-        //MARK: - Create new user
-        
+
+
         
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
             let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
             
             UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, deviceID: deviceID, completion: { (success, var user, error) -> Void in
-                
+
+
+
                 if success {
                     user?.save()
                     
