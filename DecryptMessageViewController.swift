@@ -22,7 +22,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     @IBOutlet weak var deleteButton: UIButton!
     
-    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var fromTextLabel: UILabel!
     
     @IBOutlet weak var numberOfMessagesTextLabel: UILabel!
@@ -37,9 +36,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     
     var arrayOfUserMessageDictionaries = []
     var arrayOfMessageDictionaries: [Message]?
-    var time : Float = 0.0
-    var timer: NSTimer?
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +44,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         fetchMessagesForUser()
         animateView()
         navigationBarAppearance()
+
         
     }
     
@@ -62,12 +60,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-//    @IBAction func createEncryptedMessageTapped(sender: AnyObject) {
-//        
-//        self.performSegueWithIdentifier("toEncryptFromDecrypt", sender: nil)
-//    }
-//    
-    
+
     
     //MARK: Get messages for user
     
@@ -88,6 +81,16 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                     
                     
                     arrayOfReceivedMessages.append(message!)
+
+                    if arrayOfReceivedMessages.count > 0 {
+
+                        if let messageSender = message?.messageSender {
+
+                        self.messageNotifications(messageSender, messageCount: arrayOfReceivedMessages.count)
+
+                        }
+
+                    }
                     
                     arrayOfReceivedMessages.sortInPlace({ (message1, message2) -> Bool in
                         
@@ -135,6 +138,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         return cell
     }
     
+     // MARK: Redundant function. Consider deleting
+
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         promptBiometricTouchID()
@@ -181,8 +186,7 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 cell.messageTextView.alpha = 1.0
                 cell.decryptButtonOverlayLabel.alpha = 0.0
                 
-                
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector:Selector("setProgress"), userInfo: nil, repeats: true)
+
             })
         })
         
@@ -418,6 +422,32 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
         self.navigationController!.navigationBar.translucent = true
         self.navigationController!.view.backgroundColor = UIColor.clearColor()
         
+    }
+
+
+     func messageNotifications(messageSender: String, messageCount: Int){
+
+        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
+
+        if settings!.types == .None {
+            let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            presentViewController(ac, animated: true, completion: nil)
+
+            return
+
+        }
+
+        let notification = UILocalNotification()
+        notification.fireDate = NSDate(timeIntervalSinceNow: 5)
+        notification.alertBody = "\(messageSender) has sent you an encrypted message"
+        notification.alertAction = "Confirm"
+        notification.applicationIconBadgeNumber = messageCount
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.userInfo = ["CustomField1": "w00t"]
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+
+
     }
     
     

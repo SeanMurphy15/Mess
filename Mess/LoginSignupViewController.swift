@@ -35,18 +35,13 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         Digits.sharedInstance().logOut()
         
-        let userID = UIDevice.currentDevice().identifierForVendor?.UUIDString
         
-// 0B6B37AE-DF15-425D-8F6D-5C0E7D1D234B
-// 0B6B37AE-DF15-425D-8F6D-5C0E7D1D234B
-        
-        
-        print("This is the user ID: \(userID)")
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         initialFrame = self.view.frame
+        
+      
         
     }
     
@@ -87,7 +82,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         configuration.appearance.logoImage = UIImage(named: "messLogo-digits-logo")
         
         configuration.appearance.labelFont = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        configuration.appearance.bodyFont = UIFont(name: "HelveticaNeue-Italic", size: 16)
+        configuration.appearance.bodyFont = UIFont(name: "HelveticaNeue-Bold", size: 16)
         
         configuration.appearance.accentColor = UIColor.whiteColor()
         configuration.appearance.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
@@ -134,13 +129,15 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
             
+            let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
             
-            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, completion: { (success, var user, error) -> Void in
+            UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, deviceID: deviceID, completion: { (success, var user, error) -> Void in
                 
                 if success {
                     user?.save()
                     
-                    self.performSegueWithIdentifier("toHomeViewFromSignup", sender: nil)
+                    self.performSegueWithIdentifier("toLoginFromSignup", sender: nil)
+                   
                     
                 } else {
                     if let error = error {
