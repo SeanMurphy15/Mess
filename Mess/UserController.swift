@@ -8,9 +8,14 @@
 
 import Foundation
 import Firebase
+import UIKit
 
 
-class UserController {
+class UserController: UIViewController{
+
+
+static let sharedController = UserController()
+
 
     private let kUser = "userKey"
 
@@ -40,7 +45,7 @@ class UserController {
     }
 
 
-    static let sharedController = UserController()
+
 
     static func userForIdentifier(identifier: String, completion: (user: User?) -> Void) {
 
@@ -137,49 +142,12 @@ class UserController {
         UserController.sharedController.currentUser = nil
     }
 
-
-    static func findEqualUsernames(username: String){
-
-        let ref = Firebase(url:"https://messapp.firebaseio.com/users")
-        ref.queryOrderedByChild("username").queryEqualToValue(username).queryLimitedToLast(100)
-            .observeEventType(.ChildAdded, withBlock: { snapshot in
-
-                if let userDictionary = snapshot.value as? [String: String] {
-
-                    let user = User(json: userDictionary, identifier: snapshot.key)
-
-                    
-                    if user?.username == username {
-
-                        let touchIDAlert = UIAlertController(title: "Touch ID Not Available", message: "", preferredStyle: .Alert)
-                        let touchIDAlertCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-                        let touchIDAlertAction = UIAlertAction(title: "Enter Password", style: .Default) { (_) -> Void in
-                            self.promptUserPasswordAlert()
-                        }
-
-                        touchIDAlert.addAction(touchIDAlertAction)
-                        touchIDAlert.addAction(touchIDAlertCancel)
-                        presentViewController(touchIDAlert, animated: true, completion: nil)
-
-
-                    }
-
-                    else {
-
-
-
-                    }
-                    
-                    
-                    
-                }
-                
-                
-            })
         
-    }
-
     
+
+
+     
+   
 }
 
 

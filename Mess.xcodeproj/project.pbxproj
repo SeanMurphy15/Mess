@@ -33,7 +33,6 @@
 		FF31DBFE1BFBDA6A00F49424 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFD1BFBDA6A00F49424 /* Security.framework */; };
 		FF31DC001BFBDA7D00F49424 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */; };
 		FF31DC021BFBDA9000F49424 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF31DC011BFBDA9000F49424 /* libicucore.tbd */; };
-		FF6D8A731C272FA9004341DC /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6D8A721C272FA9004341DC /* AlertController.swift */; };
 		FF9961CB1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */; };
 		FFEC3C891C17A7AC008A58BD /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */; };
 		FFFB030E1C0FBCA300F09FED /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */; };
@@ -82,7 +81,6 @@
 		FF31DBFD1BFBDA6A00F49424 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FF31DBFF1BFBDA7D00F49424 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		FF31DC011BFBDA9000F49424 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		FF6D8A721C272FA9004341DC /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsForUsersTableViewController.swift; sourceTree = "<group>"; };
 		FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 		FF31DBD51BFAB9B300F49424 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FF6D8A721C272FA9004341DC /* AlertController.swift */,
 				FF31DBCE1BFAB90700F49424 /* MessageController.swift */,
 				FF31DBD11BFAB94400F49424 /* UserController.swift */,
 				FF31DBD31BFAB9A700F49424 /* FirebaseController.swift */,
@@ -324,7 +321,6 @@
 				FF31DBC01BFAB56300F49424 /* User.swift in Sources */,
 				FF31DBC91BFAB79900F49424 /* SettingsViewController.swift in Sources */,
 				FF31DBD21BFAB94400F49424 /* UserController.swift in Sources */,
-				FF6D8A731C272FA9004341DC /* AlertController.swift in Sources */,
 				FF31DBC71BFAB76800F49424 /* ContactsTableViewController.swift in Sources */,
 				FF31DBCB1BFAB7D000F49424 /* DecryptMessageViewController.swift in Sources */,
 				FF31DBBE1BFAB54F00F49424 /* Message.swift in Sources */,

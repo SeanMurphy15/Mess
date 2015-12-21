@@ -231,7 +231,8 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
                 
             }else{
                 
-                passwordAlert.textFields?[0].text = " "
+                passwordAlert.textFields?[0].text = ""
+                
                 
                 
             }
@@ -415,30 +416,30 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
     }
 
 
-     func messageNotifications(messageCount: Int){
-
-        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
-
-        if settings!.types == .None {
-            let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            presentViewController(ac, animated: true, completion: nil)
-
-            return
-
-        }
-
-        let notification = UILocalNotification()
-        notification.fireDate = NSDate(timeIntervalSinceNow: 0)
-
-
-        notification.applicationIconBadgeNumber = messageCount
-        notification.soundName = UILocalNotificationDefaultSoundName
-
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-
-
-    }
+//     func messageNotifications(messageCount: Int){
+//
+//        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
+//
+//        if settings!.types == .None {
+//            let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+//            presentViewController(ac, animated: true, completion: nil)
+//
+//            return
+//
+//        }
+//
+//        let notification = UILocalNotification()
+//        notification.fireDate = NSDate(timeIntervalSinceNow: 0)
+//
+//
+//        notification.applicationIconBadgeNumber = messageCount
+//        notification.soundName = UILocalNotificationDefaultSoundName
+//
+//        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+//
+//
+//    }
 
     
 }

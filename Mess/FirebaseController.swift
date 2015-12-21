@@ -9,9 +9,6 @@
 import Foundation
 import Firebase
 
-import Foundation
-import Firebase
-
 class FirebaseController {
     
     static let base = Firebase(url: "https://messapp.firebaseio.com")
@@ -81,4 +78,8 @@ extension FirebaseType {
             endpointBase.removeValue()
         }
     }
+
+
+
 }
+
