@@ -35,6 +35,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         self.deviceRecognition()
+        touchIDButtonLabel.hidden = true
 
     }
 
@@ -80,24 +81,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ref.resetPasswordForUser(emailTextField.text!, withCompletionBlock: { error in
             if error != nil {
 
-                let emailAlert = UIAlertController(title: "Error", message: "Something went wrong. Did you provide an email address?", preferredStyle: .Alert)
-                let emailAlertCancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-
-
-                emailAlert.addAction(emailAlertCancel)
-
-                self.presentViewController(emailAlert, animated: true, completion: nil)
+                self.textFieldInputErrorAlert("Unable to Complete Request", message: "\(error.localizedDescription)", textField: self.emailTextField)
 
 
             } else {
 
-                let emailSentAlert = UIAlertController(title: "Email Sent", message: "The email provided has received a temporary password", preferredStyle: .Alert)
-                let emailSentAlertCancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-
-
-                emailSentAlert.addAction(emailSentAlertCancel)
-
-                self.presentViewController(emailSentAlert, animated: true, completion: nil)
+                self.textFieldInputConfirmationAlert("Email Sent!", message: "", textField: self.emailTextField)
             }
         })
 
@@ -116,7 +105,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
             } else {
 
-                let incompleteLoginAlert = UIAlertController(title: "User Does Not Exist", message: "Try again, or sign up!", preferredStyle: .ActionSheet)
+                let incompleteLoginAlert = UIAlertController(title: "User Does Not Exist", message: "Try again!", preferredStyle: .Alert)
                 let incompleteLoginAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
 
                     self.passwordTextField.text = ""
@@ -209,6 +198,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func deviceRecognition(){
 
         let currentDeviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+
+        print(currentDeviceID)
+
         let ref = Firebase(url: "https://messapp.firebaseio.com/users")
         ref.queryOrderedByChild("deviceID").queryEqualToValue(currentDeviceID).observeEventType(.ChildAdded, withBlock: { snapshot in
 
@@ -217,8 +209,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if let userDictionary = snapshot.value as? [String:String] {
 
                 let user = User(json: userDictionary, identifier: snapshot.key)
-                UserController.authenticateUser((user?.email)!, password: (user?.password)!, completion: { (success, user) -> Void in})
+                UserController.authenticateUser((user?.email)!, password: (user?.password)!, completion: { (success, user) -> Void in
 
+
+                    self.touchIDButtonLabel.hidden = false
+
+
+                })
 
 
             } else {
@@ -233,6 +230,84 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
 
     }
+
+    func textFieldInputConfirmed(textField: UITextField){
+
+        // called by textFieldConfirmationAlert
+
+        textField.layer.borderWidth = 2.5
+        textField.layer.cornerRadius = 5.0
+        textField.layer.borderColor = UIColor.greenColor().CGColor
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x, textField.center.y - 10))
+        animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x, textField.center.y + 10))
+        textField.layer.addAnimation(animation, forKey: "position")
+
+
+    }
+
+    func textFieldInputError(textField: UITextField) {
+
+        // called by textFieldErrorAlert
+
+        textField.layer.borderWidth = 2.5
+        textField.layer.cornerRadius = 5.0
+        textField.layer.borderColor = UIColor(red: 255/255, green: 29/255, blue: 96/255, alpha: 1.0).CGColor
+
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 10, textField.center.y))
+        animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 10, textField.center.y))
+        textField.layer.addAnimation(animation, forKey: "position")
+        textField.text = ""
+        
+    }
+    
+
+
+    //MARK: Universal TextField Alerts
+
+    func textFieldInputErrorAlert(title: String, message: String, textField: UITextField?){
+
+        let textFieldError = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let textFieldErrorAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
+
+            if let textField = textField {
+
+                self.textFieldInputError(textField)
+
+            }
+
+        }
+
+        textFieldError.addAction(textFieldErrorAction)
+        presentViewController(textFieldError, animated: true, completion: nil)
+
+    }
+
+    func textFieldInputConfirmationAlert(title: String, message: String, textField: UITextField?){
+
+        let textFieldConfirmation = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let textFieldConfirmationAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
+
+            if let textField = textField {
+
+                self.textFieldInputConfirmed(textField)
+
+            }
+
+        }
+
+        textFieldConfirmation.addAction(textFieldConfirmationAction)
+        presentViewController(textFieldConfirmation, animated: true, completion: nil)
+        
+    }
+
 
     //MARK: Keyboard Functions
 

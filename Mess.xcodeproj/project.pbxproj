@@ -150,7 +150,9 @@
 		FF31DBD01BFAB91300F49424 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FFEC3C8C1C17A815008A58BD /* User Login / Signup */,
+				FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */,
+				FF31DBC21BFAB6AA00F49424 /* LoginSignupViewController.swift */,
+				FF1311241C08F54800D016E3 /* LoginViewController.swift */,
 				FF31DBC41BFAB72900F49424 /* HomeViewController.swift */,
 				FF31DBC81BFAB79900F49424 /* SettingsViewController.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
@@ -205,16 +207,6 @@
 				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
 			);
 			name = "Contacts / Search";
-			sourceTree = "<group>";
-		};
-		FFEC3C8C1C17A815008A58BD /* User Login / Signup */ = {
-			isa = PBXGroup;
-			children = (
-				FFEC3C881C17A7AC008A58BD /* InitialViewController.swift */,
-				FF31DBC21BFAB6AA00F49424 /* LoginSignupViewController.swift */,
-				FF1311241C08F54800D016E3 /* LoginViewController.swift */,
-			);
-			name = "User Login / Signup";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

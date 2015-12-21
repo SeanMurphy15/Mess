@@ -15,6 +15,8 @@ import DigitsKit
 class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
     static let sharedController = LoginSignupViewController()
+    let userRef = Firebase(url: "https://messapp.firebaseio.com/users")
+
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
@@ -61,16 +63,17 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        if textField == phoneNumberTextField {
-//
-//            verifyPhone()
-//
-//            return false
+//        func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//            if textField == phoneNumberTextField {
+//    
+//                verifyPhone()
+//    
+//                return false
+//            }
+//    
+//             return true
 //        }
-//
-//         return true
-//    }
+
 
 
     func textFieldDidEndEditing(textField: UITextField){
@@ -78,14 +81,14 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         switch (textField == textField) {
         case textField == usernameTextField && usernameTextField.text?.characters.count > 0:
             textFieldInputConfirmed(usernameTextField)
-            //findEqualUsernames(self.usernameTextField.text!, textField: self.usernameTextField)
+            findEqualUsernames(usernameTextField.text!, textField: usernameTextField)
             break;
         case textField == emailTextField && emailTextField.text?.characters.count > 0:
             textFieldInputConfirmed(emailTextField)
-            //findEqualUserEmails(self.emailTextField.text!, textField: self.emailTextField)
+            findEqualUserEmails(emailTextField.text!, textField: emailTextField)
             break;
-        case textField == phoneNumberTextField && phoneNumberTextField.text?.characters.count > 0:
-            textFieldInputConfirmed(phoneNumberTextField)
+        case textField == phoneNumberTextField:
+            phoneNumberTextField.resignFirstResponder()
             break;
         case textField == passwordTextField && passwordTextField.text?.characters.count > 0:
             textFieldInputConfirmed(passwordTextField)
@@ -105,9 +108,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
         switch (textField == textField) {
         case textField == phoneNumberTextField:
-
-            //verifyPhone()
-
+            textFieldInputConfirmed(phoneNumberTextField)
             break;
         case textField == usernameTextField:
             usernameTextField.layer.borderWidth = 0.0
@@ -129,7 +130,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
 
     }
-        func textFieldInputConfirmed(textField: UITextField){
+    func textFieldInputConfirmed(textField: UITextField){
 
         // called by textFieldConfirmationAlert
 
@@ -204,6 +205,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
     }
 
+    //MARK: verify phone number for user signup
 
     func verifyPhone(){
         let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
@@ -222,6 +224,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
 
                 self.phoneNumberTextField.text = session.phoneNumber
+                self.textFieldInputConfirmed(self.phoneNumberTextField)
 
                 let message = "Phone number: \(session!.phoneNumber)"
 
@@ -238,73 +241,59 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
     }
 
-    
-     func findEqualUserEmails(email: String, textField: UITextField){
+
+    func findEqualUserEmails(email: String, textField: UITextField){
 
 
-        let ref = Firebase(url: "https://messapp.firebaseio.com/users")
-        ref.queryOrderedByChild("email").queryEqualToValue(email).observeEventType(.Value, withBlock: { snapshot in
+
+       userRef.queryOrderedByChild("email").queryEqualToValue(email).observeEventType(.ChildAdded, withBlock: { snapshot in
 
 
-            if snapshot.exists(){
 
-                let userDictionary = snapshot.value as? [String:String]
+            if let userDictionary = snapshot.value as? [String:String] {
 
-                let user = User(json: userDictionary!, identifier: snapshot.key)
+                let user = User(json: userDictionary, identifier: snapshot.key)
 
                 if user?.email == email {
 
-                    //self.textFieldErrorAlert("\(email) is already in use!", message: "try another one!", textField: textField)
-                    self.textFieldInputError(self.emailTextField)
+                    self.textFieldErrorAlert("\(email) is already in use!", message: "choose another one", textField: self.emailTextField)
 
                 } else {
 
-
-
+                    self.textFieldInputConfirmed(textField)
                 }
 
-
-
             } else {
-
-
-
+                
+                
+                
             }
-
-
-
-
+            
+            
         })
-
 
     }
 
     func findEqualUsernames(username: String, textField: UITextField){
 
 
-        let ref = Firebase(url: "https://messapp.firebaseio.com/users")
-        ref.queryOrderedByChild("username").queryEqualToValue(username).observeEventType(.Value, withBlock: { snapshot in
+
+       userRef.queryOrderedByChild("username").queryEqualToValue(username).observeEventType(.ChildAdded, withBlock: { snapshot in
 
 
-            if snapshot.exists(){
+            if let userDictionary = snapshot.value as? [String:String] {
 
-                let userDictionary = snapshot.value as? [String:String]
-
-                let user = User(json: userDictionary!, identifier: snapshot.key)
+                let user = User(json: userDictionary, identifier: snapshot.key)
 
                 if user?.username == username {
-                    
-                    //self.textFieldErrorAlert("\(username) is already in use!", message: "try another one!", textField: textField)
-                    self.textFieldInputError(self.usernameTextField)
+
+                    self.textFieldErrorAlert("\(username) is already in use!", message: "choose another one", textField: self.usernameTextField)
 
                 } else {
-                    
-                    
-                    
+
+                    self.textFieldInputConfirmed(textField)
                 }
-                
-                
-                
+
             } else {
                 
                 
@@ -312,36 +301,18 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
             }
             
             
-            
-            
         })
         
-        
-    }
-    
-    
-    
-
-
-
-
-    //MARK: Signup Button tapped
+    }    //MARK: Signup Button tapped
     @IBAction func signupButtonTapped(sender: AnyObject) {
 
-        if let email = emailTextField.text {
-
-        self.findEqualUserEmails(email, textField: emailTextField)
-        }
-        if let username = usernameTextField.text {
-
-            self.findEqualUsernames(username, textField: emailTextField)
-        }
 
 
 
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
 
             let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            userRef.removeAllObservers()
 
             UserController.createUser(emailTextField.text!, password: passwordTextField.text!, phoneNumber: phoneNumberTextField.text!, username: usernameTextField.text!, deviceID: deviceID, completion: { (success, var user, error) -> Void in
 
@@ -366,7 +337,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         if passwordTextField.text! != reEnterPasswordTextField.text! {
 
 
-     self.textFieldErrorAlert("Passwords don't match!", message: "", textField: nil)
+            self.textFieldErrorAlert("Passwords don't match!", message: "", textField: nil)
 
             textFieldInputError(self.reEnterPasswordTextField)
             textFieldInputError(self.passwordTextField)
@@ -374,86 +345,87 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
 
         }
-        
-        
+
+
     }
 
-//MARK: Keyboard Function
+    //MARK: Keyboard Function
 
-func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(notification: NSNotification) {
 
 
-    if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
 
-        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + 20)
+            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                self.view.frame = CGRectMake(0, 0, self.initialFrame!.size.width, self.initialFrame!.size.height - keyboardSize.height + 20)
 
-            self.inPlainSight.hidden = true
-            self.messLogo.hidden = true
+                self.inPlainSight.hidden = true
+                self.messLogo.hidden = true
 
+                }, completion: { (_) -> Void in
+            })
+
+        }
+
+
+    }
+
+    func keyboardWillHide(notification: NSNotification) {
+
+
+        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.view.frame = self.initialFrame!
             }, completion: { (_) -> Void in
+
+                self.inPlainSight.hidden = false
+                self.messLogo.hidden = false
         })
+    }
+
+    @IBAction func unwindForSegue(unwindSegue: UIStoryboardSegue) {
+
 
     }
 
+    //MARK: Animations
 
-}
+    func animateView(){
 
-func keyboardWillHide(notification: NSNotification) {
+        self.emailTextField.center.x = self.view.frame.width + 400
+        self.usernameTextField.center.x = self.view.frame.width - 700
+        self.passwordTextField.center.x = self.view.frame.width + 400
+        self.reEnterPasswordTextField.center.x = self.view.frame.width - 700
+        self.phoneNumberTextField.center.x = self.view.frame.width - 700
 
-
-    UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-        self.view.frame = self.initialFrame!
-        }, completion: { (_) -> Void in
-
-            self.inPlainSight.hidden = false
-            self.messLogo.hidden = false
-    })
-}
-
-@IBAction func unwindForSegue(unwindSegue: UIStoryboardSegue) {
-
-
-}
-
-//MARK: Animations
-
-func animateView(){
-
-    self.emailTextField.center.x = self.view.frame.width + 400
-    self.usernameTextField.center.x = self.view.frame.width - 700
-    self.passwordTextField.center.x = self.view.frame.width + 400
-    self.reEnterPasswordTextField.center.x = self.view.frame.width - 700
-    self.phoneNumberTextField.center.x = self.view.frame.width - 700
-    
-    self.messLogo.center.x = self.view.frame.height + 500
-    self.inPlainSight.center.x = self.view.frame.height - 700
-    self.signupButtonLabel.center.x = self.view.frame.height + 300
-    self.cancelButton.center.x = self.view.frame.height - 700
-    
-    
-    
-    UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
+        self.messLogo.center.x = self.view.frame.height + 500
+        self.inPlainSight.center.x = self.view.frame.height - 700
+        self.signupButtonLabel.center.x = self.view.frame.height + 300
+        self.cancelButton.center.x = self.view.frame.height - 700
         
-        self.emailTextField.center.x = self.view.frame.width / 2
-        self.usernameTextField.center.x = self.view.frame.width / 2
-        self.passwordTextField.center.x = self.view.frame.width / 2
-        self.reEnterPasswordTextField.center.x = self.view.frame.width / 3
-        self.phoneNumberTextField.center.x = self.view.frame.width / 3
         
-        self.messLogo.center.x = self.view.frame.height / 2
-        self.inPlainSight.center.x = self.view.frame.height / 2
-        self.signupButtonLabel.center.x = self.view.frame.height / 2
-        self.cancelButton.center.x = self.view.frame.height / 2
         
-        }, completion: nil)
+        UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
+            
+            self.emailTextField.center.x = self.view.frame.width / 2
+            self.usernameTextField.center.x = self.view.frame.width / 2
+            self.passwordTextField.center.x = self.view.frame.width / 2
+            self.reEnterPasswordTextField.center.x = self.view.frame.width / 3
+            self.phoneNumberTextField.center.x = self.view.frame.width / 3
+            
+            self.messLogo.center.x = self.view.frame.height / 2
+            self.inPlainSight.center.x = self.view.frame.height / 2
+            self.signupButtonLabel.center.x = self.view.frame.height / 2
+            self.cancelButton.center.x = self.view.frame.height / 2
+            
+            }, completion: nil)
+        
+        
+    }
+    
     
     
 }
 
-
-
-}
 
 //switch (error == error) {
 //case self.passwordTextField.text != self.reEnterPasswordTextField.text:
