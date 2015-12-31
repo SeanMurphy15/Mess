@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mess/LoginSignupViewController.swift"
-            timestampString = "472420930.302041"
+            filePath = "Mess/UserController.swift"
+            timestampString = "472462455.432837"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
-            landmarkName = "signupButtonTapped(_:)"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "checkEmail(_:completion:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,46 +25,126 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mess/LoginSignupViewController.swift"
-            timestampString = "472420930.302041"
+            filePath = "Mess/UserController.swift"
+            timestampString = "472462459.364187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "signupButtonTapped(_:)"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "checkEmail(_:completion:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mess/UserController.swift"
+            timestampString = "472462797.760884"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "checkEmail(_:completion:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mess.LoginSignupViewController.signupButtonTapped (Mess.LoginSignupViewController)(Swift.AnyObject) -&gt; ()"
+                  symbolName = "static Mess.UserController.checkEmail (Mess.UserController.Type)(Swift.String, completion : (success : Swift.Bool) -&gt; ()) -&gt; ()"
                   moduleName = "Mess"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/Mess/LoginSignupViewController.swift"
-                  timestampString = "472420930.376708"
+                  urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/Mess/UserController.swift"
+                  timestampString = "472624234.348569"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "311"
-                  endingLineNumber = "311"
-                  offsetFromSymbolStart = "3708">
+                  startingLineNumber = "84"
+                  endingLineNumber = "84"
+                  offsetFromSymbolStart = "144">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Mess.LoginSignupViewController.(signupButtonTapped (Mess.LoginSignupViewController) -&gt; (Swift.AnyObject) -&gt; ()).(closure #1)"
+                  symbolName = "static Mess.UserController.(checkEmail (Mess.UserController.Type) -&gt; (Swift.String, completion : (success : Swift.Bool) -&gt; ()) -&gt; ()).(closure #1)"
                   moduleName = "Mess"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/Mess/LoginSignupViewController.swift"
-                  timestampString = "472420930.378034"
+                  urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/Mess/UserController.swift"
+                  timestampString = "472624234.348837"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "314"
-                  endingLineNumber = "314"
-                  offsetFromSymbolStart = "480">
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoginViewController.swift"
+            timestampString = "472607501.193629"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "enterButtonTapped(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LoginViewController.swift"
+            timestampString = "472607509.727284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "enterButtonTapped(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SettingsViewController.swift"
+            timestampString = "472621180.472248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SettingsViewController.swift"
+            timestampString = "472621815.031681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "textFieldDidEndEditing(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

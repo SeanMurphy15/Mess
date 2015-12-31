@@ -63,16 +63,16 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-//        func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//            if textField == phoneNumberTextField {
-//    
-//                verifyPhone()
-//    
-//                return false
-//            }
-//    
-//             return true
-//        }
+        func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+            if textField == phoneNumberTextField {
+    
+                verifyPhone()
+    
+                return false
+            }
+    
+             return true
+        }
 
 
 
@@ -94,8 +94,20 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
             textFieldInputConfirmed(passwordTextField)
             break;
         case textField == reEnterPasswordTextField && reEnterPasswordTextField.text?.characters.count > 0:
-            textFieldInputConfirmed(reEnterPasswordTextField)
+            if reEnterPasswordTextField.text != passwordTextField.text {
+
+                self.textFieldInputError(reEnterPasswordTextField)
+
+            } else {
+
+                self.textFieldInputConfirmed(reEnterPasswordTextField)
+
+            }
+
             break;
+        case textField == reEnterPasswordTextField && reEnterPasswordTextField.text != passwordTextField.text && reEnterPasswordTextField.text?.characters.count > 0 && passwordTextField.text?.characters.count > 0:
+            textFieldInputError(reEnterPasswordTextField)
+            textFieldInputError(passwordTextField)
 
         default:
             break;
@@ -121,9 +133,8 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
             passwordTextField.layer.borderWidth = 0.0
             break;
         case textField == reEnterPasswordTextField:
-
             reEnterPasswordTextField.layer.borderWidth = 0.0
-            break;
+
         default:
             break;
         }
@@ -307,6 +318,51 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     @IBAction func signupButtonTapped(sender: AnyObject) {
 
 
+        func deviceRecognitionRevokesSignup(){
+
+            let currentDeviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+
+            print(currentDeviceID)
+
+            let ref = Firebase(url: "https://messapp.firebaseio.com/users")
+            ref.queryOrderedByChild("deviceID").queryEqualToValue(currentDeviceID).observeEventType(.ChildAdded, withBlock: { snapshot in
+
+
+
+                if let userDictionary = snapshot.value as? [String:String] {
+
+                    let user = User(json: userDictionary, identifier: snapshot.key)
+
+                    if currentDeviceID == user?.deviceID {
+
+                        let revokeSignupAlert = UIAlertController(title: "Mess does not support multiple accounts", message: "Please sign in to your existing account, or delete it!", preferredStyle: .Alert)
+                        let segueToLoginAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
+
+                            self.performSegueWithIdentifier("toLoginFromSignup", sender: nil)
+
+                        }
+                        
+                        revokeSignupAlert.addAction(segueToLoginAction)
+                        self.presentViewController(revokeSignupAlert, animated: true, completion: nil)
+
+
+                    }
+                    
+                    
+                } else {
+                    
+                    
+                    
+                }
+                
+                
+            })
+            
+            
+            
+        }
+
+
 
 
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
@@ -427,20 +483,3 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 }
 
 
-//switch (error == error) {
-//case self.passwordTextField.text != self.reEnterPasswordTextField.text:
-//    self.textFieldErrorAlert("Passwords do not match", message: "", textField: self.passwordTextField)
-//    self.textFieldInputError(self.reEnterPasswordTextField)
-//    break;
-//case self.phoneNumberTextField.text == "":
-//    self.textFieldErrorAlert("Phone Number is required", message: "", textField: self.phoneNumberTextField)
-//    break;
-//case self.phoneNumberTextField.text?.characters.count < 10:
-//    self.textFieldErrorAlert("Not a valid phone number", message: "Please provide another phone number", textField: self.phoneNumberTextField)
-//    break;
-//
-//default:
-//
-//    self.textFieldErrorAlert("Something went wrong!", message: "\(error?.localizedDescription)", textField: nil)
-//    break;
-//

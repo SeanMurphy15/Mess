@@ -157,7 +157,8 @@
 				FF31DBC81BFAB79900F49424 /* SettingsViewController.swift */,
 				FF31DBCC1BFAB7E500F49424 /* EncryptMessageViewController.swift */,
 				FF31DBCA1BFAB7D000F49424 /* DecryptMessageViewController.swift */,
-				FFEC3C8B1C17A7F2008A58BD /* Contacts / Search */,
+				FF31DBC61BFAB76800F49424 /* ContactsTableViewController.swift */,
+				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
 				FFEC3C8A1C17A7D6008A58BD /* Views */,
 			);
 			name = "View Controllers";
@@ -198,15 +199,6 @@
 				FFFB030D1C0FBCA300F09FED /* MessageCollectionViewCell.swift */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		FFEC3C8B1C17A7F2008A58BD /* Contacts / Search */ = {
-			isa = PBXGroup;
-			children = (
-				FF31DBC61BFAB76800F49424 /* ContactsTableViewController.swift */,
-				FF9961CA1BFE935500F25710 /* SearchResultsForUsersTableViewController.swift */,
-			);
-			name = "Contacts / Search";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

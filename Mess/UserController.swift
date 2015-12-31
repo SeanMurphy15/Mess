@@ -17,6 +17,7 @@ class UserController: UIViewController{
 static let sharedController = UserController()
 
 
+
     private let kUser = "userKey"
 
     var currentUser: User! {
@@ -74,6 +75,29 @@ static let sharedController = UserController()
                 completion(users: [])
             }
         }
+    }
+
+    static func checkEmail(email: String, completion: (success: Bool) -> Void){
+
+        let ref = Firebase(url: "https://messapp.firebaseio.com/users")
+
+        ref.queryOrderedByChild("email").queryEqualToValue(email).observeEventType(.ChildAdded, withBlock: { snapshot in
+
+
+            if let userDictionary = snapshot.value as? [String:String] {
+
+                let user = User(json: userDictionary, identifier: snapshot.key)
+
+                if user?.email == email {
+
+                    completion(success: true)
+
+                } else {
+
+                    completion(success: false)
+                }
+            }
+        })
     }
 
     static func updateUser(user: User, email: String, phoneNumber: String?, password: String?, username: String, deviceID: String?, completion: (success: Bool, user: User?) -> Void) {
@@ -140,14 +164,14 @@ static let sharedController = UserController()
     static func logoutCurrentUser() {
         FirebaseController.base.unauth()
         UserController.sharedController.currentUser = nil
+
+        
     }
 
         
-    
 
 
-     
-   
+
 }
 
 

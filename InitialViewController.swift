@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+
 
 class InitialViewController: UIViewController {
     
@@ -22,7 +24,7 @@ class InitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+       deviceRecognition()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,6 +43,43 @@ class InitialViewController: UIViewController {
     }
     
     @IBAction func createAccountButtonTapped(sender: AnyObject) {
+        
+        
+    }
+
+
+    func deviceRecognition(){
+
+        let currentDeviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+
+        print(currentDeviceID)
+
+        let ref = Firebase(url: "https://messapp.firebaseio.com/users")
+        ref.queryOrderedByChild("deviceID").queryEqualToValue(currentDeviceID).observeEventType(.ChildAdded, withBlock: { snapshot in
+
+
+
+            if let userDictionary = snapshot.value as? [String:String] {
+
+                let user = User(json: userDictionary, identifier: snapshot.key)
+                UserController.authenticateUser((user?.email)!, password: (user?.password)!, completion: { (success, user) -> Void in
+
+
+                   self.performSegueWithIdentifier("deviceRecognized", sender: nil)
+                    
+                    
+                })
+                
+                
+            } else {
+                
+                
+                
+            }
+            
+            
+        })
+        
         
         
     }

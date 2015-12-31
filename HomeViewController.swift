@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var contactsButtonLabel: UIButton!
     
+    @IBOutlet weak var currentUserLabel: UILabel!
     
     override func viewWillAppear(animated: Bool) {
         animateView()
@@ -32,7 +33,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        currentUserLabel.text = UserController.sharedController.currentUser.username
+
         // Do any additional setup after loading the view.
     }
     
@@ -72,6 +75,7 @@ class HomeViewController: UIViewController {
         self.contactsButtonLabel.center.x = self.view.frame.width - 450
         self.messLogo.center.x = self.view.frame.height + 500
         self.inPlainSight.center.x = self.view.frame.height - 900
+        self.currentUserLabel.center.x = self.view.frame.height + 500
         
         
         
@@ -84,6 +88,7 @@ class HomeViewController: UIViewController {
             self.contactsButtonLabel.center.x = self.view.frame.width + 450
             self.messLogo.center.x = self.view.frame.height - 500
             self.inPlainSight.center.x = self.view.frame.height + 900
+            self.currentUserLabel.center.x = self.view.frame.height - 500
             
             
             }, completion: nil)

@@ -105,10 +105,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
             } else {
 
-                let incompleteLoginAlert = UIAlertController(title: "User Does Not Exist", message: "Try again!", preferredStyle: .Alert)
+                let incompleteLoginAlert = UIAlertController(title: "Unable to login user!", message: "", preferredStyle: .Alert)
                 let incompleteLoginAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
 
                     self.passwordTextField.text = ""
+                    self.textFieldInputError(self.passwordTextField)
 
                 }
                 let seguetoSignupAction = UIAlertAction(title: "Signup", style: .Default) { (_) -> Void in
@@ -172,10 +173,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
                         switch (authenticationError!.code) {
                         case LAError.AuthenticationFailed.rawValue:
-                            //self.promptUserPasswordAlert()
+                            self.promptUserPasswordAlert()
                             break;
                         case LAError.UserFallback.rawValue:
-                            // self.promptUserPasswordAlert()
+                            self.promptUserPasswordAlert()
                             break;
                         case LAError.UserCancel.rawValue:
                             break;
@@ -229,6 +230,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
 
 
+    }
+
+    func promptUserPasswordAlert(){
+
+        let passwordAlert = UIAlertController(title: "Enter Password", message: "Touch ID is not available on your device.", preferredStyle: .Alert)
+        passwordAlert.addTextFieldWithConfigurationHandler { (passwordField) -> Void in
+
+            passwordField.placeholder = "Password"
+            passwordField.secureTextEntry = true
+
+        }
+
+        let passwordAlertCancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let passwordAlertAction = UIAlertAction(title: "Confirm", style: .Default) { (_) -> Void in
+
+            if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
+
+
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+
+                self.performSegueWithIdentifier("toHomeViewFromLogin", sender: nil)
+
+
+
+            }else{
+
+                passwordAlert.textFields?[0].text = ""
+
+
+
+            }
+
+        }
+
+        passwordAlert.addAction(passwordAlertAction)
+
+        passwordAlert.addAction(passwordAlertCancelAction)
+
+        presentViewController(passwordAlert, animated: true, completion: nil)
     }
 
     func textFieldInputConfirmed(textField: UITextField){
@@ -363,6 +403,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.loginButton.center.x = 900
         self.cancelButtonLabel.center.x = -600
         self.forgotPasswordLabel.center.x = self.view.frame.height - 900
+        self.touchIDButtonLabel.center.x = self.view.frame.height - 900
 
 
         UIView.animateWithDuration(1.0, delay: 0.75, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0, options: [], animations: { () -> Void in
@@ -374,6 +415,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.forgotPasswordLabel.center.x = self.view.frame.height / 3.5
             self.loginButton.center.x = 525
             self.cancelButtonLabel.center.x = -200
+            self.touchIDButtonLabel.center.x = self.view.frame.height / 3.5
             
             }, completion: nil)
         
