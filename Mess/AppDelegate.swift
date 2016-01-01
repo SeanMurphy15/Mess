@@ -23,8 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
 
-//        let notifySettings = UIUserNotificationSettings(forTypes: [.Alert,.Badge,.Sound], categories: nil)
-//        UIApplication.sharedApplication().registerUserNotificationSettings(notifySettings)
+
 
         return true
     }

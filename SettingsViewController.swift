@@ -4,7 +4,7 @@
 //
 //  Created by Sean Murphy on 11/16/15.
 //  Copyright © 2015 Sean Murphy. All rights reserved.
-//
+//  b92b59d3-af2c-44ee-b1dc-41858d1338c7
 
 import UIKit
 import Firebase
@@ -16,6 +16,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     var user = UserController.sharedController.currentUser
 
+
     let userRef = Firebase(url: "https://messapp.firebaseio.com/users")
 
     @IBOutlet weak var deleteAccountButtonLabel: UIButton!
@@ -26,12 +27,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var newPhoneNumberTextField: UITextField!
 
-    @IBOutlet weak var newEmailTextField: UITextField!
+    
+    @IBOutlet weak var touchIDAuthButtonLabel: UIButton!
     @IBOutlet weak var currentUserTextLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setCurrentUser()
+        currentUserTextLabel.text = UserController.sharedController.currentUser.username
+
         Digits.sharedInstance().logOut()
 
 
@@ -42,11 +45,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         animateView()
     }
 
-    func setCurrentUser(){
 
-        currentUserTextLabel.text = UserController.sharedController.currentUser.username
-
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -57,16 +56,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
 
 
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        if textField == newPhoneNumberTextField {
-
-            verifyPhone()
-
-            return false
-        }
-
-        return true
-    }
+//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//        if textField == newPhoneNumberTextField {
+//
+//            verifyPhone()
+//
+//            return false
+//        }
+//
+//        return true
+//    }
 
 
 
@@ -76,10 +75,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         case textField == newPasswordTextField && newPasswordTextField.text?.characters.count > 0:
             textFieldInputConfirmed(newPasswordTextField)
             break;
-        case textField == newEmailTextField && newEmailTextField.text?.characters.count > 0:
-            textFieldInputConfirmed(newEmailTextField)
-            break;
-        case textField == newPhoneNumberTextField:
+            case textField == newPhoneNumberTextField:
             newPhoneNumberTextField.resignFirstResponder()
             break;
         case textField == reEnterNewPasswordTextField && reEnterNewPasswordTextField.text?.characters.count > 0:
@@ -113,9 +109,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             break;
         case textField == newPasswordTextField:
             newPasswordTextField.layer.borderWidth = 0.0
-            break;
-        case textField == newEmailTextField:
-            newEmailTextField.layer.borderWidth = 0.0
             break;
         case textField == reEnterNewPasswordTextField:
 
@@ -272,7 +265,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
 
 
-        if !newPasswordTextField.text!.isEmpty && !reEnterNewPasswordTextField.text!.isEmpty && newPasswordTextField.text == reEnterNewPasswordTextField.text && newEmailTextField.text == ""{
+        if newPasswordTextField.text != "" && reEnterNewPasswordTextField.text != "" && reEnterNewPasswordTextField.text == newPasswordTextField.text && newPhoneNumberTextField.text == ""{
 
             let settingsAlert = UIAlertController(title: "Do you wish to change your Password?", message: " ", preferredStyle: .Alert)
             let cancelPasswordChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
@@ -284,7 +277,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
 
                 let ref = Firebase(url: "https://messapp.firebaseio.com")
-                ref.changePasswordForUser(UserController.sharedController.currentUser.email, fromOld: UserController.sharedController.currentUser.password,
+                ref.changePasswordForUser(self.user.email, fromOld: self.user.password,
                     toNew: self.newPasswordTextField.text, withCompletionBlock: { error in
                         if error != nil {
 
@@ -311,126 +304,90 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             settingsAlert.addAction(cancelPasswordChange)
 
             self.presentViewController(settingsAlert, animated: true, completion: nil)
-
-
-
-
         }
 
-        // save phone settings if textFields are populated and alert warning
+            if newPhoneNumberTextField.text != "" && newPasswordTextField.text == "" && reEnterNewPasswordTextField.text == "" {
 
-        if !newPhoneNumberTextField.text!.isEmpty {
+                let settingsAlert = UIAlertController(title: "Do you wish to change your phone number?", message: "New phone number: \(newPhoneNumberTextField.text!)", preferredStyle: .Alert)
+                let cancelPasswordChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
 
-
-
-            self.user.phoneNumber = self.newPhoneNumberTextField.text
-
-            self.user.save()
-
-            textFieldConfirmationAlert("Phone Number Saved!", message: "Your new number is: \n \(self.newPhoneNumberTextField.text!)", textField: newPhoneNumberTextField)
-            self.newPhoneNumberTextField.text = ""
+                    self.newPhoneNumberTextField.text = ""
 
 
+                })
+                let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
+
+                    self.user.phoneNumber = self.newPhoneNumberTextField.text
+                    self.user.save()
+                    self.textFieldInputConfirmed(self.newPhoneNumberTextField)
+                    self.newPhoneNumberTextField.text = ""
 
 
-        }
-        if !newEmailTextField.text!.isEmpty && newPasswordTextField.text == "" {
+                })
+                
+                
+                settingsAlert.addAction(settingsAlertAction)
+                settingsAlert.addAction(cancelPasswordChange)
+                
+                self.presentViewController(settingsAlert, animated: true, completion: nil)
+
+            }
 
 
-            let settingsAlert = UIAlertController(title: "Do you wish to change your Email Address?", message: " ", preferredStyle: .Alert)
-            let cancelEmailChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
 
-                self.newEmailTextField.text = ""
+        if newPhoneNumberTextField.text != "" && newPasswordTextField.text != "" && reEnterNewPasswordTextField.text != "" {
+
+
+            let settingsAlert = UIAlertController(title: "Do you wish to make multiple changes?", message: "New phone number: \(newPhoneNumberTextField.text!) \nNew Pasword \(newPasswordTextField.text!)", preferredStyle: .Alert)
+            let cancelPasswordChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+
+                self.newPhoneNumberTextField.text = ""
+                self.newPasswordTextField.text = ""
+                self.reEnterNewPasswordTextField.text = ""
+
 
             })
+
             let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
 
-                // firebase email change goes here
+                self.user.phoneNumber = self.newPhoneNumberTextField.text
+                self.user.save()
+                self.textFieldInputConfirmed(self.newPhoneNumberTextField)
+                self.newPhoneNumberTextField.text = ""
+
 
                 let ref = Firebase(url: "https://messapp.firebaseio.com")
-                ref.changeEmailForUser(self.user.email, password: self.user.password,
-                    toNewEmail:self.newEmailTextField.text, withCompletionBlock: { error in
+                ref.changePasswordForUser(UserController.sharedController.currentUser.email, fromOld: UserController.sharedController.currentUser.password,
+                    toNew: self.newPasswordTextField.text, withCompletionBlock: { error in
                         if error != nil {
 
-                            self.textFieldErrorAlert("Uable to change Email Address", message: "\(error.localizedDescription)", textField: self.newEmailTextField)
+                            self.textFieldErrorAlert("Unable to change passsword", message: "\(error.localizedDescription)", textField: nil)
+                            self.textFieldInputError(self.newPasswordTextField)
+                            self.textFieldInputError(self.reEnterNewPasswordTextField)
 
                         } else {
-
-                            self.user.email = self.newEmailTextField.text!
+                            self.user.password = self.newPasswordTextField.text
                             self.user.save()
-                            self.textFieldInputConfirmed(self.newEmailTextField)
-                            self.textFieldInputConfirmed(self.newEmailTextField)
-                            self.newEmailTextField.text = ""
-
+                            self.textFieldInputConfirmed(self.newPasswordTextField)
+                            self.textFieldInputConfirmed(self.reEnterNewPasswordTextField)
+                            self.newPasswordTextField.text = ""
+                            self.reEnterNewPasswordTextField.text = ""
+                            
+                            
                         }
                 })
+
+
             })
 
 
             settingsAlert.addAction(settingsAlertAction)
-            settingsAlert.addAction(cancelEmailChange)
-            
-            self.presentViewController(settingsAlert, animated: true, completion: nil)
-            
-            
-            }
-
-        if !newPasswordTextField.text!.isEmpty && !reEnterNewPasswordTextField.text!.isEmpty && newPasswordTextField.text == reEnterNewPasswordTextField.text && !newEmailTextField.text!.isEmpty {
-
-            let settingsAlert = UIAlertController(title: "Error", message: "Simultanious changes can't be made! Try changes individually", preferredStyle: .Alert)
-
-            let cancelChange = UIAlertAction(title: "OK", style: .Cancel, handler: { (_) -> Void in
-
-                self.newPasswordTextField.text = ""
-                self.reEnterNewPasswordTextField.text = ""
-
-
-            })
-            
-            settingsAlert.addAction(cancelChange)
-            
-            self.presentViewController(settingsAlert, animated: true, completion: nil)
-            
-            
-            
-            }
-
-        if !newPasswordTextField.text!.isEmpty && !reEnterNewPasswordTextField.text!.isEmpty && newPasswordTextField.text == reEnterNewPasswordTextField.text && !newPhoneNumberTextField.text!.isEmpty {
-
-            let settingsAlert = UIAlertController(title: "Error", message: "Simultanious changes can't be made! Try changes individually", preferredStyle: .Alert)
-
-            let cancelChange = UIAlertAction(title: "OK", style: .Cancel, handler: { (_) -> Void in
-
-                self.newPasswordTextField.text = ""
-                self.reEnterNewPasswordTextField.text = ""
-
-
-            })
-
-            settingsAlert.addAction(cancelChange)
+            settingsAlert.addAction(cancelPasswordChange)
 
             self.presentViewController(settingsAlert, animated: true, completion: nil)
-            
-            
-            
-            }
-
-        if !newPhoneNumberTextField.text!.isEmpty && !newEmailTextField.text!.isEmpty {
-
-            let settingsAlert = UIAlertController(title: "Error", message: "Simultanious changes can't be made! Try changes individually", preferredStyle: .Alert)
-
-            let cancelChange = UIAlertAction(title: "OK", style: .Cancel, handler: { (_) -> Void in
-
-                self.newEmailTextField.text = ""
-               
 
 
-            })
 
-            settingsAlert.addAction(cancelChange)
-
-            self.presentViewController(settingsAlert, animated: true, completion: nil)
-            
         }
 
     }
@@ -484,7 +441,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         self.newPasswordTextField.center.x = self.view.frame.width + 500
         self.reEnterNewPasswordTextField.center.x = self.view.frame.width - 500
         self.newPhoneNumberTextField.center.x = self.view.frame.width + 500
-        self.newEmailTextField.center.x = self.view.frame.width - 500
+        self.touchIDAuthButtonLabel.center.x = self.view.frame.width - 500
         self.logoutButtonLabel.center.x = self.view.frame.height - 900
         self.deleteAccountButtonLabel.center.x = self.view.frame.height + 400
         self.currentUserTextLabel.center.x = self.view.frame.width - 500
@@ -497,7 +454,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             self.newPasswordTextField.center.x = self.view.frame.width / 2
             self.reEnterNewPasswordTextField.center.x = self.view.frame.width / 2
             self.newPhoneNumberTextField.center.x = self.view.frame.width / 2
-            self.newEmailTextField.center.x = self.view.frame.width / 2
+            self.touchIDAuthButtonLabel.center.x = self.view.frame.width / 2
             self.logoutButtonLabel.center.x = self.view.frame.height / 3.5
             self.deleteAccountButtonLabel.center.x = self.view.frame.height / 3.5
             self.currentUserTextLabel.center.x = self.view.frame.width / 2
