@@ -5,6 +5,7 @@
 //  Created by Sean Murphy on 11/16/15.
 //  Copyright © 2015 Sean Murphy. All rights reserved.
 //  b92b59d3-af2c-44ee-b1dc-41858d1338c7
+// b92b59d3-af2c-44ee-b1dc-41858d1338c7
 
 import UIKit
 import Firebase
@@ -27,7 +28,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var newPhoneNumberTextField: UITextField!
 
-    
+
     @IBOutlet weak var touchIDAuthButtonLabel: UIButton!
     @IBOutlet weak var currentUserTextLabel: UILabel!
     override func viewDidLoad() {
@@ -56,16 +57,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
 
 
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        if textField == newPhoneNumberTextField {
-//
-//            verifyPhone()
-//
-//            return false
-//        }
-//
-//        return true
-//    }
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == newPhoneNumberTextField {
+
+            verifyPhone()
+
+            return false
+        }
+
+        return true
+    }
 
 
 
@@ -237,6 +238,29 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
 
 
+    @IBAction func enableTouchIDTapped(sender: AnyObject) {
+
+        let currentUserDevice = UIDevice.currentDevice().identifierForVendor?.UUIDString
+
+        let settingsAlert = UIAlertController(title: "Authenticate Login with Touch ID?", message: "Touch ID login will only be authorized on this device.", preferredStyle: .Alert)
+        let cancelPasswordChange = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let settingsAlertAction = UIAlertAction(title: "Confirm", style: .Default, handler: { (_) -> Void in
+
+            self.user.deviceID = currentUserDevice
+            self.user.save()
+
+
+
+        })
+
+
+        settingsAlert.addAction(settingsAlertAction)
+        settingsAlert.addAction(cancelPasswordChange)
+
+        self.presentViewController(settingsAlert, animated: true, completion: nil)
+
+
+    }
 
     @IBAction func saveButtonTapped(sender: AnyObject) {
 

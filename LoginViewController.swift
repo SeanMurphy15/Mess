@@ -70,7 +70,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {
 
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("toInitialViewController", sender: nil)
     }
 
 
@@ -86,7 +86,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
             } else {
 
-                self.textFieldInputConfirmationAlert("Email Sent!", message: "", textField: self.emailTextField)
+                self.textFieldInputConfirmationAlert("Email Sent!", message: "Check your email and follow the instructions.", textField: self.emailTextField)
             }
         })
 
@@ -105,7 +105,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
             } else {
 
-                let incompleteLoginAlert = UIAlertController(title: "Unable to login user!", message: "", preferredStyle: .Alert)
+                let incompleteLoginAlert = UIAlertController(title: "Unable to login user", message: "This user does not exist. ", preferredStyle: .Alert)
                 let incompleteLoginAlertRedoAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
 
                     self.passwordTextField.text = ""
