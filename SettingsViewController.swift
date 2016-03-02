@@ -125,7 +125,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     // aniations for confirmations / errors within text fields
     func textFieldInputConfirmed(textField: UITextField){
 
-        // called by textFieldConfirmationAlert
+        // Border turns green and wiggles
 
         textField.layer.borderWidth = 2.5
         textField.layer.cornerRadius = 5.0
@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldInputError(textField: UITextField) {
 
-        // called by textFieldErrorAlert
+       // Border turns red and wiggles
 
         textField.layer.borderWidth = 2.5
         textField.layer.cornerRadius = 5.0

@@ -103,7 +103,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         }
     }
     
-    //MARK: Charater limiting and counting
+    //MARK: Character limiting and counting
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
@@ -175,7 +175,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
                 // check whether evaluation of fingerprint was successful
                 if success {
                     
-                    self.saveMessageWithAnimation()
+                    self.saveMessage()
                     
                 } else {
                     
@@ -262,7 +262,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
             
             if passwordAlert.textFields?[0].text == UserController.sharedController.currentUser.password {
                 
-                self.saveMessageWithAnimation()
+                self.saveMessage()
                 
             }else{
                 
@@ -281,7 +281,7 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
     }
     
     
-    func saveMessageWithAnimation(){
+    func saveMessage(){
         
         let formatter = NSDateFormatter()
         formatter.dateStyle = NSDateFormatterStyle.LongStyle
@@ -292,19 +292,50 @@ class EncryptMessageViewController: UIViewController, MFMessageComposeViewContro
         let encyptedMessage = self.encryptStringWithLength(self.originalMessageTextView.text.characters.count)
         
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+
+        //UserController.sharedController.currentUser.username!
         
-        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: UserController.sharedController.currentUser.username!, timeSent: "\(timeStamp)")
+        var message = Message(originalMessage: self.originalMessageTextView.text, encryptedMessage: "\(encyptedMessage)", messageReceiver: self.identifierLabel.text!, messageSender: "studmurphin" , timeSent: "\(timeStamp)")
         message.save()
         
-        //self.presentModalMessageComposeViewController(true)
+        self.presentModalMessageComposeViewController(true)
+
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        self.animateSentMessage()
+        })
     }
     
     
     //MARK: Appearance / animation
-    
-    
-    func viewControllerAppearance(){
+
+    func animateSentMessage(){
+
+
+        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: { () -> Void in
+
+
+            self.originalMessageTextView.alpha = 0.0
+            self.totalCharactersLabel.alpha = 0.0
+            self.numberOfCharactersLabel.alpha = 0.0
+
+
+            }, completion: { (_) -> Void in
+
+                self.originalMessageTextView.text.removeAll()
+                self.numberOfCharactersLabel.text = "0"
+                self.originalMessageTextView.alpha = 1.0
+                self.messageReceiverTextLabel.alpha = 1.0
+                self.totalCharactersLabel.alpha = 1.0
+                self.numberOfCharactersLabel.alpha = 1.0
+                
+                
+        })
         
+    }
+
+
+    func viewControllerAppearance(){
+
          self.originalMessageTextView.layer.cornerRadius = 10.0
         
         // Make Navigation controller translucent and fade in View items

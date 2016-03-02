@@ -273,7 +273,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldInputConfirmed(textField: UITextField){
 
-        // called by textFieldConfirmationAlert
+
 
         textField.layer.borderWidth = 2.5
         textField.layer.cornerRadius = 5.0
@@ -291,7 +291,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldInputError(textField: UITextField) {
 
-        // called by textFieldErrorAlert
+
 
         textField.layer.borderWidth = 2.5
         textField.layer.cornerRadius = 5.0

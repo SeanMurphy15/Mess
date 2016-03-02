@@ -58,12 +58,12 @@
                   moduleName = "Mess"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/Mess/UserController.swift"
-                  timestampString = "473298104.544884"
+                  timestampString = "473662826.959621"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "84"
                   endingLineNumber = "84"
-                  offsetFromSymbolStart = "140">
+                  offsetFromSymbolStart = "144">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -73,12 +73,12 @@
                   moduleName = "Mess"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Sean_Murphy/Desktop/Mess%20Project/Mess/Mess/UserController.swift"
-                  timestampString = "473298104.545122"
+                  timestampString = "473662826.959987"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "87"
                   endingLineNumber = "87"
-                  offsetFromSymbolStart = "52">
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -112,6 +112,38 @@
             startingLineNumber = "214"
             endingLineNumber = "214"
             landmarkName = "deviceRecognition()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EncryptMessageViewController.swift"
+            timestampString = "473659854.058237"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "animateSentMessage()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EncryptMessageViewController.swift"
+            timestampString = "473662150.151382"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "animateSentMessage()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

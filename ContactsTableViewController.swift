@@ -64,6 +64,7 @@ class ContactsTableViewController: UITableViewController, UISearchResultsUpdatin
         tableView.backgroundColor = UIColor(red: 4/255, green: 197/255, blue: 255/255, alpha: 1.0)
         
         cell.textLabel?.textColor = UIColor.whiteColor()
+    
         
         
         if indexPath.row % 2 == 0 {

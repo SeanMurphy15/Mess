@@ -330,7 +330,6 @@ class DecryptMessageViewController: UIViewController, UICollectionViewDelegate, 
             
             UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: { () -> Void in
                 self.collectionView.center.x = self.view.frame.width - 600
-                //self.collectionView.alpha = 0.0
                 
                 }, completion: { (_) -> Void in
                     

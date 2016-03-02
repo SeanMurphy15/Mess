@@ -36,7 +36,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Digits.sharedInstance().logOut()
+//        Digits.sharedInstance().logOut()
 
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -50,7 +50,7 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        deviceRecognitionRevokesSignup()
     }
 
 
@@ -314,56 +314,59 @@ class LoginSignupViewController: UIViewController, UITextFieldDelegate{
             
         })
         
-    }    //MARK: Signup Button tapped
-    @IBAction func signupButtonTapped(sender: AnyObject) {
+    }
 
 
-        func deviceRecognitionRevokesSignup(){
+    func deviceRecognitionRevokesSignup(){
 
-            let currentDeviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+        let currentDeviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
 
-            print(currentDeviceID)
+        print(currentDeviceID)
 
-            let ref = Firebase(url: "https://messapp.firebaseio.com/users")
-            ref.queryOrderedByChild("deviceID").queryEqualToValue(currentDeviceID).observeEventType(.ChildAdded, withBlock: { snapshot in
+        let ref = Firebase(url: "https://messapp.firebaseio.com/users")
+        ref.queryOrderedByChild("deviceID").queryEqualToValue(currentDeviceID).observeEventType(.ChildAdded, withBlock: { snapshot in
 
 
 
-                if let userDictionary = snapshot.value as? [String:String] {
+            if let userDictionary = snapshot.value as? [String:String] {
 
-                    let user = User(json: userDictionary, identifier: snapshot.key)
+                let user = User(json: userDictionary, identifier: snapshot.key)
 
-                    if currentDeviceID == user?.deviceID {
+                if currentDeviceID == user?.deviceID {
 
-                        let revokeSignupAlert = UIAlertController(title: "Mess does not support multiple accounts", message: "Please sign in to your existing account, or delete it!", preferredStyle: .Alert)
-                        let segueToLoginAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
+                    let revokeSignupAlert = UIAlertController(title: "Mess does not support multiple accounts", message: "Please sign in to your existing account, or delete it!", preferredStyle: .Alert)
+                    let segueToLoginAction = UIAlertAction(title: "OK", style: .Default) { (_) -> Void in
 
-                            self.performSegueWithIdentifier("toLoginFromSignup", sender: nil)
-
-                        }
-                        
-                        revokeSignupAlert.addAction(segueToLoginAction)
-                        self.presentViewController(revokeSignupAlert, animated: true, completion: nil)
-
+                        self.performSegueWithIdentifier("toLoginFromSignup", sender: nil)
 
                     }
-                    
-                    
-                } else {
-                    
-                    
-                    
+
+                    revokeSignupAlert.addAction(segueToLoginAction)
+                    self.presentViewController(revokeSignupAlert, animated: true, completion: nil)
+
+
                 }
-                
-                
-            })
-            
-            
-            
-        }
+
+
+            } else {
 
 
 
+            }
+            
+            
+        })
+        
+        
+        
+    }
+
+
+
+    //MARK: Signup Button tapped
+    @IBAction func signupButtonTapped(sender: AnyObject) {
+
+        deviceRecognitionRevokesSignup()
 
         if !emailTextField.text!.isEmpty && !phoneNumberTextField.text!.isEmpty && !usernameTextField.text!.isEmpty  && passwordTextField.text == reEnterPasswordTextField.text && !passwordTextField.text!.isEmpty && !reEnterPasswordTextField.text!.isEmpty {
 
